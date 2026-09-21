@@ -1,0 +1,24 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# NASA raw/processed data
+data/raw/*
+data/processed/*
+
+# Model weights and checkpoints
+models/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# OS files
+.DS_Store
+Thumbs.db
