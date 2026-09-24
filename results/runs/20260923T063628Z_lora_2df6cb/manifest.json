@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "run_id": "20260923T063628Z_lora_2df6cb",
+  "kind": "lora",
+  "status": "complete",
+  "started_at": "2026-09-23T06:36:28.216237+00:00",
+  "config": {
+    "model_id": "amazon/chronos-t5-base",
+    "revision": "ad294eaacead15db499b740ea4122266dd2a81a2",
+    "battery_ids": [
+      "B0005",
+      "B0006",
+      "B0007",
+      "B0018"
+    ],
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "auto",
+    "inference_batch_size": 16,
+    "num_samples": 100,
+    "inference_seeds": [
+      42,
+      43,
+      44
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "train_seeds": [
+      42
+    ],
+    "batch_size": 16,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "max_epochs": 10,
+    "validation_fraction": 0.2,
+    "validation_samples": 32,
+    "validation_seed": 31415,
+    "patience": 3,
+    "min_delta": 1e-05
+  },
+  "evaluation_signature": {
+    "model_id": "amazon/chronos-t5-base",
+    "revision": "ad294eaacead15db499b740ea4122266dd2a81a2",
+    "battery_ids": [
+      "B0005",
+      "B0006",
+      "B0007",
+      "B0018"
+    ],
+    "context_length": 64,
+    "prediction_length": 16,
+    "inference_batch_size": 16,
+    "num_samples": 100,
+    "inference_seeds": [
+      42,
+      43,
+      44
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "schema_version": 1,
+    "normalization": "Q_k / Q_1",
+    "aggregation": "numpy linear quantile 0.5; sample mean",
+    "device": "xpu",
+    "data_sha256": {
+      "B0005": "0eae4585baf3f200c09fe24c5ab884f1889679fc75206ca1aa19da704104f0b0",
+      "B0006": "fa818ab4db5db8ab21e910b6dd6c3e20d3761bb9672089e1a4de8f96074616c5",
+      "B0007": "d022afa086efaf54ab5b63f05220f5be178c8027e2fa8d68589db0e85a441a3b",
+      "B0018": "d1e6c923a43ea1c9666b3a90bbb521757a067fd60b4d17dbfaa49c50b179da69"
+    },
+    "versions": {
+      "torch": "2.14.0+xpu",
+      "chronos-forecasting": "2.3.2",
+      "transformers": "5.17.0",
+      "peft": "0.21.0",
+      "numpy": "2.5.3"
+    },
+    "source_sha256": "7c9c3cbd7bad48ee97ea83ac040255354016782d2d35ea74020831ab96fa39a9"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "versions": {
+      "torch": "2.14.0+xpu",
+      "chronos-forecasting": "2.3.2",
+      "transformers": "5.17.0",
+      "peft": "0.21.0",
+      "accelerate": "1.15.0",
+      "numpy": "2.5.3",
+      "scipy": "1.18.1",
+      "pandas": "3.0.6"
+    },
+    "device": "xpu",
+    "git_commit": "65debfcd01bc3e7b54f70c650f072b30fb4bbef0",
+    "source_sha256": {
+      "src\\__init__.py": "73b098210a49c01a6af5b41010f1860d9305ccd70436e0b499df68577e5b97c2",
+      "src\\soh_experiment.py": "7c9c3cbd7bad48ee97ea83ac040255354016782d2d35ea74020831ab96fa39a9",
+      "src\\soh_plots.py": "9b35174a56c6a86ae807fa5283be2126eb0bb0ae5b67d939b00c5650715a2c25"
+    },
+    "deterministic_algorithms": false,
+    "reproducibility_note": "Seeds fixed; bitwise equality across devices or library versions is not guaranteed."
+  },
+  "protocol": "Observed 64-cycle contexts, rolling-origin 16-cycle forecasts; overlapping windows are not independent.",
+  "zeroshot_run": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\results\\runs\\20260923T063348Z_zeroshot_b57856",
+  "folds": [
+    {
+      "test_battery": "B0005",
+      "train_batteries": [
+        "B0006",
+        "B0007",
+        "B0018"
+      ],
+      "train_seed": 42,
+      "selected_epoch": 9,
+      "refit_losses": [
+        2.243235930735931,
+        2.240327380952381,
+        2.2054247835497836,
+        2.149147727272727,
+        2.074810606060606,
+        1.9920522186147187,
+        1.8567370129870129,
+        1.6585159632034632,
+        1.5298971861471862
+      ],
+      "adapter_path": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\models\\20260923T063628Z_lora_2df6cb\\B0005_train42",
+      "adapter_sha256": {
+        "adapter_config.json": "b23899ec0b3c3166d05d6c70216a9d4de69c65b32079979ca658a8ec80f11064",
+        "adapter_model.safetensors": "b8dc0d188a6cf4a1b6623788096fd98934861f040aa702053e5894a2189226c8",
+        "README.md": "9d589158ce9a15fca331b6a47567a215c06ae4f1ff75449fa6656a8780324a9b"
+      }
+    },
+    {
+      "test_battery": "B0006",
+      "train_batteries": [
+        "B0005",
+        "B0007",
+        "B0018"
+      ],
+      "train_seed": 42,
+      "selected_epoch": 10,
+      "refit_losses": [
+        2.1717397186147185,
+        2.1631493506493507,
+        2.130546536796537,
+        2.0793763528138527,
+        1.9971590909090908,
+        1.8998241341991342,
+        1.750879329004329,
+        1.553909632034632,
+        1.4471049783549783,
+        1.3648877164502164
+      ],
+      "adapter_path": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\models\\20260923T063628Z_lora_2df6cb\\B0006_train42",
+      "adapter_sha256": {
+        "adapter_config.json": "b23899ec0b3c3166d05d6c70216a9d4de69c65b32079979ca658a8ec80f11064",
+        "adapter_model.safetensors": "7516cfce267f46f5de28f2c178c7f3272bf4d01b84391bd8a96c10d7489c58e2",
+        "README.md": "9d589158ce9a15fca331b6a47567a215c06ae4f1ff75449fa6656a8780324a9b"
+      }
+    },
+    {
+      "test_battery": "B0007",
+      "train_batteries": [
+        "B0005",
+        "B0006",
+        "B0018"
+      ],
+      "train_seed": 42,
+      "selected_epoch": 9,
+      "refit_losses": [
+        2.2890963203463204,
+        2.2772591991341993,
+        2.233698593073593,
+        2.1821563852813854,
+        2.1040990259740258,
+        1.9951975108225108,
+        1.8419575216450217,
+        1.6274012445887447,
+        1.5204274891774892
+      ],
+      "adapter_path": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\models\\20260923T063628Z_lora_2df6cb\\B0007_train42",
+      "adapter_sha256": {
+        "adapter_config.json": "b23899ec0b3c3166d05d6c70216a9d4de69c65b32079979ca658a8ec80f11064",
+        "adapter_model.safetensors": "8a8f9b3b044f28d8f1ad4063cd1d44c8699339dbc28f79df900b9f96956a2bfb",
+        "README.md": "9d589158ce9a15fca331b6a47567a215c06ae4f1ff75449fa6656a8780324a9b"
+      }
+    },
+    {
+      "test_battery": "B0018",
+      "train_batteries": [
+        "B0005",
+        "B0006",
+        "B0007"
+      ],
+      "train_seed": 42,
+      "selected_epoch": 7,
+      "refit_losses": [
+        2.175064372659176,
+        2.1523876404494384,
+        2.117743445692884,
+        2.0383895131086143,
+        1.9285756086142323,
+        1.790876638576779,
+        1.5680594569288389
+      ],
+      "adapter_path": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\models\\20260923T063628Z_lora_2df6cb\\B0018_train42",
+      "adapter_sha256": {
+        "adapter_config.json": "b23899ec0b3c3166d05d6c70216a9d4de69c65b32079979ca658a8ec80f11064",
+        "adapter_model.safetensors": "e799f62be77e2e31ee97e60e0e47caf48f4a1bc8fbcee497c21a1ad9811c7a57",
+        "README.md": "9d589158ce9a15fca331b6a47567a215c06ae4f1ff75449fa6656a8780324a9b"
+      }
+    }
+  ],
+  "finished_at": "2026-09-23T06:53:51.768790+00:00",
+  "artifact_sha256": {
+    "horizon_metrics.csv": "b546e1cbd6875637d85ba4dcbae61a498a1b1cc22a232c4f5f9d44aeca7fce1c",
+    "macro_by_run.csv": "b09f39862ffdabb486005ea5c1cc0de1c902ce3cb1bff041b589df30f77f4ad0",
+    "metrics.csv": "e26ce1cce13feddadbdad7b4db716a369a945758891f7a47a0aa15c931b397a0",
+    "paired_comparison.csv": "9ac7df7d365be1e27defcac5ebdf2078b82cdb080f2dc4348a7960e2a5a076fa",
+    "paired_macro.csv": "7da620914756757ce9cc98c520b10b7e3ce54f9bc0007f6e2cfc9eea1658683a",
+    "paired_windows.csv": "19c77a14dae5a96c1e8d46f581dcea8b0d042657b1f8653f226fbd3317f23709",
+    "summary.csv": "adc19726b4f418b9f96860a2ab4e9997848179164954343fb1e392f8f178d9fe",
+    "window_metrics.csv": "31791699cb252ca80477e67344b4799605e88ff61b3f9063bbdca79e26d9c178",
+    "folds\\B0005_train42.json": "e543f442bc1fcde0e81d887635c3b746c1e5b2ae9b3f51bb816072eb1ef49c72",
+    "folds\\B0006_train42.json": "4bf4656ee631d5a7609d188fa6aa15335c44c444f82cd918c8b6fb3df3c12a00",
+    "folds\\B0007_train42.json": "9bb355f4ac7cecda059e43c59a40d88caa740920b0defb379df7782fcd8fcd07",
+    "folds\\B0018_train42.json": "ce8186f6f1987464cf498daa44e61c22a2b7231d22ccecf95e7eb70e98305a9f",
+    "predictions\\B0005_train42_infer42.npz": "c77abc4b47525dc4bdecebcc2634a8ff9e12494631301bdaefed40feb47089eb",
+    "predictions\\B0005_train42_infer43.npz": "871f94b150f66369fde254dd1305e4ba7f3351568ff3b262cc70773f29915cae",
+    "predictions\\B0005_train42_infer44.npz": "1df2a24ed3c8311c5939295145da7cf51aff57ed7b5cb785841ae23a47f52f09",
+    "predictions\\B0006_train42_infer42.npz": "2b9fcace8bfefa2a8a5bf7fa76da831baaff8ff25c955c386cc6efcbd758bd16",
+    "predictions\\B0006_train42_infer43.npz": "2db19403245dee2bcc4036bb11422d4fcf4f454feb884358c336439638755215",
+    "predictions\\B0006_train42_infer44.npz": "045937f5312fc005eb6f7140e5472c7cabe09ec3f7f884897581343cd252e592",
+    "predictions\\B0007_train42_infer42.npz": "8a4523fe68155801b514e73c11471555284509d789f9c44d0b8bcbb62b39134d",
+    "predictions\\B0007_train42_infer43.npz": "5fabb49977afda2c4d35865bc5dfa602e66722af073205db44e40c3db1c4f43a",
+    "predictions\\B0007_train42_infer44.npz": "d758831db36b5653d0aac4d568d0332dddf6405107769870e82fd0518b19a281",
+    "predictions\\B0018_train42_infer42.npz": "82cf664273b0f3cd3b619f7a151faa13749a236b2390f5ce3482063b206c9c70",
+    "predictions\\B0018_train42_infer43.npz": "c26319a0a933ab5e477d25b7a6090da5085a9180be4259f33f2bd4d0db00a891",
+    "predictions\\B0018_train42_infer44.npz": "f461776325b2ff1be7d001729fb00cf9b478f215307c8c42bc9884d71c140ed4",
+    "selection\\B0005_train42.json": "20ddddedbb8abc3aa4e2caddb70120411bc518c40887a6758e583c8f5efecde4",
+    "selection\\B0006_train42.json": "230a1c8e3c4ae2af7df02e498f50317a429d6c362c60dd80f3b5539ebb69a42f",
+    "selection\\B0007_train42.json": "98fae6ef45f9f00e1c979d5102017cc0d758738e602828c93ea07b175c9f77e2",
+    "selection\\B0018_train42.json": "3b55555c6f82a2bc51ed6e14c39d6bf01b9179ca81bc5878abc9b732d675e570"
+  }
+}

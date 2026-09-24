@@ -1,0 +1,28 @@
+{
+  "test_battery": "B0006",
+  "train_batteries": [
+    "B0005",
+    "B0007",
+    "B0018"
+  ],
+  "train_seed": 42,
+  "selected_epoch": 10,
+  "refit_losses": [
+    2.1717397186147185,
+    2.1631493506493507,
+    2.130546536796537,
+    2.0793763528138527,
+    1.9971590909090908,
+    1.8998241341991342,
+    1.750879329004329,
+    1.553909632034632,
+    1.4471049783549783,
+    1.3648877164502164
+  ],
+  "adapter_path": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\models\\20260923T063628Z_lora_2df6cb\\B0006_train42",
+  "adapter_sha256": {
+    "adapter_config.json": "b23899ec0b3c3166d05d6c70216a9d4de69c65b32079979ca658a8ec80f11064",
+    "adapter_model.safetensors": "7516cfce267f46f5de28f2c178c7f3272bf4d01b84391bd8a96c10d7489c58e2",
+    "README.md": "9d589158ce9a15fca331b6a47567a215c06ae4f1ff75449fa6656a8780324a9b"
+  }
+}

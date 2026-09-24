@@ -1,0 +1,56 @@
+{
+  "lora_artifacts": {
+    "run_id": "20260923T063628Z_lora_2df6cb",
+    "metric_rows_verified": 24,
+    "artifacts_verified": 28,
+    "status": "passed"
+  },
+  "zeroshot_artifacts": {
+    "run_id": "20260923T063348Z_zeroshot_b57856",
+    "metric_rows_verified": 32,
+    "artifacts_verified": 17,
+    "status": "passed"
+  },
+  "adapter_initialization": {
+    "seed": 42,
+    "sha256": "6ef7942c4d761e55ab5f6bd7355325d2ec455777b9175567e46e9498ffa617b7",
+    "identical": true
+  },
+  "adapter_reload": [
+    {
+      "battery": "B0005",
+      "train_seed": 42,
+      "inference_seed": 42,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0006",
+      "train_seed": 42,
+      "inference_seed": 42,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0007",
+      "train_seed": 42,
+      "inference_seed": 42,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0018",
+      "train_seed": 42,
+      "inference_seed": 42,
+      "windows": 16,
+      "identical": true
+    }
+  ],
+  "zeroshot_repeat": {
+    "battery": "B0005",
+    "inference_seed": 42,
+    "windows": 16,
+    "identical": true
+  },
+  "scope": "Exact checks on current environment and first inference batch of each fold; no cross-device guarantee."
+}

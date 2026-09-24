@@ -1,0 +1,147 @@
+{
+  "status": "complete",
+  "train_batteries": [
+    "B0005",
+    "B0006",
+    "B0018"
+  ],
+  "splits": {
+    "B0005": {
+      "cutoff_zero_based": 134,
+      "last_training_target_cycle": 134,
+      "first_validation_target_cycle": 135,
+      "training_windows": 55,
+      "validation_windows": 19
+    },
+    "B0006": {
+      "cutoff_zero_based": 134,
+      "last_training_target_cycle": 134,
+      "first_validation_target_cycle": 135,
+      "training_windows": 55,
+      "validation_windows": 19
+    },
+    "B0018": {
+      "cutoff_zero_based": 105,
+      "last_training_target_cycle": 105,
+      "first_validation_target_cycle": 106,
+      "training_windows": 26,
+      "validation_windows": 12
+    }
+  },
+  "seed": 42,
+  "history": [
+    {
+      "epoch": 0,
+      "train_ce": null,
+      "validation_macro_rmse": 0.013515927584659115,
+      "by_battery": {
+        "B0005": 0.009417865800508364,
+        "B0006": 0.012088243915014646,
+        "B0018": 0.019041673038454335
+      }
+    },
+    {
+      "epoch": 1,
+      "train_ce": 2.3189338235294117,
+      "validation_macro_rmse": 0.013490366850002445,
+      "by_battery": {
+        "B0005": 0.009414652977786002,
+        "B0006": 0.012013353048787262,
+        "B0018": 0.01904309452343407
+      }
+    },
+    {
+      "epoch": 2,
+      "train_ce": 2.3253676470588234,
+      "validation_macro_rmse": 0.013449488453374936,
+      "by_battery": {
+        "B0005": 0.009323913402292106,
+        "B0006": 0.012049534668400313,
+        "B0018": 0.018975017289432385
+      }
+    },
+    {
+      "epoch": 3,
+      "train_ce": 2.306985294117647,
+      "validation_macro_rmse": 0.013344884348186184,
+      "by_battery": {
+        "B0005": 0.009346550082247183,
+        "B0006": 0.011727955779469838,
+        "B0018": 0.01896014718284153
+      }
+    },
+    {
+      "epoch": 4,
+      "train_ce": 2.280330882352941,
+      "validation_macro_rmse": 0.013211651419470177,
+      "by_battery": {
+        "B0005": 0.009041708529825845,
+        "B0006": 0.0116372033339211,
+        "B0018": 0.01895604239466359
+      }
+    },
+    {
+      "epoch": 5,
+      "train_ce": 2.2591911764705883,
+      "validation_macro_rmse": 0.013062795712832503,
+      "by_battery": {
+        "B0005": 0.008985903555640138,
+        "B0006": 0.011585484764031225,
+        "B0018": 0.018616998818826152
+      }
+    },
+    {
+      "epoch": 6,
+      "train_ce": 2.2215073529411766,
+      "validation_macro_rmse": 0.012929712046698544,
+      "by_battery": {
+        "B0005": 0.00891340811738355,
+        "B0006": 0.011236208250815763,
+        "B0018": 0.018639519771896318
+      }
+    },
+    {
+      "epoch": 7,
+      "train_ce": 2.1801470588235294,
+      "validation_macro_rmse": 0.012644701754817527,
+      "by_battery": {
+        "B0005": 0.008896169531065137,
+        "B0006": 0.01083947725405357,
+        "B0018": 0.01819845847933387
+      }
+    },
+    {
+      "epoch": 8,
+      "train_ce": 2.1176470588235294,
+      "validation_macro_rmse": 0.01254555933785273,
+      "by_battery": {
+        "B0005": 0.008788897152845688,
+        "B0006": 0.010671362710083584,
+        "B0018": 0.01817641815062892
+      }
+    },
+    {
+      "epoch": 9,
+      "train_ce": 2.0482536764705883,
+      "validation_macro_rmse": 0.012424782232602594,
+      "by_battery": {
+        "B0005": 0.008467147169342945,
+        "B0006": 0.011224883286951532,
+        "B0018": 0.01758231624151331
+      }
+    },
+    {
+      "epoch": 10,
+      "train_ce": 1.9715073529411764,
+      "validation_macro_rmse": 0.012497079076743628,
+      "by_battery": {
+        "B0005": 0.00844499060543749,
+        "B0006": 0.011939035914383899,
+        "B0018": 0.0171072107104095
+      }
+    }
+  ],
+  "selected_epoch": 9,
+  "selection_metric": "Macro validation RMSE of interpolated median; epoch 0 is eligible",
+  "validation_protocol": "Chronological tail of outer training batteries; no held-out battery used"
+}
