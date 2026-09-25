@@ -1,0 +1,17 @@
+{
+  "notebooks": [
+    {
+      "notebook": "02_chronos_zeroshot.ipynb",
+      "code_cells_executed": 5,
+      "passed": true,
+      "run": "results/runs/20260924T121259Z_zeroshot_f83f80"
+    },
+    {
+      "notebook": "03_chronos_lora_lobo.ipynb",
+      "code_cells_executed": 8,
+      "passed": true,
+      "run": "results/runs/ablations/20260924T121403Z_lora_robust_66d5ac"
+    }
+  ],
+  "execution": "All code cells from notebooks working directory, verified cached runs, Agg plotting backend"
+}

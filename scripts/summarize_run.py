@@ -2,6 +2,11 @@
 import argparse
 import json
 from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from src.soh_experiment import resolve_reference
 
 import matplotlib
 matplotlib.use("Agg")
@@ -52,7 +57,7 @@ def main():
     lines.extend(["", "## 원시 예측 분포 진단", "",
                   "| 모델 | 전체 샘플 최솟값 | 전체 샘플 최댓값 | SOH < 0 샘플 비율 | SOH > 2 샘플 비율 |",
                   "|---|---:|---:|---:|---:|"])
-    for label, path in [("Zero-shot", Path(manifest["zeroshot_run"])), ("LoRA", run)]:
+    for label, path in [("Zero-shot", resolve_reference(ROOT, manifest["zeroshot_run"])), ("LoRA", run)]:
         low, high, count, large, negative = float("inf"), float("-inf"), 0, 0, 0
         for file in (path / "predictions").glob("*.npz"):
             with np.load(file, allow_pickle=False) as saved:
@@ -67,18 +72,18 @@ def main():
     lines.extend(["", "**중앙값 점수 개선만으로 예측 분포도 개선되었다고 결론내릴 수 없습니다.**", "",
                   "| 모델 | Sample mean의 macro RMSE | Sample mean의 macro MAE | 평균 80% coverage | 평균 구간 폭 |",
                   "|---|---:|---:|---:|---:|"])
-    for label, path in [("Zero-shot", Path(manifest["zeroshot_run"])), ("LoRA", run)]:
+    for label, path in [("Zero-shot", resolve_reference(ROOT, manifest["zeroshot_run"])), ("LoRA", run)]:
         summary = pd.read_csv(path / "summary.csv")
         score = summary[(summary.estimator == "mean") & summary.model.isin(["ZeroShot", "LoRA"])].iloc[0]
         metrics_frame = pd.read_csv(path / "metrics.csv")
         intervals = metrics_frame[(metrics_frame.estimator == "median") & metrics_frame.model.isin(["ZeroShot", "LoRA"])]
         intervals = intervals.groupby("battery")[["coverage80", "width80"]].mean().mean()
         lines.append(f"| {label} | {score.rmse_mean:.6f} | {score.mae_mean:.6f} | {intervals.coverage80:.2%} | {intervals.width80:.6f} |")
-    lines.extend(["", "Validation은 중앙값 RMSE로 epoch를 선택했습니다. 극단 샘플의 빈도나 분포 전체의 품질을 직접 최적화하지 않았으므로, "
-                  "향후 확률 예측을 개선하려면 validation에서 CRPS 등 분포 지표와 비현실적 샘플 비율을 함께 평가해야 합니다. "
-                  "이번 test 결과로 사후에 최적 epoch나 집계 규칙을 다시 고르지는 않았습니다."])
+    lines.extend(["", f"Epoch 선택 기준: `{config.get('selection_metric', 'median_rmse')}`. "
+                  f"전체 데이터 refit: `{config.get('refit_full_data', True)}`. "
+                  "Validation 선택과 평가 배터리의 결과는 구분해야 합니다."])
     lines.extend(["", "## 해석 범위", "",
-                  "- 평가 배터리를 제외한 3개 배터리의 시간순 validation으로 epoch를 선택하고 전체 학습 데이터로 재학습했습니다.",
+                  "- 평가 배터리를 제외한 3개 배터리의 시간순 validation으로 epoch를 선택했습니다. 실제 최종 학습 방식은 위 refit 설정을 따릅니다.",
                   "- 저장된 원시 samples에서 자동으로 계산한 지표이며 과거 하드코딩 비교표를 사용하지 않았습니다.",
                   "- 추론 seed 반복은 학습 초기화 반복을 대신하지 않습니다. 학습 seed가 1개이면 학습 변동성은 평가되지 않았습니다.",
                   "- 중첩 윈도우는 독립 표본이 아니며, 위 변화율은 통계적 유의성의 증거가 아닙니다.",

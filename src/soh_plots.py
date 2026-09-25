@@ -59,9 +59,14 @@ def validation_curves(directory: Path):
     figure, axes = plt.subplots(len(paths), 1, figsize=(10, 2.8 * len(paths)), squeeze=False)
     for ax, path, record in zip(axes.flat, paths, records):
         history = record["history"]
-        ax.plot([x["epoch"] for x in history], [x["validation_macro_rmse"] for x in history], marker="o")
+        ax.plot([x["epoch"] for x in history], [x["validation_macro_rmse"] for x in history], marker="o", label="Median RMSE")
+        if all("validation" in x for x in history):
+            ax.plot([x["epoch"] for x in history], [x["validation"]["crps"] for x in history],
+                    marker=".", label="CRPS")
+            ax.plot([x["epoch"] for x in history], [x["validation"]["mean_rmse"] for x in history],
+                    linestyle=":", label="Mean forecast RMSE")
         ax.axvline(record["selected_epoch"], linestyle="--", label=f"Selected epoch {record['selected_epoch']}")
-        ax.set(title=path.stem, xlabel="Epoch", ylabel="Validation macro RMSE")
+        ax.set(title=path.stem, xlabel="Epoch", ylabel="Validation macro error")
         ax.legend()
         ax.grid(alpha=0.2)
     figure.tight_layout()

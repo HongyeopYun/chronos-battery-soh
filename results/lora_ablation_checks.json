@@ -1,0 +1,37 @@
+{
+  "notebooks": [
+    {
+      "notebook": "02_chronos_zeroshot.ipynb",
+      "code_cells_executed": 5,
+      "passed": true
+    },
+    {
+      "notebook": "03_chronos_lora_lobo.ipynb",
+      "code_cells_executed": 8,
+      "passed": true
+    }
+  ],
+  "unit_tests_passed": 21,
+  "unchanged_early_training_prefix": [
+    {
+      "battery": "B0005",
+      "epochs_including_zero": 4,
+      "identical": true
+    },
+    {
+      "battery": "B0006",
+      "epochs_including_zero": 4,
+      "identical": true
+    },
+    {
+      "battery": "B0007",
+      "epochs_including_zero": 4,
+      "identical": true
+    },
+    {
+      "battery": "B0018",
+      "epochs_including_zero": 4,
+      "identical": true
+    }
+  ]
+}

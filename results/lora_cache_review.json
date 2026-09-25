@@ -1,0 +1,8 @@
+{
+  "isolated_wrong_kind_acceptance_reproduced": true,
+  "isolated_test_mocks": "evaluation signature and artifact audit; find_lobo/verify_saved_run are actual implementations",
+  "current_normal_cache": "results/runs/20260924T004908Z_lora_9e14e5",
+  "current_normal_cache_kind": "lora",
+  "existing_archived_ablation_is_not_selected": true,
+  "issue_status": "confirmed, not modified during this review"
+}

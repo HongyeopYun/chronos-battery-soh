@@ -1,0 +1,22 @@
+{
+  "base_config": "configs/experiment.json",
+  "overrides": {
+    "learning_rate": 0.00003,
+    "kl_weight": 0.5,
+    "max_epochs": 20,
+    "patience": 20,
+    "validation_seeds": [31415, 31416, 31417, 31418, 31419],
+    "validation_samples": 64,
+    "validation_batch_size": 32,
+    "battery_balance": false,
+    "refit_full_data": false
+  },
+  "search_train_seed": 42,
+  "candidate_order": ["multi_seed10", "multi_seed20", "balanced20"],
+  "diagnostic_policy": "single_seed10",
+  "selection": "Compare selected five-seed macro validation CRPS; improvement must exceed min_delta; ties preserve candidate_order. Median and mean RMSE guards stay relative to epoch zero.",
+  "training": "Each trajectory runs through its full epoch budget. Epoch10 and epoch20 policies share the exact first ten updates. Battery balance uses example weights N/(B*n_b) on both CE and KL, preserving shuffle and optimizer-step count.",
+  "validation": "Concatenate validation contexts for efficient batching, split predictions back by battery, score each seed separately, then average metrics equally over seeds and batteries. Single-seed diagnostic uses the same batch layout.",
+  "evaluation": "Freeze all outer-fold choices before any heldout forecasting. Evaluate all four policies at training seed42, then chosen policies at training seeds43/44; inference seeds42/43/44. No full-data refit.",
+  "limitation": "Previously inspected four-battery benchmark; exploratory followup, not an independent test set or significance test."
+}

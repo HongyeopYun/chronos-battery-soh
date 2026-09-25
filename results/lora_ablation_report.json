@@ -1,0 +1,250 @@
+{
+  "run": "results/runs/ablations/20260924T082717Z_lora_ablation_958398",
+  "zero": "results/runs/20260924T004736Z_zeroshot_48b8e3",
+  "audits": [
+    {
+      "run_id": "20260924T082717Z_lora_ablation_958398",
+      "metric_rows_verified": 72,
+      "artifacts_verified": 87,
+      "adapters_verified": true,
+      "status": "passed"
+    },
+    {
+      "run_id": "20260924T004736Z_zeroshot_48b8e3",
+      "metric_rows_verified": 32,
+      "artifacts_verified": 17,
+      "adapters_verified": false,
+      "status": "passed"
+    }
+  ],
+  "macro": {
+    "Zero-shot": {
+      "median_rmse": 0.01627068474112945,
+      "median_mae": 0.011555738915068364,
+      "mean_rmse": 0.019494995325750216,
+      "crps": 0.00871730851657466,
+      "coverage80": 0.8056442565896402,
+      "width80": 0.04207307271038492
+    },
+    "Selected LoRA": {
+      "median_rmse": 0.01615867253647798,
+      "median_mae": 0.011478112331329591,
+      "mean_rmse": 0.01942228655283565,
+      "crps": 0.008669996309207843,
+      "coverage80": 0.8118227804866558,
+      "width80": 0.04264460980064339
+    }
+  },
+  "training_seed_scores": {
+    "42": {
+      "median_rmse": 0.016179986147439797,
+      "median_mae": 0.011487009429803515,
+      "mean_rmse": 0.01942901484593517,
+      "crps": 0.008681257079634727,
+      "coverage80": 0.8110800473464772,
+      "width80": 0.04256491564835112
+    },
+    "43": {
+      "median_rmse": 0.016153566749682727,
+      "median_mae": 0.011486189730788306,
+      "mean_rmse": 0.019478770100923304,
+      "crps": 0.008670598667531552,
+      "coverage80": 0.811997606176242,
+      "width80": 0.04270040336996317
+    },
+    "44": {
+      "median_rmse": 0.016142464712311413,
+      "median_mae": 0.011461137833396952,
+      "mean_rmse": 0.019359074711648473,
+      "crps": 0.008658133180457247,
+      "coverage80": 0.8123906879372482,
+      "width80": 0.042668510383615896
+    }
+  },
+  "search_and_repeat_receipts_verified": [
+    "B0005_higher_lr_train42",
+    "B0005_longer_training_train42",
+    "B0005_longer_training_train43",
+    "B0005_longer_training_train44",
+    "B0005_without_kl_train42",
+    "B0006_higher_lr_train42",
+    "B0006_longer_training_train42",
+    "B0006_without_kl_train42",
+    "B0006_without_kl_train43",
+    "B0006_without_kl_train44",
+    "B0007_higher_lr_train42",
+    "B0007_longer_training_train42",
+    "B0007_longer_training_train43",
+    "B0007_longer_training_train44",
+    "B0007_without_kl_train42",
+    "B0018_higher_lr_train42",
+    "B0018_longer_training_train42",
+    "B0018_longer_training_train43",
+    "B0018_longer_training_train44",
+    "B0018_without_kl_train42"
+  ],
+  "validation_choices_recomputed": true,
+  "improvement_pct": {
+    "median_rmse": 0.6884295678615371,
+    "median_mae": 0.6717578539053859,
+    "mean_rmse": 0.37296122260941367,
+    "crps": 0.5427387051503363,
+    "coverage80": -0.76690472829406,
+    "width80": -1.358439147510615
+  },
+  "epoch_zero_models": 3,
+  "choices": {
+    "B0005": "longer_training",
+    "B0006": "without_kl",
+    "B0007": "longer_training",
+    "B0018": "longer_training"
+  },
+  "folds": [
+    {
+      "test_battery": "B0005",
+      "train_seed": 42,
+      "candidate": "longer_training",
+      "selected_epoch": 0
+    },
+    {
+      "test_battery": "B0005",
+      "train_seed": 43,
+      "candidate": "longer_training",
+      "selected_epoch": 6
+    },
+    {
+      "test_battery": "B0005",
+      "train_seed": 44,
+      "candidate": "longer_training",
+      "selected_epoch": 7
+    },
+    {
+      "test_battery": "B0006",
+      "train_seed": 42,
+      "candidate": "without_kl",
+      "selected_epoch": 7
+    },
+    {
+      "test_battery": "B0006",
+      "train_seed": 43,
+      "candidate": "without_kl",
+      "selected_epoch": 6
+    },
+    {
+      "test_battery": "B0006",
+      "train_seed": 44,
+      "candidate": "without_kl",
+      "selected_epoch": 7
+    },
+    {
+      "test_battery": "B0007",
+      "train_seed": 42,
+      "candidate": "longer_training",
+      "selected_epoch": 0
+    },
+    {
+      "test_battery": "B0007",
+      "train_seed": 43,
+      "candidate": "longer_training",
+      "selected_epoch": 5
+    },
+    {
+      "test_battery": "B0007",
+      "train_seed": 44,
+      "candidate": "longer_training",
+      "selected_epoch": 0
+    },
+    {
+      "test_battery": "B0018",
+      "train_seed": 42,
+      "candidate": "longer_training",
+      "selected_epoch": 9
+    },
+    {
+      "test_battery": "B0018",
+      "train_seed": 43,
+      "candidate": "longer_training",
+      "selected_epoch": 10
+    },
+    {
+      "test_battery": "B0018",
+      "train_seed": 44,
+      "candidate": "longer_training",
+      "selected_epoch": 10
+    }
+  ],
+  "reload_checks": [
+    {
+      "battery": "B0005",
+      "train_seed": 42,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0005",
+      "train_seed": 43,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0005",
+      "train_seed": 44,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0006",
+      "train_seed": 42,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0006",
+      "train_seed": 43,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0006",
+      "train_seed": 44,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0007",
+      "train_seed": 42,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0007",
+      "train_seed": 43,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0007",
+      "train_seed": 44,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0018",
+      "train_seed": 42,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0018",
+      "train_seed": 43,
+      "windows": 16,
+      "identical": true
+    },
+    {
+      "battery": "B0018",
+      "train_seed": 44,
+      "windows": 16,
+      "identical": true
+    }
+  ]
+}

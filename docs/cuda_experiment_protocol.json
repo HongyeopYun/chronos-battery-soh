@@ -1,0 +1,88 @@
+{
+  "base_commit": "f5bf4cc",
+  "before_source_sha256": "78b31b6fbd8b7cefd0895e8c506b604114f826948c59fe3debff9280d717ac3e",
+  "before_config": {
+    "model_id": "amazon/chronos-t5-base",
+    "revision": "ad294eaacead15db499b740ea4122266dd2a81a2",
+    "battery_ids": [
+      "B0005",
+      "B0006",
+      "B0007",
+      "B0018"
+    ],
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "cuda",
+    "inference_batch_size": 16,
+    "num_samples": 100,
+    "inference_seeds": [
+      42,
+      43,
+      44
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "train_seeds": [
+      42
+    ],
+    "batch_size": 16,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "max_epochs": 10,
+    "validation_fraction": 0.2,
+    "validation_samples": 32,
+    "validation_seed": 31415,
+    "patience": 3,
+    "min_delta": 1e-05
+  },
+  "after_config": {
+    "model_id": "amazon/chronos-t5-base",
+    "revision": "ad294eaacead15db499b740ea4122266dd2a81a2",
+    "battery_ids": [
+      "B0005",
+      "B0006",
+      "B0007",
+      "B0018"
+    ],
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "cuda",
+    "inference_batch_size": 16,
+    "num_samples": 100,
+    "inference_seeds": [
+      42,
+      43,
+      44
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "train_seeds": [
+      42,
+      43,
+      44
+    ],
+    "batch_size": 16,
+    "learning_rate": 3e-05,
+    "weight_decay": 0.0,
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "max_epochs": 10,
+    "validation_fraction": 0.2,
+    "validation_samples": 64,
+    "validation_seed": 31415,
+    "patience": 3,
+    "min_delta": 1e-05,
+    "kl_weight": 0.5,
+    "selection_metric": "guarded_crps",
+    "refit_full_data": false
+  },
+  "control_patch": "docs/cuda_control_from_main.patch",
+  "zero_shot_samples_identical_across_12_files": true,
+  "selection_rule_fixed_before_after_run": true
+}

@@ -1,0 +1,13 @@
+{
+  "base_config": "configs/experiment.json",
+  "search_train_seed": 42,
+  "candidates": [
+    {"name": "longer_training", "overrides": {"patience": 10}},
+    {"name": "higher_lr", "overrides": {"patience": 10, "learning_rate": 0.0001}},
+    {"name": "without_kl", "overrides": {"patience": 10, "kl_weight": 0.0}}
+  ],
+  "candidate_selection": "Lowest selected validation CRPS; improvement must exceed min_delta; ties keep earlier candidate. Epoch selection keeps the existing median/mean RMSE guards.",
+  "diagnostics": "Replay patience=3 on longer_training to isolate early stopping. Also report minimum median-RMSE epoch of each trajectory, without using it for model selection.",
+  "test_policy": "Freeze all four candidate choices before any held-out forecasts. Repeat selected settings with training seeds 42,43,44; select each seed's checkpoint on its training-battery validation only. No full-data refit.",
+  "limitation": "These four batteries have been inspected in earlier experiments; this is a controlled follow-up, not a new independent benchmark."
+}

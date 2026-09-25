@@ -1,5 +1,5 @@
 # Install the matching hardware-specific torch wheel first; see README.md.
-torch==2.14.0
+torch==2.11.0
 chronos-forecasting==2.3.2
 transformers==5.17.0
 peft==0.21.0

@@ -19,6 +19,11 @@ models/
 *.ckpt
 *.safetensors
 
+# Local CUDA verification runs; historical tracked results remain available.
+results/metrics/zeroshot_cuda/
+results/cuda_validation/
+results/runs/
+
 # OS files
 .DS_Store
 Thumbs.db

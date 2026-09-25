@@ -1,0 +1,86 @@
+--- a/src/soh_experiment.py
++++ b/src/soh_experiment.py
+@@ -164,15 +164,51 @@
+ def seed_everything(seed: int) -> None:
+     random.seed(seed)
+     np.random.seed(seed)
+-    torch.manual_seed(seed)  # Includes XPU in the installed PyTorch.
++    torch.manual_seed(seed)  # Seeds all available torch devices.
+ 
+ 
+ def resolve_device(requested: str) -> str:
+-    if requested != "auto":
+-        return requested
+-    if hasattr(torch, "xpu") and torch.xpu.is_available():
+-        return "xpu"
+-    return "cuda" if torch.cuda.is_available() else "cpu"
++    if requested == "auto":
++        if torch.cuda.is_available():
++            requested = "cuda"
++        elif hasattr(torch, "xpu") and torch.xpu.is_available():
++            requested = "xpu"
++        else:
++            requested = "cpu"
++    device = torch.device(requested)
++    if device.type == "cuda":
++        if not torch.cuda.is_available():
++            raise RuntimeError(
++                "CUDA is unavailable. Select the project .venv kernel, install the "
++                "CUDA PyTorch wheel from README.md, and restart the kernel. "
++                f"torch={torch.__version__}, compiled CUDA={torch.version.cuda}"
++            )
++        index = torch.cuda.current_device() if device.index is None else device.index
++        if index >= torch.cuda.device_count():
++            raise ValueError(f"CUDA device {index} does not exist")
++        return f"cuda:{index}"
++    return str(device)
++
++
++def model_dtype(device: str) -> torch.dtype:
++    target = torch.device(device)
++    if target.type == "cuda":
++        with torch.cuda.device(target):
++            # Native BF16 requires Ampere or newer. FP32 avoids T5 FP16 overflow.
++            supports_bf16 = (torch.cuda.get_device_capability(target)[0] >= 8
++                             and torch.cuda.is_bf16_supported())
++        return torch.bfloat16 if supports_bf16 else torch.float32
++    return torch.bfloat16 if target.type == "xpu" else torch.float32
++
++
++def runtime_info(requested: str) -> dict:
++    device = resolve_device(requested)
++    info = {"device": device, "dtype": str(model_dtype(device)), "torch": torch.__version__}
++    if torch.device(device).type == "cuda":
++        props = torch.cuda.get_device_properties(device)
++        info.update(gpu=props.name, capability=[props.major, props.minor],
++                    total_memory_bytes=props.total_memory, cuda_runtime=torch.version.cuda)
++    return info
+ 
+ 
+ def clear_device_cache() -> None:
+@@ -186,7 +222,7 @@
+ def fresh_pipeline(config: ExperimentConfig, seed: int, lora: bool = False):
+     seed_everything(seed)  # MUST precede model and adapter creation.
+     device = resolve_device(config.device)
+-    dtype = torch.float32 if device == "cpu" else torch.bfloat16
++    dtype = model_dtype(device)
+     pipeline = ChronosPipeline.from_pretrained(config.model_id, revision=config.revision,
+                                                 device_map=device, dtype=dtype)
+     if config.context_length > pipeline.model.config.context_length:
+@@ -233,7 +269,7 @@
+     except (OSError, subprocess.CalledProcessError):
+         commit = None
+     return {"python": platform.python_version(), "platform": platform.platform(),
+-            "versions": versions, "device": device, "git_commit": commit,
++            "versions": versions, "device": device, "runtime": runtime_info(device), "git_commit": commit,
+             "source_sha256": {str(p.relative_to(root)): file_sha256(p)
+                               for p in sorted((root / "src").glob("*.py"))},
+             "deterministic_algorithms": torch.are_deterministic_algorithms_enabled(),
+@@ -247,6 +283,7 @@
+     signature = {k: raw[k] for k in fields}
+     signature.update(schema_version=SCHEMA_VERSION, normalization="Q_k / Q_1", aggregation="numpy linear quantile 0.5; sample mean",
+                      device=resolve_device(config.device),
++                      runtime=runtime_info(config.device),
+                      data_sha256={b: file_sha256(root / "data" / "raw" / f"{b}.mat") for b in config.battery_ids},
+                      versions={p: importlib.metadata.version(p) for p in ("torch", "chronos-forecasting", "transformers", "peft", "numpy")},
+                      source_sha256=file_sha256(Path(__file__)))

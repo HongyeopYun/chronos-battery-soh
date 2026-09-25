@@ -14,18 +14,19 @@ import random
 import subprocess
 from dataclasses import asdict, dataclass, replace
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 from uuid import uuid4
 
 import numpy as np
 import pandas as pd
 import torch
+import torch.nn.functional as F
 from chronos import ChronosPipeline
 from peft import LoraConfig, PeftModel, TaskType, get_peft_model
 from scipy.io import loadmat
 from torch.utils.data import DataLoader, TensorDataset
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 
 @dataclass(frozen=True)
@@ -42,35 +43,50 @@ class ExperimentConfig:
     temperature: float = 1.0
     top_k: int = 50
     top_p: float = 1.0
-    train_seeds: tuple[int, ...] = (42,)
+    train_seeds: tuple[int, ...] = (42, 43, 44)
     batch_size: int = 16
-    learning_rate: float = 1e-4
+    learning_rate: float = 3e-5
     weight_decay: float = 0.0
     lora_rank: int = 8
     lora_alpha: int = 16
     lora_dropout: float = 0.05
     max_epochs: int = 10
     validation_fraction: float = 0.2
-    validation_samples: int = 32
+    validation_samples: int = 64
     validation_seed: int = 31415
+    validation_seeds: tuple[int, ...] = ()
+    validation_batch_size: int = 32
+    battery_balance: bool = False
     patience: int = 3
     min_delta: float = 1e-5
+    kl_weight: float = 0.5
+    selection_metric: str = "guarded_crps"
+    refit_full_data: bool = False
 
     def __post_init__(self):
         for name in ("battery_ids", "inference_seeds", "train_seeds"):
             object.__setattr__(self, name, tuple(getattr(self, name)))
             if not getattr(self, name) or len(set(getattr(self, name))) != len(getattr(self, name)):
                 raise ValueError(f"{name} must be nonempty and contain unique values")
+        object.__setattr__(self, "validation_seeds", tuple(self.validation_seeds))
+        if len(set(self.validation_seeds)) != len(self.validation_seeds):
+            raise ValueError("validation_seeds must contain unique values")
+        if not isinstance(self.battery_balance, bool):
+            raise ValueError("battery_balance must be boolean")
         if len(self.battery_ids) < 3:
             raise ValueError("LOBO requires at least three batteries")
         for name in ("context_length", "prediction_length", "inference_batch_size",
-                     "num_samples", "batch_size", "lora_rank", "validation_samples", "patience"):
+                     "num_samples", "batch_size", "lora_rank", "validation_samples", "validation_batch_size", "patience"):
             if getattr(self, name) < 1:
                 raise ValueError(f"{name} must be positive")
         if not 0 < self.validation_fraction < 1 or self.max_epochs < 0:
             raise ValueError("Invalid validation_fraction or max_epochs")
         if not self.revision or self.learning_rate <= 0 or self.min_delta < 0:
             raise ValueError("A pinned revision, positive learning_rate and nonnegative min_delta are required")
+        if not np.isfinite(self.kl_weight) or self.kl_weight < 0:
+            raise ValueError("kl_weight must be finite and nonnegative")
+        if self.selection_metric not in ("median_rmse", "guarded_crps"):
+            raise ValueError("selection_metric must be median_rmse or guarded_crps")
 
 
 def find_project_root(start: str | Path | None = None) -> Path:
@@ -98,6 +114,22 @@ def file_sha256(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def resolve_reference(root: Path, reference: str | Path) -> Path:
+    """Resolve new project-relative references and relocate legacy Windows runs."""
+    root = Path(root).resolve()
+    path = Path(reference)
+    if path.is_absolute() and path.exists():
+        return path
+    windows = PureWindowsPath(str(reference))
+    if not path.is_absolute() and not windows.is_absolute():
+        return root / path
+    parts = windows.parts if windows.is_absolute() else path.parts
+    for marker in ("results", "models"):
+        if marker in parts:
+            return root.joinpath(*parts[parts.index(marker):])
+    return path
 
 
 def load_soh(root: Path, config: ExperimentConfig) -> dict[str, np.ndarray]:
@@ -161,18 +193,90 @@ def summarize_samples(samples: np.ndarray) -> dict[str, np.ndarray]:
             "q90": np.quantile(samples, 0.9, axis=1)}
 
 
+def distribution_metrics(target: np.ndarray, samples: np.ndarray) -> dict[str, float]:
+    """Empirical CRPS: E|X-y| - E|X-X'|/2, computed by sorting (no S x S array)."""
+    summary = summarize_samples(samples)
+    samples = np.asarray(samples, dtype=np.float64)
+    target = np.asarray(target, dtype=np.float64)
+    point_metrics(target, summary["median"])
+    count = samples.shape[1]
+    weights = (2 * np.arange(1, count + 1) - count - 1)[None, :, None]
+    pair_term = np.sum(np.sort(samples, axis=1) * weights, axis=1) / count ** 2
+    crps = np.mean(np.abs(samples - target[:, None, :]), axis=1) - pair_term
+    return {"crps": float(np.mean(crps)),
+            "coverage80": float(np.mean((target >= summary["q10"]) & (target <= summary["q90"]))),
+            "width80": float(np.mean(summary["q90"] - summary["q10"])),
+            "negative_sample_rate": float(np.mean(samples < 0)),
+            "above_two_sample_rate": float(np.mean(samples > 2))}
+
+
+def masked_reference_kl(logits, reference_log_probs, labels):
+    """KL(base || adapted) averaged over valid tokens, including EOS, excluding padding."""
+    valid = labels != -100
+    if not valid.any():
+        raise ValueError("KL requires at least one valid label")
+    token_kl = F.kl_div(F.log_softmax(logits.float(), dim=-1), reference_log_probs.float(),
+                        reduction="none", log_target=True).sum(dim=-1)
+    return token_kl[valid].mean()
+
+
+def validation_candidate_improves(candidate: dict, best: dict, baseline: dict, config) -> bool:
+    if config.selection_metric == "median_rmse":
+        return candidate["median_rmse"] < best["median_rmse"] - config.min_delta
+    # Guardrails are relative to the untrained adapter on the SAME validation data.
+    eligible = all(candidate[key] <= baseline[key] + config.min_delta
+                   for key in ("median_rmse", "mean_rmse"))
+    return eligible and candidate["crps"] < best["crps"] - config.min_delta
+
+
 def seed_everything(seed: int) -> None:
     random.seed(seed)
     np.random.seed(seed)
-    torch.manual_seed(seed)  # Includes XPU in the installed PyTorch.
+    torch.manual_seed(seed)  # Seeds all available torch devices.
 
 
 def resolve_device(requested: str) -> str:
-    if requested != "auto":
-        return requested
-    if hasattr(torch, "xpu") and torch.xpu.is_available():
-        return "xpu"
-    return "cuda" if torch.cuda.is_available() else "cpu"
+    if requested == "auto":
+        if torch.cuda.is_available():
+            requested = "cuda"
+        elif hasattr(torch, "xpu") and torch.xpu.is_available():
+            requested = "xpu"
+        else:
+            requested = "cpu"
+    device = torch.device(requested)
+    if device.type == "cuda":
+        if not torch.cuda.is_available():
+            raise RuntimeError(
+                "CUDA is unavailable. Select the project .venv kernel, install the "
+                "CUDA PyTorch wheel from README.md, and restart the kernel. "
+                f"torch={torch.__version__}, compiled CUDA={torch.version.cuda}"
+            )
+        index = torch.cuda.current_device() if device.index is None else device.index
+        if index >= torch.cuda.device_count():
+            raise ValueError(f"CUDA device {index} does not exist")
+        return f"cuda:{index}"
+    return str(device)
+
+
+def model_dtype(device: str) -> torch.dtype:
+    target = torch.device(device)
+    if target.type == "cuda":
+        with torch.cuda.device(target):
+            # Native BF16 requires Ampere or newer. FP32 avoids T5 FP16 overflow.
+            supports_bf16 = (torch.cuda.get_device_capability(target)[0] >= 8
+                             and torch.cuda.is_bf16_supported())
+        return torch.bfloat16 if supports_bf16 else torch.float32
+    return torch.bfloat16 if target.type == "xpu" else torch.float32
+
+
+def runtime_info(requested: str) -> dict:
+    device = resolve_device(requested)
+    info = {"device": device, "dtype": str(model_dtype(device)), "torch": torch.__version__}
+    if torch.device(device).type == "cuda":
+        props = torch.cuda.get_device_properties(device)
+        info.update(gpu=props.name, capability=[props.major, props.minor],
+                    total_memory_bytes=props.total_memory, cuda_runtime=torch.version.cuda)
+    return info
 
 
 def clear_device_cache() -> None:
@@ -186,7 +290,7 @@ def clear_device_cache() -> None:
 def fresh_pipeline(config: ExperimentConfig, seed: int, lora: bool = False):
     seed_everything(seed)  # MUST precede model and adapter creation.
     device = resolve_device(config.device)
-    dtype = torch.float32 if device == "cpu" else torch.bfloat16
+    dtype = model_dtype(device)
     pipeline = ChronosPipeline.from_pretrained(config.model_id, revision=config.revision,
                                                 device_map=device, dtype=dtype)
     if config.context_length > pipeline.model.config.context_length:
@@ -233,7 +337,7 @@ def _environment(root: Path, device: str) -> dict:
     except (OSError, subprocess.CalledProcessError):
         commit = None
     return {"python": platform.python_version(), "platform": platform.platform(),
-            "versions": versions, "device": device, "git_commit": commit,
+            "versions": versions, "device": device, "runtime": runtime_info(device), "git_commit": commit,
             "source_sha256": {str(p.relative_to(root)): file_sha256(p)
                               for p in sorted((root / "src").glob("*.py"))},
             "deterministic_algorithms": torch.are_deterministic_algorithms_enabled(),
@@ -247,6 +351,7 @@ def evaluation_signature(root: Path, config: ExperimentConfig) -> dict:
     signature = {k: raw[k] for k in fields}
     signature.update(schema_version=SCHEMA_VERSION, normalization="Q_k / Q_1", aggregation="numpy linear quantile 0.5; sample mean",
                      device=resolve_device(config.device),
+                     runtime=runtime_info(config.device),
                      data_sha256={b: file_sha256(root / "data" / "raw" / f"{b}.mat") for b in config.battery_ids},
                      versions={p: importlib.metadata.version(p) for p in ("torch", "chronos-forecasting", "transformers", "peft", "numpy")},
                      source_sha256=file_sha256(Path(__file__)))
@@ -255,7 +360,10 @@ def evaluation_signature(root: Path, config: ExperimentConfig) -> dict:
 
 def _start_run(root: Path, config: ExperimentConfig, kind: str):
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + f"_{kind}_{uuid4().hex[:6]}"
-    directory = root / "results" / "runs" / run_id
+    run_root = root / "results" / "runs"
+    if kind in ("lora_ablation", "lora_robust"):
+        run_root = run_root / "ablations"
+    directory = run_root / run_id
     directory.mkdir(parents=True, exist_ok=False)
     manifest = {"schema_version": SCHEMA_VERSION, "run_id": run_id, "kind": kind, "status": "running",
                 "started_at": datetime.now(timezone.utc).isoformat(), "config": asdict(config),
@@ -285,7 +393,7 @@ def save_forecast(path: Path, windows: dict, samples: np.ndarray):
 
 
 def metric_rows(windows: dict, prediction: dict, model: str, battery: str,
-                train_seed: int = -1, inference_seed: int = -1):
+                train_seed: int = -1, inference_seed: int = -1, samples=None):
     rows, horizons, window_rows = [], [], []
     target = windows["target"]
     for estimator in ("median", "mean"):
@@ -298,6 +406,8 @@ def metric_rows(windows: dict, prediction: dict, model: str, battery: str,
         if "q10" in prediction:
             row.update(coverage80=float(np.mean((target >= prediction["q10"]) & (target <= prediction["q90"]))),
                        width80=float(np.mean(prediction["q90"] - prediction["q10"])))
+        if samples is not None:
+            row.update(distribution_metrics(target, samples))
         rows.append(row)
         for h in range(target.shape[1]):
             horizons.append({**tags, "horizon": h + 1, **point_metrics(target[:, h:h+1], pred[:, h:h+1])})
@@ -349,7 +459,7 @@ def run_zeroshot(root: Path, config: ExperimentConfig) -> Path:
             for seed in config.inference_seeds:
                 samples = predict_samples(pipeline, windows["context"], config, seed)
                 save_forecast(directory / "predictions" / f"{battery}_infer{seed}.npz", windows, samples)
-                r, h, w = metric_rows(windows, summarize_samples(samples), "ZeroShot", battery, inference_seed=seed)
+                r, h, w = metric_rows(windows, summarize_samples(samples), "ZeroShot", battery, inference_seed=seed, samples=samples)
                 rows.extend(r); horizons.extend(h); window_rows.extend(w)
                 print(f"Zero-shot {battery} seed={seed}: median RMSE={r[0]['rmse']:.6f}", flush=True)
         _write_tables(directory, rows, horizons, window_rows)
@@ -394,9 +504,34 @@ def _training_loader(pipeline, datasets: list[dict], config: ExperimentConfig, s
     ids, mask, scale = tokenizer.context_input_transform(context)
     labels, label_mask = tokenizer.label_input_transform(target, scale)
     labels[~label_mask] = -100
-    dataset = TensorDataset(ids, mask, labels)
-    return DataLoader(dataset, batch_size=config.batch_size, shuffle=True, num_workers=0,
-                      generator=torch.Generator().manual_seed(seed))
+    tensors = [ids, mask, labels]
+    if config.kl_weight:
+        # Teacher is the frozen base with adapters disabled. Cache only training
+        # contexts/labels; neither validation nor held-out battery enters this loss.
+        model = pipeline.model.model
+        model.eval()
+        device = next(model.parameters()).device
+        reference = []
+        with torch.no_grad(), model.disable_adapter():
+            for start in range(0, len(ids), config.batch_size):
+                stop = start + config.batch_size
+                logits = model(input_ids=ids[start:stop].to(device),
+                               attention_mask=mask[start:stop].to(device),
+                               labels=labels[start:stop].to(device)).logits
+                reference.append(F.log_softmax(logits.float(), dim=-1).cpu())
+        tensors.append(torch.cat(reference))
+    if config.battery_balance:
+        sizes = [len(d["context"]) for d in datasets]
+        if not sizes or min(sizes) < 1:
+            raise ValueError("Battery-balanced training requires nonempty batteries")
+        # Mean weight is one over the full dataset; shuffle/update count is unchanged.
+        tensors.append(torch.cat([torch.full((n,), sum(sizes) / (len(sizes) * n), dtype=torch.float32)
+                                  for n in sizes]))
+    dataset = TensorDataset(*tensors)
+    loader = DataLoader(dataset, batch_size=config.batch_size, shuffle=True, num_workers=0,
+                        generator=torch.Generator().manual_seed(seed))
+    loader.battery_balance = config.battery_balance
+    return loader
 
 
 def _optimizer(pipeline, config):
@@ -404,7 +539,7 @@ def _optimizer(pipeline, config):
                               lr=config.learning_rate, weight_decay=config.weight_decay)
 
 
-def _train_epoch(pipeline, loader, optimizer, seed: int):
+def _train_epoch(pipeline, loader, optimizer, seed: int, kl_weight: float = 0.0):
     # Independent of how many validation forecasts were generated last epoch.
     seed_everything(seed)
     model = pipeline.model.model
@@ -412,10 +547,32 @@ def _train_epoch(pipeline, loader, optimizer, seed: int):
     device = next(model.parameters()).device
     parameters = [p for p in model.parameters() if p.requires_grad]
     total, count = 0.0, 0
-    for ids, mask, labels in loader:
+    for batch in loader:
+        ids, mask, labels = (tensor.to(device) for tensor in batch[:3])
         optimizer.zero_grad(set_to_none=True)
-        outputs = model(input_ids=ids.to(device), attention_mask=mask.to(device), labels=labels.to(device))
-        loss = outputs.loss
+        outputs = model(input_ids=ids, attention_mask=mask, labels=labels)
+        # Accumulate token losses in FP32 even when the frozen base uses BF16.
+        balanced = getattr(loader, "battery_balance", False)
+        weights = batch[-1].to(device) if balanced else None
+        # Exactly preserve the original reduction when all battery weights equal one.
+        weighted = weights is not None and not bool(torch.all(weights == 1))
+        if kl_weight and len(batch) != 4 + int(balanced):
+            raise ValueError("Reference probabilities are required for KL regularization")
+        if weighted:
+            valid = labels != -100
+            counts = valid.sum(dim=1).clamp_min(1)
+            ce = F.cross_entropy(outputs.logits.float().transpose(1, 2), labels,
+                                 ignore_index=-100, reduction="none")
+            per_example = ce.sum(dim=1) / counts
+            if kl_weight:
+                kl = F.kl_div(F.log_softmax(outputs.logits.float(), dim=-1), batch[3].to(device).float(),
+                              reduction="none", log_target=True).sum(dim=-1)
+                per_example = per_example + kl_weight * (kl * valid).sum(dim=1) / counts
+            loss = (per_example * weights).mean()
+        else:
+            loss = F.cross_entropy(outputs.logits.float().flatten(0, 1), labels.flatten(), ignore_index=-100)
+            if kl_weight:
+                loss = loss + kl_weight * masked_reference_kl(outputs.logits, batch[3].to(device), labels)
         if not torch.isfinite(loss):
             raise FloatingPointError("Nonfinite training loss")
         loss.backward()
@@ -426,16 +583,50 @@ def _train_epoch(pipeline, loader, optimizer, seed: int):
     return total / count
 
 
+def validation_seed_scores(pipeline, validation: dict, config):
+    """Score each seed separately, without pooling Monte Carlo samples."""
+    def score(windows, samples):
+        summary = summarize_samples(samples)
+        return {
+            "median_rmse": point_metrics(windows["target"], summary["median"])["rmse"],
+            "mean_rmse": point_metrics(windows["target"], summary["mean"])["rmse"],
+            **distribution_metrics(windows["target"], samples),
+        }
+    seeds = config.validation_seeds or (config.validation_seed,)
+    by_seed = {}
+    for seed in seeds:
+        if not config.validation_seeds:
+            # Preserve the exact legacy RNG/batch layout for historical experiments.
+            by_seed[seed] = {b: score(w, predict_samples(pipeline, w["context"], config, seed, config.validation_samples))
+                             for b, w in validation.items()}
+        else:
+            combined = np.concatenate([w["context"] for w in validation.values()])
+            samples = predict_samples(pipeline, combined, replace(config, inference_batch_size=config.validation_batch_size),
+                                      seed, config.validation_samples)
+            by_seed[seed], offset = {}, 0
+            for battery, windows in validation.items():
+                stop = offset + len(windows["context"])
+                by_seed[seed][battery] = score(windows, samples[offset:stop])
+                offset = stop
+    return by_seed
+
+
+def aggregate_validation_scores(by_seed):
+    seeds = list(by_seed)
+    batteries = list(by_seed[seeds[0]])
+    metrics = list(by_seed[seeds[0]][batteries[0]])
+    by_battery = {b: {k: float(np.mean([by_seed[s][b][k] for s in seeds])) for k in metrics} for b in batteries}
+    macro = {key: float(np.mean([row[key] for row in by_battery.values()]))
+             for key in next(iter(by_battery.values()))}
+    return macro, by_battery
+
+
 def _validation_score(pipeline, validation: dict, config):
-    by_battery = {}
-    for battery, windows in validation.items():
-        samples = predict_samples(pipeline, windows["context"], config,
-                                  config.validation_seed, config.validation_samples)
-        by_battery[battery] = point_metrics(windows["target"], summarize_samples(samples)["median"])["rmse"]
-    return float(np.mean(list(by_battery.values()))), by_battery
+    return aggregate_validation_scores(validation_seed_scores(pipeline, validation, config))
 
 
-def select_epochs(series: dict, train_batteries: list[str], config, seed: int, output: Path):
+def select_epochs(series: dict, train_batteries: list[str], config, seed: int, output: Path,
+                  checkpoint: Path | None = None):
     train, validation, split_info = [], {}, {}
     for battery in train_batteries:
         training, valid, cutoff = temporal_split(series[battery], config)
@@ -451,25 +642,34 @@ def select_epochs(series: dict, train_batteries: list[str], config, seed: int, o
         loader = _training_loader(pipeline, train, config, seed)
         optimizer = _optimizer(pipeline, config)
         best, by_battery = _validation_score(pipeline, validation, config)
+        baseline = best.copy()
         best_epoch, stale = 0, 0
-        history.append({"epoch": 0, "train_ce": None, "validation_macro_rmse": best, "by_battery": by_battery})
-        print(f"  validation epoch=0 macro RMSE={best:.6f}", flush=True)
+        if checkpoint is not None:
+            pipeline.model.model.save_pretrained(checkpoint)
+        history.append({"epoch": 0, "train_loss": None, "validation_macro_rmse": best["median_rmse"],
+                        "validation": best, "by_battery": by_battery})
+        print(f"  validation epoch=0 RMSE={best['median_rmse']:.6f} CRPS={best['crps']:.6f}", flush=True)
         for epoch in range(1, config.max_epochs + 1):
-            loss = _train_epoch(pipeline, loader, optimizer, seed + epoch)
+            loss = _train_epoch(pipeline, loader, optimizer, seed + epoch, config.kl_weight)
             score, by_battery = _validation_score(pipeline, validation, config)
-            history.append({"epoch": epoch, "train_ce": loss, "validation_macro_rmse": score, "by_battery": by_battery})
-            if score < best - config.min_delta:
+            history.append({"epoch": epoch, "train_loss": loss, "validation_macro_rmse": score["median_rmse"],
+                            "validation": score, "by_battery": by_battery})
+            if validation_candidate_improves(score, best, baseline, config):
                 best, best_epoch, stale = score, epoch, 0
+                if checkpoint is not None:
+                    pipeline.model.model.save_pretrained(checkpoint)
             else:
                 stale += 1
-            print(f"  validation epoch={epoch} CE={loss:.4f} macro RMSE={score:.6f} best={best_epoch}", flush=True)
+            print(f"  validation epoch={epoch} loss={loss:.4f} RMSE={score['median_rmse']:.6f} "
+                  f"CRPS={score['crps']:.6f} mean_RMSE={score['mean_rmse']:.6f} best={best_epoch}", flush=True)
             write_json(output, {"status": "running", "train_batteries": train_batteries, "splits": split_info,
                                 "seed": seed, "history": history, "selected_epoch": best_epoch})
             if stale >= config.patience:
                 break
         record = {"status": "complete", "train_batteries": train_batteries, "splits": split_info,
                   "seed": seed, "history": history, "selected_epoch": best_epoch,
-                  "selection_metric": "Macro validation RMSE of interpolated median; epoch 0 is eligible",
+                  "selection_metric": config.selection_metric, "baseline_validation": baseline,
+                  "selected_validation": best, "train_objective": "FP32 CE + kl_weight * KL(base || adapted)",
                   "validation_protocol": "Chronological tail of outer training batteries; no held-out battery used"}
         write_json(output, record)
         return best_epoch
@@ -513,12 +713,12 @@ def _paired_comparison(directory: Path, baseline: Path):
 def run_lobo(root: Path, config: ExperimentConfig, zeroshot_run: Path | None = None) -> Path:
     root = Path(root).resolve()
     series = load_soh(root, config)
-    baseline = Path(zeroshot_run) if zeroshot_run else find_zeroshot(root, config)
+    baseline = resolve_reference(root, zeroshot_run) if zeroshot_run else find_zeroshot(root, config)
     if baseline is None:
         baseline = run_zeroshot(root, config)
     verify_zeroshot(baseline, root, config)
     directory, manifest = _start_run(root, config, "lora")
-    manifest["zeroshot_run"] = str(baseline.resolve())
+    manifest["zeroshot_run"] = baseline.resolve().relative_to(root).as_posix()
     write_json(directory / "manifest.json", manifest)
     pipeline, optimizer = None, None
     try:
@@ -527,24 +727,31 @@ def run_lobo(root: Path, config: ExperimentConfig, zeroshot_run: Path | None = N
             train_batteries = [b for b in config.battery_ids if b != test_battery]
             for seed in config.train_seeds:
                 print(f"LOBO test={test_battery}, train={train_batteries}, seed={seed}", flush=True)
-                selected = select_epochs(series, train_batteries, config, seed,
-                                         directory / "selection" / f"{test_battery}_train{seed}.json")
-                print(f"  refit on all training data: {selected} epoch(s)", flush=True)
-                pipeline = fresh_pipeline(config, seed, lora=True)
-                training = [make_windows(series[b], config.context_length, config.prediction_length) for b in train_batteries]
-                loader = _training_loader(pipeline, training, config, seed)
-                optimizer = _optimizer(pipeline, config)
-                losses = []
-                for epoch in range(1, selected + 1):
-                    loss = _train_epoch(pipeline, loader, optimizer, seed + epoch)
-                    losses.append(loss)
-                    print(f"  refit epoch={epoch}/{selected} CE={loss:.4f}", flush=True)
-                pipeline.model.model.eval()
                 adapter = root / "models" / directory.name / f"{test_battery}_train{seed}"
+                selected = select_epochs(series, train_batteries, config, seed,
+                                         directory / "selection" / f"{test_battery}_train{seed}.json",
+                                         checkpoint=adapter)
+                losses = []
+                if config.refit_full_data:
+                    print(f"  refit on all training data: {selected} epoch(s)", flush=True)
+                    pipeline = fresh_pipeline(config, seed, lora=True)
+                    training = [make_windows(series[b], config.context_length, config.prediction_length) for b in train_batteries]
+                    loader = _training_loader(pipeline, training, config, seed)
+                    optimizer = _optimizer(pipeline, config)
+                    for epoch in range(1, selected + 1):
+                        loss = _train_epoch(pipeline, loader, optimizer, seed + epoch, config.kl_weight)
+                        losses.append(loss)
+                        print(f"  refit epoch={epoch}/{selected} loss={loss:.4f}", flush=True)
+                    del loader
+                else:
+                    print(f"  loading validated checkpoint: epoch {selected}", flush=True)
+                    pipeline = reload_adapter(config, adapter)
+                pipeline.model.model.eval()
                 pipeline.model.model.save_pretrained(adapter)
                 fold = {"test_battery": test_battery, "train_batteries": train_batteries, "train_seed": seed,
                         "selected_epoch": selected, "refit_losses": losses,
-                        "adapter_path": str(adapter.resolve()),
+                        "fit_protocol": "full_data_refit" if config.refit_full_data else "validated_temporal_checkpoint",
+                        "adapter_path": adapter.relative_to(root).as_posix(),
                         "adapter_sha256": {p.name: file_sha256(p) for p in adapter.iterdir() if p.is_file()}}
                 write_json(adapter / "experiment.json", {"config": asdict(config), "fold": fold})
                 write_json(directory / "folds" / f"{test_battery}_train{seed}.json", fold)
@@ -552,7 +759,7 @@ def run_lobo(root: Path, config: ExperimentConfig, zeroshot_run: Path | None = N
                 for infer_seed in config.inference_seeds:
                     samples = predict_samples(pipeline, windows["context"], config, infer_seed)
                     save_forecast(directory / "predictions" / f"{test_battery}_train{seed}_infer{infer_seed}.npz", windows, samples)
-                    r, h, w = metric_rows(windows, summarize_samples(samples), "LoRA", test_battery, seed, infer_seed)
+                    r, h, w = metric_rows(windows, summarize_samples(samples), "LoRA", test_battery, seed, infer_seed, samples=samples)
                     rows.extend(r); horizons.extend(h); window_rows.extend(w)
                     print(f"  test {test_battery} train={seed} infer={infer_seed}: median RMSE={r[0]['rmse']:.6f}", flush=True)
                 folds.append(fold)
@@ -572,20 +779,22 @@ def run_lobo(root: Path, config: ExperimentConfig, zeroshot_run: Path | None = N
     return directory
 
 
-def verify_saved_run(directory: Path, root: Path, config: ExperimentConfig) -> dict:
-    """Check recorded checksums and recalculate metrics from saved raw samples."""
-    directory = Path(directory)
+def audit_saved_run(directory: Path, root: Path, verify_adapters: bool = False) -> dict:
+    """Audit persisted forecasts using their recorded data/config, without requiring the original GPU."""
+    directory = resolve_reference(root, directory)
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
-    if manifest["status"] != "complete" or manifest["evaluation_signature"] != evaluation_signature(root, config):
-        raise ValueError("Run incomplete or evaluation signature incompatible")
-    if manifest["kind"] == "lora" and manifest["config"] != json.loads(json.dumps(asdict(config))):
-        raise ValueError("LoRA training configuration differs")
+    if manifest["status"] != "complete":
+        raise ValueError("Run incomplete")
+    config = ExperimentConfig(**manifest["config"])
+    for battery, digest in manifest["evaluation_signature"]["data_sha256"].items():
+        if file_sha256(root / "data" / "raw" / f"{battery}.mat") != digest:
+            raise ValueError(f"Changed data: {battery}")
     for relative, digest in manifest["artifact_sha256"].items():
         if file_sha256(directory / relative) != digest:
             raise ValueError(f"Changed artifact: {relative}")
-    for fold in manifest.get("folds", []):
+    for fold in manifest.get("folds", []) if verify_adapters else []:
         for name, digest in fold["adapter_sha256"].items():
-            if file_sha256(Path(fold["adapter_path"]) / name) != digest:
+            if file_sha256(resolve_reference(root, fold["adapter_path"]) / name) != digest:
                 raise ValueError(f"Changed adapter: {fold['adapter_path']}/{name}")
     metrics = pd.read_csv(directory / "metrics.csv")
     series = load_soh(root, config)
@@ -607,16 +816,38 @@ def verify_saved_run(directory: Path, root: Path, config: ExperimentConfig) -> d
                 if hasattr(row, "coverage80") and np.isfinite(row.coverage80):
                     coverage = np.mean((windows["target"] >= summary["q10"]) & (windows["target"] <= summary["q90"]))
                     np.testing.assert_allclose(coverage, row.coverage80, rtol=0, atol=1e-12)
+                diagnostics = distribution_metrics(windows["target"], saved["samples"])
+                for key, value in diagnostics.items():
+                    if hasattr(row, key) and np.isfinite(getattr(row, key)):
+                        np.testing.assert_allclose(value, getattr(row, key), rtol=0, atol=1e-12)
         calculated = point_metrics(windows["target"], pred)
         np.testing.assert_allclose([calculated["rmse"], calculated["mae"]], [row.rmse, row.mae], rtol=0, atol=1e-12)
         checked += 1
     return {"run_id": manifest["run_id"], "metric_rows_verified": checked,
-            "artifacts_verified": len(manifest["artifact_sha256"]), "status": "passed"}
+            "artifacts_verified": len(manifest["artifact_sha256"]),
+            "adapters_verified": verify_adapters, "status": "passed"}
+
+
+def verify_saved_run(directory: Path, root: Path, config: ExperimentConfig) -> dict:
+    """Strict cache reuse check, separate from hardware-independent artifact audit."""
+    directory = resolve_reference(root, directory)
+    manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
+    if manifest["kind"] not in ("zeroshot", "lora"):
+        raise ValueError("Special experiment kinds require their own protocol verifier; use audit_saved_run for historical artifacts")
+    if manifest["evaluation_signature"] != evaluation_signature(root, config):
+        raise ValueError("Evaluation signature incompatible")
+    if manifest["kind"] == "lora":
+        if manifest["config"] != json.loads(json.dumps(asdict(config))):
+            raise ValueError("LoRA training configuration differs")
+        verify_zeroshot(resolve_reference(root, manifest["zeroshot_run"]), root, config)
+    return audit_saved_run(directory, root, verify_adapters=True)
 
 
 def find_lobo(root: Path, config: ExperimentConfig) -> Path | None:
     for path in sorted((root / "results" / "runs").glob("*_lora_*/manifest.json"), reverse=True):
         try:
+            if json.loads(path.read_text(encoding="utf-8"))["kind"] != "lora":
+                continue
             verify_saved_run(path.parent, root, config)
             return path.parent
         except (ValueError, KeyError, FileNotFoundError, AssertionError):

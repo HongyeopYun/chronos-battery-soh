@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "run": "results/runs/ablations/20260924T121403Z_lora_robust_66d5ac",
+  "unit_tests_passed": 31,
+  "training_trajectories": 15,
+  "total_training_epochs": 240,
+  "notebooks": {
+    "notebooks": [
+      {
+        "notebook": "02_chronos_zeroshot.ipynb",
+        "code_cells_executed": 5,
+        "passed": true,
+        "run": "results/runs/20260924T121259Z_zeroshot_f83f80"
+      },
+      {
+        "notebook": "03_chronos_lora_lobo.ipynb",
+        "code_cells_executed": 8,
+        "passed": true,
+        "run": "results/runs/ablations/20260924T121403Z_lora_robust_66d5ac"
+      }
+    ],
+    "execution": "All code cells from notebooks working directory, verified cached runs, Agg plotting backend"
+  },
+  "notebook_generator_sources_match": true,
+  "adapter_reload_checks": [
+    {
+      "battery": "B0005",
+      "train_seed": 42,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0005",
+      "train_seed": 43,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0005",
+      "train_seed": 44,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0006",
+      "train_seed": 42,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0006",
+      "train_seed": 43,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0006",
+      "train_seed": 44,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0007",
+      "train_seed": 42,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0007",
+      "train_seed": 43,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0007",
+      "train_seed": 44,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0018",
+      "train_seed": 42,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0018",
+      "train_seed": 43,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    },
+    {
+      "battery": "B0018",
+      "train_seed": 44,
+      "identical": true,
+      "scope": "First inference batch after adapter reload"
+    }
+  ]
+}
