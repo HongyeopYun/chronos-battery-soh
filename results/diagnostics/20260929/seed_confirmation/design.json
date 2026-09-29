@@ -1,0 +1,10 @@
+{
+  "purpose": "Fixed without-EOS-loss adapters; sampling robustness, not training-seed robustness",
+  "training_seed": 42,
+  "inference_seeds": [
+    42,
+    43,
+    44
+  ],
+  "script_sha256": "f8c0f5ff4e65adb9e5b23a9077ec5dfc329f02969d944a688e247389e4f88a30"
+}

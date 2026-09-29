@@ -1,0 +1,46 @@
+{
+  "variant": "selection_prefix",
+  "test_battery": "B0005",
+  "train_batteries": [
+    "B0006",
+    "B0007",
+    "B0018"
+  ],
+  "epochs": 9,
+  "steps": 81,
+  "losses": [
+    2.2775735294117645,
+    2.282169117647059,
+    2.2637867647058822,
+    2.2472426470588234,
+    2.2251838235294117,
+    2.1966911764705883,
+    2.151654411764706,
+    2.0955882352941178,
+    2.043658088235294
+  ],
+  "learning_rate": 0.0001,
+  "test_metrics": {
+    "battery": "B0005",
+    "variant": "selection_prefix",
+    "checkpoint": "final",
+    "steps": 81,
+    "median_rmse": 0.010974802673789858,
+    "median_mae": 0.007822737634915875,
+    "mean_rmse": 0.043998425291819,
+    "crps": 0.006790483693837683,
+    "negative_rate": 0.0,
+    "above2_rate": 0.0010323033707865168,
+    "coverage80": 0.8581460674157303,
+    "width80": 0.04882994664602738,
+    "minimum": 0.5896909236907959,
+    "maximum": 14.40385627746582
+  },
+  "final_gradient": {
+    "forecast_ce": 1.4723570346832275,
+    "eos_ce": 13.396535873413086,
+    "weighted_forecast_gradient_norm": 0.1479213684797287,
+    "weighted_eos_gradient_norm": 0.1540553718805313,
+    "gradient_cosine": -0.35433831810951233
+  }
+}

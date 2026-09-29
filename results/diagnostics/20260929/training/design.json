@@ -1,0 +1,58 @@
+{
+  "purpose": "Post-hoc causal diagnosis; test outcomes do not select checkpoints",
+  "batteries": [
+    "B0005"
+  ],
+  "variants": [
+    "baseline",
+    "lower_lr",
+    "without_eos",
+    "selection_prefix"
+  ],
+  "config": {
+    "model_id": "amazon/chronos-t5-base",
+    "revision": "ad294eaacead15db499b740ea4122266dd2a81a2",
+    "battery_ids": [
+      "B0005",
+      "B0006",
+      "B0007",
+      "B0018"
+    ],
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "auto",
+    "inference_batch_size": 16,
+    "num_samples": 100,
+    "inference_seeds": [
+      42,
+      43,
+      44
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "train_seeds": [
+      42
+    ],
+    "batch_size": 16,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "lora_rank": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "max_epochs": 10,
+    "validation_fraction": 0.2,
+    "validation_samples": 32,
+    "validation_seed": 31415,
+    "patience": 3,
+    "min_delta": 1e-05
+  },
+  "original_run": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\results\\runs\\20260923T063628Z_lora_2df6cb",
+  "seed": 42,
+  "script_sha256": "aa245855815421f7917a90dd2b6793f7572e10593a748d599341d242df5cd7de",
+  "checkpoint_rule": "Final original selected epoch; baseline also checked at selection-equivalent updates",
+  "without_eos_rule": "Mask final label only, preserve encoder EOS and decoder conditioning, multiply forecast-only loss by 16/17 to preserve per-token weight",
+  "lower_lr_rule": "Only learning rate changes from 1e-4 to 3e-5",
+  "selection_prefix_rule": "Only dataset changes to original temporal training prefixes; same selected epochs",
+  "all_train_tail_scope": "Tail windows are in-sample after full-data refit; not an independent validation score"
+}

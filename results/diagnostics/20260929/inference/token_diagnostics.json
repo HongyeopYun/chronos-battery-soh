@@ -1,0 +1,226 @@
+{
+  "B0005_original": {
+    "all_token_min": 1871,
+    "all_token_max": 4095,
+    "outside_vocab_rate": 0.0,
+    "eos_rate": 0.0,
+    "pad_rate": 0.0,
+    "max_bin_rate": 0.03244140625,
+    "bad_by_horizon": [
+      0.0025,
+      0.0040625,
+      0.00375,
+      0.0053125,
+      0.00875,
+      0.0165625,
+      0.02375,
+      0.0296875,
+      0.0396875,
+      0.0446875,
+      0.0565625,
+      0.0634375,
+      0.073125,
+      0.088125,
+      0.096875,
+      0.11
+    ],
+    "top_bad_tokens": [
+      {
+        "token": 4095,
+        "count": 1661
+      },
+      {
+        "token": 2527,
+        "count": 19
+      },
+      {
+        "token": 2524,
+        "count": 16
+      },
+      {
+        "token": 2514,
+        "count": 15
+      },
+      {
+        "token": 2515,
+        "count": 14
+      },
+      {
+        "token": 2523,
+        "count": 13
+      },
+      {
+        "token": 2520,
+        "count": 13
+      },
+      {
+        "token": 2516,
+        "count": 11
+      },
+      {
+        "token": 2519,
+        "count": 11
+      },
+      {
+        "token": 2529,
+        "count": 11
+      },
+      {
+        "token": 2518,
+        "count": 10
+      },
+      {
+        "token": 2411,
+        "count": 10
+      },
+      {
+        "token": 2410,
+        "count": 10
+      },
+      {
+        "token": 2400,
+        "count": 9
+      },
+      {
+        "token": 2521,
+        "count": 9
+      }
+    ],
+    "teacher_forced": {
+      "forecast_ce": 1.32222306355834,
+      "eos_ce": 2.1156989205628633,
+      "forecast_eos_probability": 0.06891567405546084,
+      "forecast_maxbin_probability": 0.006309384873020463,
+      "vocab_size": 4096.0
+    }
+  },
+  "B0005_adapter_disabled": {
+    "all_token_min": 2141,
+    "all_token_max": 2296,
+    "outside_vocab_rate": 0.0,
+    "eos_rate": 0.0,
+    "pad_rate": 0.0,
+    "max_bin_rate": 0.0,
+    "bad_by_horizon": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "top_bad_tokens": [],
+    "teacher_forced": {
+      "forecast_ce": 1.275907775387168,
+      "eos_ce": 17.213705092668533,
+      "forecast_eos_probability": 8.31666813194687e-08,
+      "forecast_maxbin_probability": 2.1411037380403286e-05,
+      "vocab_size": 4096.0
+    }
+  },
+  "B0005_direct_generate": {
+    "all_token_min": 1871,
+    "all_token_max": 4095,
+    "outside_vocab_rate": 0.0,
+    "eos_rate": 0.0,
+    "pad_rate": 0.0,
+    "max_bin_rate": 0.03244140625,
+    "bad_by_horizon": [
+      0.0025,
+      0.0040625,
+      0.00375,
+      0.0053125,
+      0.00875,
+      0.0165625,
+      0.02375,
+      0.0296875,
+      0.0396875,
+      0.0446875,
+      0.0565625,
+      0.0634375,
+      0.073125,
+      0.088125,
+      0.096875,
+      0.11
+    ],
+    "top_bad_tokens": [
+      {
+        "token": 4095,
+        "count": 1661
+      },
+      {
+        "token": 2527,
+        "count": 19
+      },
+      {
+        "token": 2524,
+        "count": 16
+      },
+      {
+        "token": 2514,
+        "count": 15
+      },
+      {
+        "token": 2515,
+        "count": 14
+      },
+      {
+        "token": 2523,
+        "count": 13
+      },
+      {
+        "token": 2520,
+        "count": 13
+      },
+      {
+        "token": 2516,
+        "count": 11
+      },
+      {
+        "token": 2519,
+        "count": 11
+      },
+      {
+        "token": 2529,
+        "count": 11
+      },
+      {
+        "token": 2518,
+        "count": 10
+      },
+      {
+        "token": 2411,
+        "count": 10
+      },
+      {
+        "token": 2410,
+        "count": 10
+      },
+      {
+        "token": 2400,
+        "count": 9
+      },
+      {
+        "token": 2521,
+        "count": 9
+      }
+    ],
+    "teacher_forced": {
+      "forecast_ce": 1.322351910173893,
+      "eos_ce": 2.114731850102544,
+      "forecast_eos_probability": 0.0689096410642378,
+      "forecast_maxbin_probability": 0.006311039309366606,
+      "vocab_size": 4096.0
+    }
+  }
+}
