@@ -3,6 +3,25 @@
 02는 Chronos T5 zero-shot, 03은 배터리 단위 leave-one-battery-out(LOBO) LoRA 실험입니다.
 두 노트북은 `src/soh_experiment.py`의 같은 데이터 처리·추론·평가 함수를 사용합니다.
 
+## 02·03 갈무리
+
+02는 zero-shot 기준선, 03은 기존 LoRA와 EOS loss 분리 검증까지 정리했습니다.
+노트북 마지막 절에서 저장된 결과를 읽을 수 있습니다. [정리 문서와 04 비교 조건](docs/02_03_closeout.md),
+[상세 진단 보고서](results/diagnostics/20260929/diagnosis.md)에 결론과 한계를 모았습니다.
+
+| 모델 | 중앙값 RMSE | 평균 예측 RMSE | CRPS |
+|---|---:|---:|---:|
+| Zero-shot | 0.016307 | 0.018540 | 0.008769 |
+| 기존 LoRA | 0.016176 | 0.294040 | 0.017684 |
+| EOS loss 제외 LoRA | 0.014894 | 0.015011 | 0.007552 |
+
+고정 XPU 실행에서 네 배터리·세 추론 seed를 동일 가중치로 평균했습니다. 학습 seed는 42 하나입니다.
+EOS 제외는 사후 원인 진단이며, 모든 배터리·지표가 개선된 것은 아닙니다. 80% 구간 포함률은 약 74.46%로 낮아졌습니다.
+**04 Full fine-tuning은 아직 실행하지 않았습니다.** 04에서는 같은 검증 프로토콜의 LoRA 대조군을 다시 평가합니다.
+
+아래 실행 방법과 `configs/experiment.json`은 **기존 EOS 포함 + 전체 데이터 refit 실험**에 해당합니다.
+EOS 제외 진단은 `scripts/diagnose_training.py`로 별도 실행했으며, 명령과 산출물은 상세 진단 보고서에 있습니다.
+
 ## 환경과 실행
 
 기존 `.venv`는 그대로 사용할 수 있습니다. 현재 확인한 환경은 Python 3.12.10과 Intel Arc B390 XPU입니다.
