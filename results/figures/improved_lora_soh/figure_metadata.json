@@ -1,0 +1,59 @@
+{
+  "model": "amazon/chronos-t5-base + q/v LoRA, EOS target loss excluded",
+  "training_seed": 42,
+  "inference_seed": 42,
+  "num_samples": 100,
+  "context_length": 64,
+  "prediction_length": 16,
+  "normalization": "Q_k / Q_1",
+  "selection": "Indices [0, n//2, n-1], independent of errors; n=89 except B0018 n=53",
+  "summary": "Linear interpolated median and 10th/90th percentiles from saved samples; no clipping or smoothing",
+  "scope": "Post-hoc EOS-loss ablation; one training seed and one inference seed shown",
+  "style_reference": "results/figures/zeroshot_0.png; src.soh_plots.forecast_grid",
+  "source_predictions": {
+    "B0005": {
+      "prediction_file": "results/diagnostics/20260929/training/B0005_without_eos/final.npz",
+      "sha256": "4afa14b36b4def1e9117850f1a799c48c378f6edc75ac53ec7cf4a7f271af824",
+      "train_batteries": [
+        "B0006",
+        "B0007",
+        "B0018"
+      ],
+      "epochs": 9,
+      "steps": 135
+    },
+    "B0006": {
+      "prediction_file": "results/diagnostics/20260929/confirm_eos/B0006_without_eos/final.npz",
+      "sha256": "228d7d7e64581f5069c5e1f7cef2f49f78a825beb43971bdcbecb524ea9a70aa",
+      "train_batteries": [
+        "B0005",
+        "B0007",
+        "B0018"
+      ],
+      "epochs": 10,
+      "steps": 150
+    },
+    "B0007": {
+      "prediction_file": "results/diagnostics/20260929/confirm_eos/B0007_without_eos/final.npz",
+      "sha256": "467ec77cd3f7be8fdc8c18dc69953fcc349d6b9e2b904be36d4b4e68b236f969",
+      "train_batteries": [
+        "B0005",
+        "B0006",
+        "B0018"
+      ],
+      "epochs": 9,
+      "steps": 135
+    },
+    "B0018": {
+      "prediction_file": "results/diagnostics/20260929/confirm_eos/B0018_without_eos/final.npz",
+      "sha256": "a4f575f820902b737660ba283ce354127cf278feb160afaf22d2c314c9c0aea0",
+      "train_batteries": [
+        "B0005",
+        "B0006",
+        "B0007"
+      ],
+      "epochs": 7,
+      "steps": 119
+    }
+  }
+}

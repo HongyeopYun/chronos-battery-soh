@@ -1,12 +1,32 @@
 # NASA battery SOH forecasting with Chronos
 
 02는 Chronos T5 zero-shot, 03은 배터리 단위 leave-one-battery-out(LOBO) LoRA 실험입니다.
-두 노트북은 `src/soh_experiment.py`의 같은 데이터 처리·추론·평가 함수를 사용합니다.
+데이터 처리·추론은 `src/soh_experiment.py`를 공유하고, 현재 03의 학습·선택은 `src/soh_checkpoint.py`를 사용합니다.
 
-## 02·03 갈무리
+## 현재 LoRA: EOS loss 제외 + best checkpoint
 
-02는 zero-shot 기준선, 03은 기존 LoRA와 EOS loss 분리 검증까지 정리했습니다.
-노트북 마지막 절에서 저장된 결과를 읽을 수 있습니다. [정리 문서와 04 비교 조건](docs/02_03_closeout.md),
+03은 출력 EOS loss를 제외하고 validation을 학습에 합치지 않습니다. 학습률 `1e-5`, `3e-5`, `1e-4`를
+각각 최대 100 optimizer steps까지 학습하고, 10 steps마다 세 validation seed의 평균 CRPS를 계산합니다.
+네 fold에서 학습률과 best checkpoint를 모두 선택한 뒤 그 가중치를 재로딩해 평가합니다. Full-data refit은 하지 않습니다.
+
+설정은 `configs/lora_checkpoint.json`, 세부 기준은 [현재 프로토콜](docs/lora_checkpoint_protocol.md),
+결과는 [학습률 비교 보고서](results/checkpoint_lora/report.md)에 있습니다. Step 0도 후보이고, 학습 seed는 42 하나입니다.
+세 고정 후보를 모두 실행하므로 Optuna는 사용하지 않습니다.
+
+이번 실행에서는 네 fold 모두 `1e-4`가 선택됐고, B0005/B0006/B0007/B0018의 선택 step은 각각 100/90/90/80입니다.
+Zero-shot 대비 중앙값 RMSE는 `0.016307 → 0.014355`(11.97% 감소), CRPS는 `0.008769 → 0.007461`(14.92% 감소)였습니다.
+네 배터리 모두 중앙값 RMSE가 개선됐지만, 80% 예측구간 포함률은 `80.32% → 76.53%`로 낮아졌습니다.
+재로딩 중 발생한 sample 한 개의 불일치와 평가 재현성 검사 보완은 결과 보고서에 기록했습니다. 최종 실행에서는 validation 배열 36개가 모두 일치했습니다.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_experiment.py zeroshot
+.\.venv\Scripts\python.exe scripts\run_checkpoint_lora.py
+```
+
+## 이전 기록: 2026-09-29 EOS 분리 진단
+
+02의 zero-shot 기준선과 03의 기존 LoRA·EOS 분리 진단을 보관합니다.
+노트북 마지막 절에서 당시 저장된 결과를 읽을 수 있습니다. [당시 정리 문서와 04 비교 조건](docs/02_03_closeout.md),
 [상세 진단 보고서](results/diagnostics/20260929/diagnosis.md)에 결론과 한계를 모았습니다.
 
 | 모델 | 중앙값 RMSE | 평균 예측 RMSE | CRPS |
@@ -17,9 +37,10 @@
 
 고정 XPU 실행에서 네 배터리·세 추론 seed를 동일 가중치로 평균했습니다. 학습 seed는 42 하나입니다.
 EOS 제외는 사후 원인 진단이며, 모든 배터리·지표가 개선된 것은 아닙니다. 80% 구간 포함률은 약 74.46%로 낮아졌습니다.
-**04 Full fine-tuning은 아직 실행하지 않았습니다.** 04에서는 같은 검증 프로토콜의 LoRA 대조군을 다시 평가합니다.
+**04 Full fine-tuning은 아직 실행하지 않았습니다.** 위 EOS 제외 수치는 과거 full-data 학습 결과이며 현재 best-checkpoint 점수와 구분합니다.
 
-아래 실행 방법과 `configs/experiment.json`은 **기존 EOS 포함 + 전체 데이터 refit 실험**에 해당합니다.
+`configs/experiment.json`의 학습률·epoch·patience 기본값은 **기존 EOS 포함 + 전체 데이터 refit 실험**의 기록입니다.
+현재 학습에서는 `configs/lora_checkpoint.json`의 학습률 후보와 step 예산을 적용합니다.
 EOS 제외 진단은 `scripts/diagnose_training.py`로 별도 실행했으며, 명령과 산출물은 상세 진단 보고서에 있습니다.
 
 ## 환경과 실행
@@ -41,17 +62,19 @@ requirements는 이번에 확인한 직접 의존성 버전이며 완전한 tran
 VS Code에서 `.venv` 커널로 02와 03을 순서대로 전체 실행하거나, 프로젝트 루트에서 다음을 실행합니다.
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\run_experiment.py all
+.\.venv\Scripts\python.exe scripts\run_experiment.py zeroshot
+.\.venv\Scripts\python.exe scripts\run_checkpoint_lora.py
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-`zeroshot`, `lora` 모드로 개별 실행할 수 있습니다. 03 / `lora`는 호환되는 zero-shot 실행이 없으면 먼저 생성합니다.
+현재 03 / `run_checkpoint_lora.py`는 호환되는 zero-shot 실행이 없으면 먼저 생성합니다.
+`run_experiment.py lora` 또는 `all`은 과거 epoch/refit 실험을 재현하는 명령입니다.
 완료된 호환 실행이 있으면 검증 후 재사용합니다. 새 반복 실행은 CLI에 `--force`를 붙이거나 노트북에서 `FORCE_RERUN = True`로 설정하세요.
 모델이 이미 캐시에 있고 네트워크 접속 없이 실행하려면 `$env:HF_HUB_OFFLINE='1'`을 설정할 수 있습니다.
 
-## 실험 설정과 평가 방법
+## 기존 epoch/refit 실험의 설정과 평가 방법
 
-설정 파일은 `configs/experiment.json`입니다.
+다음은 `configs/experiment.json`으로 재현하는 기존 실험의 기록입니다. 현재 03의 선택 방식은 위 프로토콜 문서를 따릅니다.
 
 - SOH는 첫 관측 용량 기준 `Qk / Q1`입니다. context 64개, horizon 16개, stride 1입니다.
 - 각 예측 시점마다 **실제 관측 context**를 제공합니다. 초기 64개만 알고 전체 수명을 예측하는 실험은 아닙니다.
@@ -68,9 +91,10 @@ VS Code에서 `.venv` 커널로 02와 03을 순서대로 전체 실행하거나,
 중첩 window와 fold별로 중복되는 학습 배터리 때문에 결과를 수백 개 독립 표본처럼 해석할 수 없습니다.
 Seed 고정만으로 다른 장치·드라이버·라이브러리 버전 간 bitwise 재현성을 보장하지 않습니다.
 
-## 결과 보관 및 재검산
+## 기존 epoch/refit 실행의 결과 보관 및 재검산
 
 실행마다 `results/runs/<timestamp>_<kind>_<id>/`에 새 디렉터리를 만듭니다.
+현재 best-checkpoint 실행의 후보별 기록·선택 동결·분포 점수·재로딩 검사는 [현재 프로토콜](docs/lora_checkpoint_protocol.md)의 파일 목록과 audit 명령을 사용하세요. 아래 표와 명령은 기존 실행 형식에 해당합니다.
 
 | 파일 | 내용 |
 |---|---|

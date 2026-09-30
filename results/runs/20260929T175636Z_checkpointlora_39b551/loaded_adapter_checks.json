@@ -1,0 +1,26 @@
+{
+  "entrypoint_sha256": "50318e87a524510e8aa3ec4d865067c0180f9c9ba4b82f5660c70299317e7bc6",
+  "checks": [
+    {
+      "adapter": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\models\\20260929T175636Z_checkpointlora_39b551\\B0005_train42_candidate2",
+      "tensor_count": 144,
+      "exact": true
+    },
+    {
+      "adapter": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\models\\20260929T175636Z_checkpointlora_39b551\\B0006_train42_candidate2",
+      "tensor_count": 144,
+      "exact": true
+    },
+    {
+      "adapter": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\models\\20260929T175636Z_checkpointlora_39b551\\B0007_train42_candidate2",
+      "tensor_count": 144,
+      "exact": true
+    },
+    {
+      "adapter": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-nasa-soh\\models\\20260929T175636Z_checkpointlora_39b551\\B0018_train42_candidate2",
+      "tensor_count": 144,
+      "exact": true
+    }
+  ],
+  "note": "Exact loaded tensors; record sample differences; CRPS drift below original selection min_delta."
+}

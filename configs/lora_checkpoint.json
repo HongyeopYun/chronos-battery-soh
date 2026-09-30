@@ -1,0 +1,9 @@
+{
+  "base_config": "configs/experiment.json",
+  "learning_rates": [0.00001, 0.00003, 0.0001],
+  "max_steps": 100,
+  "eval_every_steps": 10,
+  "validation_samples": 32,
+  "validation_seeds": [31415, 31416, 31417],
+  "min_delta": 0.00001
+}

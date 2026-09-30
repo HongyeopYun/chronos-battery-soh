@@ -1,5 +1,7 @@
 # 02·03 갈무리와 04 비교 기준
 
+이 문서는 2026-09-29 진단을 갈무리한 기록이다. 이후 03에는 EOS loss 제외·validation 유지·학습률 3개·best checkpoint 프로토콜을 적용했다. 현재 실행 방식은 [새 프로토콜](lora_checkpoint_protocol.md), 결과는 [학습률 비교 보고서](../results/checkpoint_lora/report.md)를 참고한다. 아래 수치는 당시 결과로 보존한다.
+
 02는 zero-shot 기준선, 03은 기존 LoRA 결과와 EOS loss 분리 검증까지 정리했다. 04 Full fine-tuning은 다음 단계이며 아직 구현하거나 실행하지 않았다.
 
 ## 무엇을 비교했나

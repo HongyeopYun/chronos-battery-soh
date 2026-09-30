@@ -1,0 +1,82 @@
+[
+  {
+    "battery": "B0005",
+    "adapter_tensors_exact": 144,
+    "passes": [
+      {
+        "pass": 0,
+        "crps": 0.006842192917740158,
+        "crps_delta": 0.0,
+        "differences": [],
+        "different_from_previous_pass": 0
+      },
+      {
+        "pass": 1,
+        "crps": 0.006842192917740158,
+        "crps_delta": 0.0,
+        "differences": [],
+        "different_from_previous_pass": 0
+      }
+    ]
+  },
+  {
+    "battery": "B0006",
+    "adapter_tensors_exact": 144,
+    "passes": [
+      {
+        "pass": 0,
+        "crps": 0.0065747228196549575,
+        "crps_delta": 0.0,
+        "differences": [],
+        "different_from_previous_pass": 0
+      },
+      {
+        "pass": 1,
+        "crps": 0.0065747228196549575,
+        "crps_delta": 0.0,
+        "differences": [],
+        "different_from_previous_pass": 0
+      }
+    ]
+  },
+  {
+    "battery": "B0007",
+    "adapter_tensors_exact": 144,
+    "passes": [
+      {
+        "pass": 0,
+        "crps": 0.0069983324504354,
+        "crps_delta": 0.0,
+        "differences": [],
+        "different_from_previous_pass": 0
+      },
+      {
+        "pass": 1,
+        "crps": 0.0069983324504354,
+        "crps_delta": 0.0,
+        "differences": [],
+        "different_from_previous_pass": 0
+      }
+    ]
+  },
+  {
+    "battery": "B0018",
+    "adapter_tensors_exact": 144,
+    "passes": [
+      {
+        "pass": 0,
+        "crps": 0.0051063197935060185,
+        "crps_delta": 0.0,
+        "differences": [],
+        "different_from_previous_pass": 0
+      },
+      {
+        "pass": 1,
+        "crps": 0.0051063197935060185,
+        "crps_delta": 0.0,
+        "differences": [],
+        "different_from_previous_pass": 0
+      }
+    ]
+  }
+]
