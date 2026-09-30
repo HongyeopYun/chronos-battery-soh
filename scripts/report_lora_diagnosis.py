@@ -1,6 +1,7 @@
 """Build the causal diagnosis report from saved measurements only."""
 from pathlib import Path
 import json
+import sys
 
 import matplotlib
 matplotlib.use("Agg")
@@ -10,6 +11,8 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "results/diagnostics/20260929"
+sys.path.insert(0, str(ROOT))
+from src.soh_evaluation import export_diagnosis
 
 
 def table(headers, rows):
@@ -19,15 +22,26 @@ def table(headers, rows):
 
 
 def run():
-    frame = pd.read_csv(OUT / "seed_confirmation/metrics.csv")
+    evaluation = export_diagnosis(ROOT, OUT)
+    frame = pd.read_csv(evaluation / "seed_confirmation/metrics.csv")
     assert len(frame) == 36 and not frame.duplicated(["model", "battery", "inference_seed"]).any()
     models = ["zero", "original_lora", "without_eos"]
     batteries = ["B0005", "B0006", "B0007", "B0018"]
     names = ["Zero-shot", "기존 LoRA", "EOS loss 제외 LoRA"]
-    metrics = ["median_rmse", "mean_rmse", "crps", "above2_rate", "coverage80"]
+    metrics = ["median_rmse", "mean_rmse", "crps", "above2_rate", "coverage80", "median_r2", "mean_r2"]
     macro = frame.groupby("model")[metrics].mean()
     by_battery = frame.groupby(["model", "battery"])[metrics].mean()
-    controls = pd.read_csv(OUT / "training/training_controls.csv")
+    controls = pd.read_csv(evaluation / "training/training_controls.csv")
+    inference = pd.concat([pd.read_csv(evaluation / "inference/inference_controls.csv"),
+                           pd.read_csv(evaluation / "float32/inference_controls.csv")]).set_index("variant")
+    inference_rows = []
+    for variant, label, note in [
+        ("original", "기존 adapter", "문제 재현; 원본 sample 동일"),
+        ("adapter_disabled", "adapter만 비활성화", "zero-shot sample과 완전히 동일"),
+        ("direct_generate", "PEFT generate wrapper 우회", "기존 raw token과 완전히 동일"),
+        ("float32", "같은 checkpoint를 FP32로 추론", "폭주 유지")]:
+        row = inference.loc[variant]
+        inference_rows.append([label, *[f"{row[k]:.6f}" for k in ("median_rmse", "mean_rmse", "median_r2", "mean_r2")], note])
     original = controls.query("variant == 'baseline' and checkpoint == 'final'").iloc[0]
     matched = controls.query("checkpoint == 'matched_updates'").iloc[0]
     assert bool(original.original_samples_identical)
@@ -42,9 +56,11 @@ def run():
     battery_rows = []
     for b in batteries:
         values = [by_battery.loc[(m, b), "median_rmse"] for m in models]
-        battery_rows.append([b, *[f"{v:.6f}" for v in values], f"{100 * (values[2] / values[0] - 1):+.2f}%"])
+        battery_rows.append([b, *[f"{v:.6f}" for v in values], f"{100 * (values[2] / values[0] - 1):+.2f}%",
+                             *[f"{by_battery.loc[(m, b), 'median_r2']:.6f}" for m in models]])
     macro_rows = [[name, *[f"{macro.loc[m, k]:.6f}" for k in metrics[:3]],
-                   f"{100 * macro.loc[m, 'above2_rate']:.5f}%", f"{100 * macro.loc[m, 'coverage80']:.2f}%"]
+                   f"{100 * macro.loc[m, 'above2_rate']:.5f}%", f"{100 * macro.loc[m, 'coverage80']:.2f}%",
+                   f"{macro.loc[m, 'median_r2']:.6f}", f"{macro.loc[m, 'mean_r2']:.6f}"]
                   for m, name in zip(models, names)]
     control_names = {("baseline", "final"): "기존: 135회", ("baseline", "matched_updates"): "업데이트만 81회에서 중단",
                      ("lower_lr", "final"): "학습률만 1e-4 → 3e-5", ("without_eos", "final"): "EOS loss만 제외",
@@ -52,13 +68,15 @@ def run():
     control_rows = []
     for _, r in controls.iterrows():
         control_rows.append([control_names[(r.variant, r.checkpoint)], int(r.steps), f"{r.median_rmse:.6f}",
-                             f"{r.mean_rmse:.6f}", f"{r.crps:.6f}", f"{100*r.above2_rate:.5f}%"])
+                             f"{r.mean_rmse:.6f}", f"{r.crps:.6f}", f"{100*r.above2_rate:.5f}%",
+                             f"{r.median_r2:.6f}", f"{r.mean_r2:.6f}"])
 
     colors = ["#7f8c8d", "#c44e52", "#2980b9"]
-    fig, axes = plt.subplots(2, 2, figsize=(11.5, 7.5), layout="constrained")
-    for ax, metric, title in zip(axes.flat, ["median_rmse", "mean_rmse", "crps", "coverage80"],
+    fig, axes = plt.subplots(2, 3, figsize=(16, 8), layout="constrained")
+    for ax, metric, title in zip(axes.flat, ["median_rmse", "mean_rmse", "median_r2", "crps", "coverage80", "mean_r2"],
                                ["Median forecast RMSE (lower is better)", "Mean forecast RMSE (log scale)",
-                                "Empirical CRPS (lower is better)", "80% interval coverage (%)"]):
+                                "Median R2 (higher is better)", "Empirical CRPS (lower is better)",
+                                "80% interval coverage (%)", "Mean R2 (higher is better)"]):
         for j, model in enumerate(models):
             means, lows, highs = [], [], []
             factor = 100 if metric == "coverage80" else 1
@@ -103,11 +121,13 @@ def run():
 
 변경 실험에서는 **입력 EOS를 유지**하고, 마지막 출력 EOS 정답만 `-100`으로 마스킹했다. 예측 16개 loss의 평균에 `16/17`을 곱해 각 예측 토큰의 원래 가중치도 유지했다. 마지막 label만 바꾸므로 teacher forcing의 decoder 입력도 같다. 차이는 EOS 학습 항의 유무다. 출력값 자르기나 후처리는 사용하지 않았다.
 
-{table(["배터리", "Zero-shot 중앙값 RMSE", "기존 LoRA", "EOS loss 제외", "Zero-shot 대비 오차 변화"], battery_rows)}
+{table(["배터리", "Zero-shot 중앙값 RMSE", "기존 LoRA", "EOS loss 제외", "Zero-shot 대비 오차 변화", "Zero-shot R²", "기존 LoRA R²", "EOS 제외 R²"], battery_rows)}
 
 음수 오차 변화는 개선이다. EOS 제외의 macro 중앙값 RMSE는 zero-shot보다 **{median_improvement:.2f}% 감소**했고, CRPS는 **{crps_improvement:.2f}% 감소**했다. B0006 중앙값 RMSE는 zero-shot보다 여전히 나쁘고, B0007 중앙값은 기존 LoRA보다 나빠졌다. EOS 제거가 모든 점예측을 일괄 개선하는 것은 아니다.
 
-{table(["모델", "중앙값 RMSE", "평균 예측 RMSE", "CRPS", "SOH > 2 sample 비율", "80% 구간 실제 포함률"], macro_rows)}
+{table(["모델", "중앙값 RMSE", "평균 예측 RMSE", "CRPS", "SOH > 2 sample 비율", "80% 구간 실제 포함률", "중앙값 R² ↑", "평균 예측 R² ↑"], macro_rows)}
+
+R²는 각 배터리·추론 seed의 전체 window/horizon에서 `1 - SSE/SST`로 계산한 후 같은 가중치로 평균한다. 음수도 유효하며 자르지 않는다. 정답이 상수이면 NaN이다. R²는 평가 지표로 추가했으며 기존 학습·선택을 바꾸지 않았다.
 
 여기서 '평균 예측 RMSE'는 sample 100개를 평균해 만든 예측의 RMSE이고, 표 전체의 평균이라는 뜻이 아니다. CRPS는 정답과 예측 sample 분포를 함께 평가하는 점수로 작을수록 좋다. `SOH > 2`는 이번 데이터에서의 명백한 폭주를 추적하는 진단 기준이며, SOH의 일반적인 허용 범위를 정의한 것은 아니다.
 
@@ -132,7 +152,7 @@ EOS를 붙이는 형식 자체는 [Chronos 공식 구현](https://github.com/ama
 
 ## 3. 학습량과 학습률을 별도로 변경
 
-{table(["B0005 실험", "업데이트", "중앙값 RMSE", "평균 예측 RMSE", "CRPS", "SOH > 2 비율"], control_rows)}
+{table(["B0005 실험", "업데이트", "중앙값 RMSE", "평균 예측 RMSE", "CRPS", "SOH > 2 비율", "중앙값 R² ↑", "평균 예측 R² ↑"], control_rows)}
 
 원본 재학습을 재현한 baseline의 sample 배열은 저장된 원본과 **완전히 일치**했다. 중간 평가 시 난수 상태를 복구해 이후 학습 경로를 보존했다.
 
@@ -150,11 +170,7 @@ epoch 수를 그대로 옮기는 것이 일반적으로 항상 잘못은 아니�
 
 이 비교는 **B0005 앞 32개 window**에 한정한다. 전체 89개 결과와 숫자를 직접 섞지 않는다.
 
-{table(["조건", "중앙값 RMSE", "평균 예측 RMSE", "해석"], [
-    ["기존 adapter", "0.018730", "0.679716", "문제 재현; 원본 sample 동일"],
-    ["adapter만 비활성화", "0.016348", "0.017326", "zero-shot sample과 완전히 동일"],
-    ["PEFT generate wrapper 우회", "0.018730", "0.679716", "기존 raw token과 완전히 동일"],
-    ["같은 checkpoint를 FP32로 추론", "0.018669", "0.683912", "폭주 유지"]])}
+{table(["조건", "중앙값 RMSE", "평균 예측 RMSE", "중앙값 R² ↑", "평균 예측 R² ↑", "해석"], inference_rows)}
 
 - PEFT의 generate wrapper와 bf16 **추론** 반올림을 주원인으로 보기 어렵다. FP32로 재학습한 실험은 아니므로 학습 정밀도의 영향까지 배제하지 않는다.
 - 원본 생성 raw token은 vocab 범위 안이다. 실제 sample에 EOS/PAD는 없고, 폭주에 최대 수치 bin인 **token 4095**가 많이 등장했다. 이 토큰이 tokenizer의 최상단 값으로 복원되는 과정은 정의와 맞는다. EOS를 SOH 숫자로 잘못 변환한 오류라는 가설은 이 sample에서 맞지 않는다.
@@ -170,6 +186,8 @@ epoch 수를 그대로 옮기는 것이 일반적으로 항상 잘못은 아니�
 실용적인 다음 후보는 **출력 EOS loss 제외 + step 기반 학습량 관리 + 분포 지표를 포함한 내부 검증**이다. 현재 결과를 본 test 배터리로 이 조합의 하이퍼파라미터를 고르면 성능이 낙관적으로 보일 수 있으므로, 후보 비교는 훈련 배터리 내부에서 하고 추가 배터리/학습 seed로 확인해야 한다.
 
 ## 파일과 재현
+
+- R²를 포함한 재평가 표는 [별도 평가 디렉터리](../../evaluation_r2/diagnostics/20260929)에 보관한다. 원본 학습·예측 파일은 변경하지 않았다.
 
 - [추론 요인 비교](inference/inference_controls.csv), [FP32 비교](float32/inference_controls.csv)
 - [B0005 학습 요인 비교](training/training_controls.csv), [나머지 fold EOS 비교](confirm_eos/training_controls.csv)

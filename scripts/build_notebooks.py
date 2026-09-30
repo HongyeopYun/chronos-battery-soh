@@ -31,6 +31,7 @@ from src.soh_experiment import (
     find_zeroshot, find_lobo, run_zeroshot, run_lobo, verify_saved_run,
 )
 from src.soh_plots import forecast_grid, horizon_comparison, validation_curves, window_comparison
+from src.soh_evaluation import export_run, export_diagnosis, evaluation_directory
 
 CONFIG = load_config(PROJECT_ROOT)
 FORCE_RERUN = False  # True: new run directory; False: reuse only verified compatible artifacts.
@@ -47,6 +48,8 @@ MAT의 방전 용량으로 `SOH = Qk / Q1`을 구성합니다. 실제 최근 64�
 
 모델 revision, 데이터 해시, 라이브러리 버전, seed와 예측 배열을 실행별로 저장합니다. 기본 설정은 100 samples, 추론 seed 42/43/44이며 점 예측은 보간 중앙값과 sample mean을 함께 보고합니다. `configs/experiment.json`에서 설정을 변경하세요.
 
+R²는 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`로 계산한 뒤 배터리를 동일 가중치로 평균합니다. 1은 완벽한 예측, 0은 평가 target 평균을 항상 예측한 수준이며 음수도 가능합니다. Horizon/개별 window 점수는 해당 범위의 평균을 기준으로 합니다. 상수 target은 NaN입니다. 원본 실행 기록은 보존하고 R²를 포함한 파생 평가를 `results/evaluation_r2/`에 저장합니다.
+
 이전 노트북과 실행 출력은 `archive/20260923_before_improvements/`에 보관했습니다."""),
     ("code", SETUP),
     ("markdown", "## 원본 데이터 및 평가 윈도우\n정규화에는 첫 관측만 사용합니다. 배터리별 오차를 동일 가중치로 평균합니다."),
@@ -60,17 +63,20 @@ display(pd.DataFrame([
     ("code", '''ZERO_RUN = None if FORCE_RERUN else find_zeroshot(PROJECT_ROOT, CONFIG)
 ZERO_RUN = ZERO_RUN or run_zeroshot(PROJECT_ROOT, CONFIG)
 print("Saved run:", ZERO_RUN)
-display(verify_saved_run(ZERO_RUN, PROJECT_ROOT, CONFIG))'''),
+display(verify_saved_run(ZERO_RUN, PROJECT_ROOT, CONFIG))
+ZERO_EVAL = export_run(PROJECT_ROOT, ZERO_RUN)'''),
     ("markdown", "## 자동 계산된 성능\n표준편차는 추론 seed별 점수 변동입니다. 중첩 윈도우를 독립 표본으로 간주한 신뢰구간이 아닙니다. 단일 기준 모델의 표준편차는 정의되지 않아 NaN으로 표시합니다."),
-    ("code", '''summary = pd.read_csv(ZERO_RUN / "summary.csv")
-metrics = pd.read_csv(ZERO_RUN / "metrics.csv")
+    ("code", '''summary = pd.read_csv(ZERO_EVAL / "summary.csv")
+metrics = pd.read_csv(ZERO_EVAL / "metrics.csv")
 display(summary)
-display(metrics.groupby(["model", "estimator", "battery"])[["rmse", "mae"]].mean())
+display(metrics.groupby(["model", "estimator", "battery"])[["rmse", "mae", "r2"]].mean())
 display(metrics[metrics.model == "ZeroShot"].groupby("battery")[["coverage80", "width80"]].mean())'''),
     ("markdown", "## 예측 구간과 horizon별 오차\n아래 예시는 첫 번째 추론 seed의 첫·중간·마지막 윈도우입니다. 10~90% 예측 구간은 실제 coverage를 함께 확인해야 합니다."),
     ("code", '''forecast_grid(ZERO_RUN)
 plt.show()
 horizon_comparison(ZERO_RUN)
+plt.show()
+horizon_comparison(ZERO_EVAL, metric="r2")
 plt.show()'''),
     ("markdown", """## 해석 시 주의
 
@@ -87,11 +93,12 @@ LORA = checkpoint_lora_cells(SETUP)
 
 # These tables refer to the frozen diagnosis, independently of any new run above.
 CLOSEOUT_DATA = '''DIAGNOSIS = PROJECT_ROOT / "results" / "diagnostics" / "20260929"
-diagnostic_metrics = pd.read_csv(DIAGNOSIS / "seed_confirmation" / "metrics.csv")
+DIAGNOSIS_EVAL = export_diagnosis(PROJECT_ROOT, DIAGNOSIS)
+diagnostic_metrics = pd.read_csv(DIAGNOSIS_EVAL / "seed_confirmation" / "metrics.csv")
 keys = ["model", "battery", "inference_seed"]
 assert len(diagnostic_metrics) == 36 and not diagnostic_metrics.duplicated(keys).any()
 assert set(diagnostic_metrics["inference_seed"]) == {42, 43, 44}
-score_columns = ["median_rmse", "mean_rmse", "crps", "above2_rate", "coverage80"]
+score_columns = ["median_rmse", "median_r2", "mean_rmse", "mean_r2", "crps", "above2_rate", "coverage80"]
 # First average inference seeds, then give the four batteries equal weight.
 diagnostic_battery = diagnostic_metrics.groupby(["model", "battery"])[score_columns].mean()
 diagnostic_macro = diagnostic_battery.groupby(level="model").mean()
@@ -124,6 +131,8 @@ median_by_battery["without_eos_vs_zero_error_change_pct"] = (
     median_by_battery["without_eos"] / median_by_battery["zero"] - 1
 ) * 100
 display(median_by_battery.round(6))
+display(diagnostic_battery["median_r2"].unstack("model")[model_order].round(6))
+display(diagnostic_battery["mean_r2"].unstack("model")[model_order].round(6))
 print("Error change: negative is better. Inference repetitions are not training repetitions.")'''),
     ("markdown", """### 분리 검증으로 확인한 원인
 
@@ -133,10 +142,10 @@ print("Error change: negative is better. Inference repetitions are not training 
 - **추론 구현:** B0005 앞 32개 window에서 PEFT generate wrapper를 우회해도 결과가 같고, 같은 checkpoint의 FP32 추론에서도 폭주했습니다. FP32 재학습이나 cache 영향까지 배제한 것은 아닙니다.
 
 다음 표는 **B0005 전체 window, 추론 seed 42 하나**의 비교입니다. 위 세 추론 seed 평균과 구분합니다. `selection_prefix`는 데이터와 업데이트 수가 함께 바뀐 보조 실험이므로 한 요인 비교 표에서 제외했습니다."""),
-    ("code", '''training_controls = pd.read_csv(DIAGNOSIS / "training" / "training_controls.csv")
+    ("code", '''training_controls = pd.read_csv(DIAGNOSIS_EVAL / "training" / "training_controls.csv")
 display(training_controls.loc[
     training_controls["variant"] != "selection_prefix",
-    ["variant", "checkpoint", "steps", "median_rmse", "mean_rmse", "crps", "above2_rate"],
+    ["variant", "checkpoint", "steps", "median_rmse", "median_r2", "mean_rmse", "mean_r2", "crps", "above2_rate"],
 ].round(6))
 from IPython.display import Image
 display(Image(filename=str(DIAGNOSIS / "diagnosis_comparison.png"), width=1000))'''),

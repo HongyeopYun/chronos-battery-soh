@@ -1,0 +1,22 @@
+{
+  "source_run": "results\\runs\\20260929T175636Z_checkpointlora_39b551",
+  "r2_definition": "R2 = 1 - sum((target - prediction)^2) / sum((target - mean(target))^2). Flatten all windows and horizons within each battery/seed; average seed scores then give batteries equal weight. Horizon/window tables use their own target mean. Negative values are valid; constant targets or fewer than 2 values return NaN. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+  "metric_source_sha256": "548cdd400d48faa7f26a09a46790b920513756c5bded72146f9da59e3c5eceb7",
+  "original_manifest_sha256": "a956dc007d5ce6ba68b80a4158506124cf513a0fc15220255915d1d9ae520f45",
+  "prediction_sha256": {
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0005_train42_infer42.npz": "e085f7c6396e73a9ba953aab0fae11bb1878ad84c4178dedaab4e1b73dbd40ed",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0005_train42_infer43.npz": "85d95a0370377ca2e8f31d40012f285a6cc01a4bf7e6ef6d642a272405c3c868",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0005_train42_infer44.npz": "7213246e2cbea8ea7339ffa90e18f50894389a2a0243264087c7b8fc8648c48f",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0006_train42_infer42.npz": "7a0fb8be65dda5538f5d587550be5905e1e2b2053341534290ae133c6497493a",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0006_train42_infer43.npz": "9c4c7437f9adad712ec4ec91d1e709ea416a332362c8ff50eb5ac47d69bb0279",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0006_train42_infer44.npz": "c6ef980a88fe0332ad9778f1bc2607687d212c08e19a7bce19c0735a1c4457b9",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0007_train42_infer42.npz": "806cacbabec1f7e04eedc2234f119757ff1648c1924e726cf376806082074a17",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0007_train42_infer43.npz": "c6a41309daacd3dd2fc8ff1b452c55862aadb78075c9e028d031e7a1182e158b",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0007_train42_infer44.npz": "b915ba1980a94eec01af6a738c7f9d26097f37121476b40e86ca93c6a1e0d102",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0018_train42_infer42.npz": "9f1a9f69594800fdde37eda96c8a70b8ab9100df0afdb23438f3bbce4f3013b5",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0018_train42_infer43.npz": "742ec4fec2aa7b6a7e68ed434d7a7c9ee91058bfee892068aa3df27cf97ac8de",
+    "results\\runs\\20260929T175636Z_checkpointlora_39b551\\predictions\\B0018_train42_infer44.npz": "9e126930c46f67bf721462d388b98cf6b41d36e26025622b0b2b30a5ea64c1fa"
+  },
+  "original_metrics_recalculated": 24,
+  "training_or_selection_changed": false
+}

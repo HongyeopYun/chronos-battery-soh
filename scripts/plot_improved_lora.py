@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -15,6 +16,8 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from src.soh_evaluation import r2_score
 BATTERIES = ["B0005", "B0006", "B0007", "B0018"]
 STAGES = ["Early", "Middle", "Late"]
 OBSERVED = "#1f77b4"
@@ -110,7 +113,8 @@ def main():
             rmse = float(np.sqrt(np.mean((data["median"][idx] - data["target"][idx]) ** 2)))
             selected_rows.append({"battery": battery, "stage": stage, "window_index": idx,
                 "context_start": start - 64, "context_end": start - 1, "forecast_start": start,
-                "forecast_end": start + 15, "median_rmse": rmse})
+                "forecast_end": start + 15, "median_rmse": rmse,
+                "median_r2": r2_score(data["target"][idx], data["median"][idx])})
             for h in range(16):
                 forecast_rows.append({"battery": battery, "stage": stage, "cycle": start + h,
                     "actual": data["target"][idx, h], "median": data["median"][idx, h],

@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.soh_checkpoint import load_checkpoint_config, verify_checkpoint_run
 from src.soh_plots import forecast_grid
+from src.soh_evaluation import export_run
 
 
 def plot_learning_curves(directory):
@@ -55,8 +56,9 @@ def summarize(directory, output):
     audit = verify_checkpoint_run(directory, ROOT, cfg, policy)
     output.mkdir(parents=True, exist_ok=True)
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
-    data = pd.read_csv(directory / "distribution_metrics.csv")
-    columns = ["median_rmse", "median_mae", "mean_rmse", "crps", "coverage80", "width80", "above2_rate"]
+    evaluation = export_run(ROOT, directory)
+    data = pd.read_csv(evaluation / "distribution_metrics.csv")
+    columns = ["median_rmse", "median_mae", "median_r2", "mean_rmse", "mean_r2", "crps", "coverage80", "width80", "above2_rate"]
     battery = data.groupby(["model", "battery"])[columns].mean()
     macro = battery.groupby(level="model").mean().loc[["ZeroShot", "SelectedLoRA"]]
     macro.to_csv(output / "macro_summary.csv")
@@ -67,8 +69,12 @@ def summarize(directory, output):
         "selected_examples_seen": f["selected_examples_seen"],
         "validation_crps": f["selected_validation"]["macro"]["crps"],
     } for f in manifest["folds"]])
+    candidates = pd.read_csv(evaluation / "validation_candidates.csv")
+    choices = choices.merge(
+        candidates.rename(columns={"test_battery": "battery"})[
+            ["battery", "train_seed", "learning_rate", "selected_step", "median_r2", "mean_r2"]],
+        on=["battery", "train_seed", "learning_rate", "selected_step"], validate="one_to_one")
     choices.to_csv(output / "selected_checkpoints.csv", index=False)
-    candidates = pd.read_csv(directory / "validation_candidates.csv")
     candidates.to_csv(output / "validation_candidates.csv", index=False)
     plot_learning_curves(directory).savefig(output / "validation_learning_rates.png", dpi=180)
     plt.close("all")
@@ -80,6 +86,9 @@ def summarize(directory, output):
     main_table = macro.reset_index().round(6)
     comparison = battery["median_rmse"].unstack("model")[["ZeroShot", "SelectedLoRA"]]
     comparison["error_change_pct"] = 100 * (comparison.SelectedLoRA / comparison.ZeroShot - 1)
+    r2_comparison = battery["median_r2"].unstack("model")
+    comparison["ZeroShot_R2"] = r2_comparison["ZeroShot"]
+    comparison["SelectedLoRA_R2"] = r2_comparison["SelectedLoRA"]
     comparison = comparison.reset_index().round(6)
     zero_count = int((choices.selected_step == 0).sum())
     replay = json.loads((directory / "checkpoint_replay.json").read_text(encoding="utf-8"))
@@ -124,9 +133,13 @@ Step 0을 선택한 모델은 {zero_count}/{len(choices)}개다. Step 0 결과�
 
 배터리와 추론 반복에 같은 가중치를 준 평균이다. `mean_rmse`는 sample mean으로 만든 점예측의 RMSE다. 비율 열은 0~1 단위다.
 
+`median_r2`와 `mean_r2`는 각 점예측의 결정계수 R²다. 배터리·seed마다 전체 window와 horizon을 펼쳐 `1 - SSE/SST`로 계산한 뒤 동일 가중 평균한다. 1이면 완전 예측, 0이면 평가 target의 평균 예측과 같고 음수도 유효하다. 정답이 상수이면 NaN이다. R²는 높을수록 좋으며 모델 선택에는 사용하지 않았다.
+
 {md_table(main_table)}
 
 Zero-shot 대비 오차 감소율: 중앙값 RMSE **{gains['median_rmse']:+.2f}%**, 평균 예측 RMSE **{gains['mean_rmse']:+.2f}%**, CRPS **{gains['crps']:+.2f}%**. 양수는 개선, 음수는 악화다.
+
+R² 절대 변화: 중앙값 **{macro.loc['SelectedLoRA', 'median_r2'] - macro.loc['ZeroShot', 'median_r2']:+.6f}**, 평균 예측 **{macro.loc['SelectedLoRA', 'mean_r2'] - macro.loc['ZeroShot', 'mean_r2']:+.6f}**. R²에는 백분율 개선율을 적용하지 않는다.
 
 {md_table(comparison)}
 

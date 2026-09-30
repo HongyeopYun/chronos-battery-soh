@@ -9,6 +9,8 @@ def checkpoint_lora_cells(setup):
 
 각 후보의 best checkpoint를 저장하고 validation CRPS로 학습률을 선택합니다. Step 0도 후보입니다. 네 fold의 선택을 모두 고정한 후 저장된 adapter를 재로딩해 held-out 배터리를 평가합니다. 세 학습률은 Optuna 없이 모두 비교합니다.
 
+R²는 중앙값·평균 예측에 각각 계산합니다. 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`를 구하고 배터리를 동일 가중치로 평균합니다. 1은 완벽한 예측, 0은 평가 target 평균을 항상 예측한 수준이며 음수도 가능합니다. 상수 target은 NaN입니다. 짧은 validation/window는 target 변동이 작아 R²가 크게 낮아질 수 있습니다. R²는 보고용이며 학습률·checkpoint 선택 기준은 CRPS로 유지합니다.
+
 학습 seed는 42, validation seed는 31415/31416/31417(각 32 samples), 최종 추론 seed는 42/43/44(각 100 samples)입니다. 추론 반복과 학습 반복은 다릅니다. 04 Full FT는 여기서 실행하지 않습니다.
 
 마지막 절의 2026-09-29 EOS 진단은 **과거 full-data 학습 결과**이며, 이 새 프로토콜과 구분합니다. [프로토콜](../docs/lora_checkpoint_protocol.md) · [현재 결과 보고서](../results/checkpoint_lora/report.md)"""),
@@ -44,7 +46,9 @@ manifest = json.loads((CHECKPOINT_RUN / "manifest.json").read_text(encoding="utf
 ZERO_RUN = Path(manifest["zeroshot_run"])
 print("Current LoRA run:", CHECKPOINT_RUN)
 print("Zero-shot reference:", ZERO_RUN)
-display(verify_checkpoint_run(CHECKPOINT_RUN, PROJECT_ROOT, CONFIG, CHECKPOINT_POLICY))'''),
+display(verify_checkpoint_run(CHECKPOINT_RUN, PROJECT_ROOT, CONFIG, CHECKPOINT_POLICY))
+CHECKPOINT_EVAL = export_run(PROJECT_ROOT, CHECKPOINT_RUN)
+ZERO_EVAL = evaluation_directory(PROJECT_ROOT, ZERO_RUN)'''),
         ("markdown", """## Validation으로 선택한 학습률과 step
 
 아래 CRPS는 test 점수가 아니라 학습 배터리의 validation 점수입니다. 세 validation seed의 sample을 합치지 않고 각 seed의 점수를 먼저 계산한 뒤 평균합니다. `selected_step`은 실제로 평가할 저장 checkpoint의 시점, `executed_steps`는 후보 학습을 탐색한 총 횟수입니다."""),
@@ -55,15 +59,15 @@ display(verify_checkpoint_run(CHECKPOINT_RUN, PROJECT_ROOT, CONFIG, CHECKPOINT_P
      "validation_crps": fold["selected_validation"]["macro"]["crps"]}
     for fold in manifest["folds"]
 ]))
-display(pd.read_csv(CHECKPOINT_RUN / "validation_candidates.csv").drop(columns="trial_path"))
+display(pd.read_csv(CHECKPOINT_EVAL / "validation_candidates.csv").drop(columns="trial_path"))
 from scripts.summarize_checkpoint_lora import plot_learning_curves
 plot_learning_curves(CHECKPOINT_RUN)
 plt.show()'''),
         ("markdown", """## 같은 조건의 zero-shot과 비교
 
 학습률·checkpoint 선택이 끝난 후 생성한 held-out 예측입니다. 표는 seed별 점수를 평균한 뒤 배터리에 같은 가중치를 줍니다. `mean_rmse`는 sample mean을 점예측으로 사용한 오차입니다. `coverage80`과 이상 sample 비율은 0~1 단위입니다."""),
-        ("code", '''current_scores = pd.read_csv(CHECKPOINT_RUN / "distribution_metrics.csv")
-score_columns = ["median_rmse", "median_mae", "mean_rmse", "crps", "coverage80", "width80", "above2_rate"]
+        ("code", '''current_scores = pd.read_csv(CHECKPOINT_EVAL / "distribution_metrics.csv")
+score_columns = ["median_rmse", "median_mae", "median_r2", "mean_rmse", "mean_r2", "crps", "coverage80", "width80", "above2_rate"]
 current_battery = current_scores.groupby(["model", "battery"])[score_columns].mean()
 current_macro = current_battery.groupby(level="model").mean().loc[["ZeroShot", "SelectedLoRA"]]
 display(current_macro.round(6))
@@ -71,13 +75,17 @@ display(current_battery.round(6))
 print("Zero-shot 대비 오차 감소율 (%; 양수=개선)")
 display((100 * (1 - current_macro.loc["SelectedLoRA", ["median_rmse", "mean_rmse", "crps"]]
                 / current_macro.loc["ZeroShot", ["median_rmse", "mean_rmse", "crps"]])).round(3))
-display(pd.read_csv(CHECKPOINT_RUN / "paired_macro.csv"))'''),
+print("R² change (absolute difference; higher is better)")
+display((current_macro.loc["SelectedLoRA", ["median_r2", "mean_r2"]] - current_macro.loc["ZeroShot", ["median_r2", "mean_r2"]]).round(6))
+display(pd.read_csv(CHECKPOINT_EVAL / "paired_macro.csv"))'''),
         ("markdown", """## 선택 checkpoint의 SOH 곡선
 
 각 배터리의 첫·중간·마지막 window를 선택했습니다. 과거 관측 64개로 미래 16개를 예측하며, 평활화나 clipping 없이 예측 중앙값과 10~90% 구간을 표시합니다. 추론 seed 42의 예시이며 전체 결과는 위의 세 seed 평가 표입니다."""),
         ("code", '''forecast_grid(CHECKPOINT_RUN)
 plt.show()
 horizon_comparison(ZERO_RUN, CHECKPOINT_RUN)
+plt.show()
+horizon_comparison(ZERO_EVAL, CHECKPOINT_EVAL, metric="r2")
 plt.show()'''),
         ("markdown", """## 저장·재현 확인과 해석 범위
 

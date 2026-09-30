@@ -6,6 +6,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from src.soh_checkpoint import load_checkpoint_config, find_checkpoint_run, run_checkpoint_search, verify_checkpoint_run
+from src.soh_evaluation import export_run
 
 
 if __name__ == "__main__":
@@ -23,3 +24,4 @@ if __name__ == "__main__":
         directory = directory or run_checkpoint_search(ROOT, cfg, policy, resume=args.resume)
         print("CHECKPOINT_RUN=" + str(directory), flush=True)
         print(verify_checkpoint_run(directory, ROOT, cfg, policy), flush=True)
+        print("EVALUATION_R2=" + str(export_run(ROOT, directory)), flush=True)

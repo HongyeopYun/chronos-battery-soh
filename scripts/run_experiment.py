@@ -9,6 +9,7 @@ sys.path.insert(0, str(ROOT))
 
 from src.soh_experiment import (find_lobo, find_zeroshot, load_config, run_lobo,
                                 run_zeroshot, verify_saved_run)
+from src.soh_evaluation import export_run
 
 
 def main():
@@ -32,11 +33,13 @@ def main():
         zero = zero or run_zeroshot(ROOT, config)
         print("ZERO_RUN=" + str(zero), flush=True)
         print(verify_saved_run(zero, ROOT, config), flush=True)
+        print("EVALUATION_R2=" + str(export_run(ROOT, zero)), flush=True)
     if args.mode in ("lora", "all"):
         lora = None if args.force else find_lobo(ROOT, config)
         lora = lora or run_lobo(ROOT, config, zero)
         print("LORA_RUN=" + str(lora), flush=True)
         print(verify_saved_run(lora, ROOT, config), flush=True)
+        print("EVALUATION_R2=" + str(export_run(ROOT, lora)), flush=True)
         manifest = json.loads((lora / "manifest.json").read_text(encoding="utf-8"))
         print(verify_saved_run(Path(manifest["zeroshot_run"]), ROOT, config), flush=True)
 

@@ -34,7 +34,9 @@ def forecast_grid(directory: Path):
     return figure
 
 
-def horizon_comparison(zeroshot: Path, lora: Path | None = None):
+def horizon_comparison(zeroshot: Path, lora: Path | None = None, metric="rmse"):
+    if metric not in ("rmse", "r2"):
+        raise ValueError("Expected rmse or r2")
     frames = [pd.read_csv(zeroshot / "horizon_metrics.csv")]
     if lora:
         frames.append(pd.read_csv(lora / "horizon_metrics.csv"))
@@ -44,9 +46,9 @@ def horizon_comparison(zeroshot: Path, lora: Path | None = None):
     figure, axes = plt.subplots(2, 2, figsize=(12, 8))
     for ax, battery in zip(axes.flat, batteries):
         for model, group in data[data.battery == battery].groupby("model"):
-            curve = group.groupby("horizon").rmse.mean()
+            curve = group.groupby("horizon")[metric].mean()
             ax.plot(curve.index, curve.values, marker=".", label=model)
-        ax.set(title=battery, xlabel="Horizon", ylabel="RMSE (averaged across runs)")
+        ax.set(title=battery, xlabel="Horizon", ylabel=f"{metric.upper()} (averaged across runs)")
         ax.grid(alpha=0.2)
     axes.flat[0].legend()
     figure.tight_layout()

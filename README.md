@@ -29,11 +29,11 @@ Zero-shot 대비 중앙값 RMSE는 `0.016307 → 0.014355`(11.97% 감소), CRPS�
 노트북 마지막 절에서 당시 저장된 결과를 읽을 수 있습니다. [당시 정리 문서와 04 비교 조건](docs/02_03_closeout.md),
 [상세 진단 보고서](results/diagnostics/20260929/diagnosis.md)에 결론과 한계를 모았습니다.
 
-| 모델 | 중앙값 RMSE | 평균 예측 RMSE | CRPS |
-|---|---:|---:|---:|
-| Zero-shot | 0.016307 | 0.018540 | 0.008769 |
-| 기존 LoRA | 0.016176 | 0.294040 | 0.017684 |
-| EOS loss 제외 LoRA | 0.014894 | 0.015011 | 0.007552 |
+| 모델 | 중앙값 RMSE | 평균 예측 RMSE | CRPS | 중앙값 R² ↑ | 평균 예측 R² ↑ |
+|---|---:|---:|---:|---:|---:|
+| Zero-shot | 0.016307 | 0.018540 | 0.008769 | 0.676844 | 0.616669 |
+| 기존 LoRA | 0.016176 | 0.294040 | 0.017684 | 0.668538 | -65.167624 |
+| EOS loss 제외 LoRA | 0.014894 | 0.015011 | 0.007552 | 0.731631 | 0.732641 |
 
 고정 XPU 실행에서 네 배터리·세 추론 seed를 동일 가중치로 평균했습니다. 학습 seed는 42 하나입니다.
 EOS 제외는 사후 원인 진단이며, 모든 배터리·지표가 개선된 것은 아닙니다. 80% 구간 포함률은 약 74.46%로 낮아졌습니다.
@@ -42,6 +42,14 @@ EOS 제외는 사후 원인 진단이며, 모든 배터리·지표가 개선된 
 `configs/experiment.json`의 학습률·epoch·patience 기본값은 **기존 EOS 포함 + 전체 데이터 refit 실험**의 기록입니다.
 현재 학습에서는 `configs/lora_checkpoint.json`의 학습률 후보와 step 예산을 적용합니다.
 EOS 제외 진단은 `scripts/diagnose_training.py`로 별도 실행했으며, 명령과 산출물은 상세 진단 보고서에 있습니다.
+
+## R² 성능평가
+
+현재 best-checkpoint LoRA의 macro R²는 중앙값 예측 **0.733519**, 평균 예측 **0.705528**이다. Zero-shot은 각각 **0.676844**, **0.616669**다.
+배터리·seed별 모든 window/horizon을 펼쳐 `R² = 1 - SSE/SST`를 계산한 뒤 배터리에 같은 가중치를 준다. 1은 완벽한 예측, 0은 평가 target 평균을 항상 예측한 수준이다. 음수도 가능하며 상수 target은 NaN이다. Horizon/window 평가는 각 범위의 평균을 사용한다.
+
+[R² 포함 평가표](results/evaluation_r2/README.md)에 baseline, 중앙값·평균 예측, 배터리·horizon·window, 현재 validation 후보·이력을 저장했다. 기존 실행의 해시와 원시 예측은 보존한다. R²는 보고용이며 checkpoint 선택 기준은 CRPS다.
+`python scripts/add_r2_metrics.py`로 재학습 없이 재생성한다. 과거 20-sample LoRA는 원시 예측이 없어 반올림된 RMSE로 계산한 근삿값임을 별도 CSV에 표시했다.
 
 ## 환경과 실행
 
