@@ -8,7 +8,7 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-# NASA raw/processed data
+# Battery raw/processed data
 data/raw/*
 data/processed/*
 

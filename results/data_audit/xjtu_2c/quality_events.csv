@@ -1,0 +1,21 @@
+dataset,battery_id,cycle,capacity_ah,soh,capacity_kind,is_observed,quality_flags,protocol_id,cycle_description,soh_change
+xjtu,batch1_2C_battery-1,1,1.9910000000000001,1,reference_test,True,initial_capacity_test,initial_capacity_test,0.5C charge and 0.2C discharge [test capacity],
+xjtu,batch1_2C_battery-1,2,1.863,0.93571069814163732,full_discharge,True,protocol_transition,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.06428930185836268
+xjtu,batch1_2C_battery-1,390,1.5920000000000001,0.79959819186338521,full_discharge,True,large_soh_change,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.025113008538422799
+xjtu,batch1_2C_battery-2,1,1.988,1,reference_test,True,initial_capacity_test,initial_capacity_test,0.5C charge and 0.2C discharge [test capacity],
+xjtu,batch1_2C_battery-2,2,1.861,0.9361167002012073,full_discharge,True,protocol_transition,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.063883299798792703
+xjtu,batch1_2C_battery-2,391,1.6679999999999999,0.83903420523138827,full_discharge,True,capacity_increase;large_soh_change,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,0.017605633802816878
+xjtu,batch1_2C_battery-2,392,1.6399999999999999,0.82494969818913477,full_discharge,True,large_soh_change,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.014084507042253502
+xjtu,batch1_2C_battery-3,1,1.9870000000000001,1,reference_test,True,initial_capacity_test,initial_capacity_test,0.5C charge and 0.2C discharge [test capacity],
+xjtu,batch1_2C_battery-3,2,1.861,0.93658782083543024,full_discharge,True,protocol_transition,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.06341217916456976
+xjtu,batch1_2C_battery-3,393,1.581,0.79567186713638649,full_discharge,True,large_soh_change,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.014091595369904342
+xjtu,batch1_2C_battery-4,1,1.99,1,reference_test,True,initial_capacity_test,initial_capacity_test,0.5C charge and 0.2C discharge [test capacity],
+xjtu,batch1_2C_battery-4,2,1.8580000000000001,0.93366834170854274,full_discharge,True,protocol_transition,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.066331658291457263
+xjtu,batch1_2C_battery-5,1,2.0169999999999999,1,reference_test,True,initial_capacity_test,initial_capacity_test,0.5C charge and 0.2C discharge [test capacity],
+xjtu,batch1_2C_battery-5,2,1.901,0.94248884481903827,full_discharge,True,protocol_transition,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.057511155180961726
+xjtu,batch1_2C_battery-6,1,2.024,1,reference_test,True,initial_capacity_test,initial_capacity_test,0.5C charge and 0.2C discharge [test capacity],
+xjtu,batch1_2C_battery-6,2,1.9059999999999999,0.94169960474308301,full_discharge,True,protocol_transition,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.058300395256916993
+xjtu,batch1_2C_battery-7,1,2.0430000000000001,1,reference_test,True,initial_capacity_test,initial_capacity_test,0.5C charge and 0.2C discharge [test capacity],
+xjtu,batch1_2C_battery-7,2,1.9379999999999999,0.94860499265785603,full_discharge,True,protocol_transition,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.051395007342143972
+xjtu,batch1_2C_battery-8,1,2.008,1,reference_test,True,initial_capacity_test,initial_capacity_test,0.5C charge and 0.2C discharge [test capacity],
+xjtu,batch1_2C_battery-8,2,1.893,0.9427290836653387,full_discharge,True,protocol_transition,cccv_2c_charge_1c_discharge,2C charge and 1C discharge,-0.057270916334661304

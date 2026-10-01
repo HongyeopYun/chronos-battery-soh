@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "key": [
+    "dataset",
+    "battery_id",
+    "cycle"
+  ],
+  "soh_columns": {
+    "dataset": "string",
+    "battery_id": "string",
+    "cycle": "positive_integer",
+    "capacity_ah": "float64, Ah",
+    "soh": "float64, fraction Q/Q_ref",
+    "capacity_kind": "reference_test|full_discharge|partial_discharge|unknown",
+    "is_observed": "boolean",
+    "quality_flags": "semicolon-delimited strings; empty means none",
+    "protocol_id": "string",
+    "cycle_description": "source string"
+  },
+  "battery_required_columns": [
+    "dataset",
+    "battery_id",
+    "batch",
+    "reference_method",
+    "reference_cycle",
+    "reference_capacity_ah",
+    "source_file",
+    "source_sha256",
+    "cycle_number_source"
+  ]
+}

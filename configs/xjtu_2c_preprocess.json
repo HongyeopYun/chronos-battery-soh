@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "dataset": "xjtu",
+  "batch": "batch1",
+  "source_pattern": "2C_battery-*.mat",
+  "expected_batteries": 8,
+  "reference_method": "first_cycle",
+  "reference_cycle": 1,
+  "nominal_capacity_ah": 2.0,
+  "normal_charge_rate_c": 2.0,
+  "normal_discharge_rate_c": 1.0,
+  "initial_charge_rate_c": 0.5,
+  "initial_discharge_rate_c": 0.2,
+  "context_length": 64,
+  "prediction_length": 16,
+  "large_soh_change_threshold": 0.01,
+  "prediction_excluded_flags": ["initial_capacity_test", "nonfinite_capacity", "nonpositive_capacity", "unexpected_protocol"],
+  "source_documentation": "https://wang-fujin.github.io/"
+}

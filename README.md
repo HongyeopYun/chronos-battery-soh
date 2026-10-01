@@ -53,6 +53,8 @@ EOS 제외 진단은 `scripts/diagnose_training.py`로 별도 실행했으며, �
 
 ## 환경과 실행
 
+XJTU 2C 배터리 8개의 [Audit 및 공통 SOH 포맷](docs/common_soh_format.md)을 추가했습니다. `python scripts/preprocess_xjtu_2c.py`로 추출하며, 검토 결과는 [XJTU 2C 보고서](results/data_audit/xjtu_2c/report.md)에 있습니다. Q1 기준으로 모든 cycle을 보존하고 초기 시험은 예측용 window 생성 단계에서 제외합니다.
+
 기존 `.venv`는 그대로 사용할 수 있습니다. 현재 확인한 환경은 Python 3.12.10과 Intel Arc B390 XPU입니다.
 새 환경에서는 장치에 맞는 PyTorch를 먼저 설치한 뒤 나머지 패키지를 설치하세요.
 Intel GPU용 설치 인덱스는 [PyTorch 공식 안내](https://github.com/pytorch/pytorch/blob/main/docs/source/notes/get_start_xpu.md)를 따릅니다.
