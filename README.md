@@ -67,6 +67,7 @@ py -3.12 -m venv .venv
 requirements는 이번에 확인한 직접 의존성 버전이며 완전한 transitive lockfile은 아닙니다.
 
 `data/raw/`에 `B0005.mat`, `B0006.mat`, `B0007.mat`, `B0018.mat`이 필요합니다.
+폴더명·데이터 위치 변경 뒤 저장된 실험을 다시 사용할 때는 [로컬 경로 정리](docs/local_workspace.md)를 참고하세요.
 VS Code에서 `.venv` 커널로 02와 03을 순서대로 전체 실행하거나, 프로젝트 루트에서 다음을 실행합니다.
 
 ```powershell
