@@ -1,0 +1,5 @@
+battery_id,batch,reference_method,reference_cycle,reference_capacity_ah
+B0005,aging,first_cycle,1,1.8564874208181572
+B0006,aging,first_cycle,1,2.035337591005598
+B0007,aging,first_cycle,1,1.89105229539079
+B0018,aging,first_cycle,1,1.8550045207910817

@@ -1,0 +1,5 @@
+battery_id,n_cycles,n_nonfinite_capacity,n_nonpositive_capacity,n_excluded_measurements,n_prediction_windows,first_cycle,last_cycle,last_soh,status
+CS2_35,886,0,4,6,0,1,886,0.26671390036336889,passed_with_exclusions
+CS2_36,976,0,3,6,0,1,976,0.1504873797027462,passed_with_exclusions
+CS2_37,1043,0,5,7,0,1,1043,0.16847570900608441,passed_with_exclusions
+CS2_38,1032,0,4,7,0,1,1032,0.25427457968014078,passed_with_exclusions

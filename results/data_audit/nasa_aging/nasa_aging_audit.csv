@@ -1,0 +1,5 @@
+battery_id,n_cycles,n_nonfinite_capacity,n_nonpositive_capacity,n_excluded_measurements,n_prediction_windows,first_cycle,last_cycle,last_soh,status
+B0005,168,0,0,0,89,1,168,0.71375615788388735,passed
+B0006,168,0,0,0,89,1,168,0.58254475229690506,passed
+B0007,168,0,0,0,89,1,168,0.75749109400833536,passed
+B0018,132,0,0,0,53,1,132,0.72293702015808714,passed

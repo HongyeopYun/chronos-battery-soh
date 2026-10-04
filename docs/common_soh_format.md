@@ -1,6 +1,6 @@
 # 데이터셋 Audit 및 공통 SOH 포맷 v1
 
-데이터셋마다 측정 조건을 보존하면서 cycle별 용량과 SOH를 같은 구조로 저장한다. XJTU Batch 1의 2C 충전 배터리 8개와 Batch 2의 3C 충전 배터리 15개를 지원한다. 현재 NASA 02·03의 데이터·실험 코드와 저장된 결과는 유지한다.
+데이터셋마다 측정 조건을 보존하면서 cycle별 용량과 SOH를 같은 구조로 저장한다. XJTU 2C·3C, NASA 4개, MIT 3개 batch, CALCE CS2 4개를 지원한다. 현재 NASA 02·03의 데이터·실험 코드와 저장된 결과는 유지한다. [전체 가공 현황](../results/data_audit/battery_datasets_overview.md)에서 그룹별 곡선과 필수 확인 결과를 볼 수 있다.
 
 ## 공통 데이터 묶음
 
@@ -63,6 +63,20 @@
 파일 하나라도 해석이나 Audit에 실패하면 manifest가 `audit_failed`가 되고 CLI가 실패 종료한다. `src.soh_data.load_bundle`도 이 상태의 데이터를 예측에 넘기지 않는다. `complete`일 때는 산출물 해시와 기본키·정규화 일관성을 다시 검사한다. 같은 입력·코드·설정으로 다시 실행하면 동일한 데이터 CSV를 생성한다.
 
 ## Zero-shot 입력 준비
+
+NASA·MIT·CALCE는 다음 명령으로 추출한다. dataset을 제한하려면 `--datasets mit calce`처럼 지정한다.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\preprocess_remaining_batteries.py
+```
+
+- NASA: discharge의 `data.Capacity`를 사용하고 기존 02·03 실험과 같은 첫 방전 Q1 기준으로 정규화한다. 정격 2 Ah는 별도 metadata다. 전체 MAT에서의 `source_record_index`도 보존한다. [제작자 설명](https://data.nasa.gov/dataset/li-ion-battery-aging-datasets).
+- MIT: HDF5의 `summary.QDischarge`와 `summary.cycle`만 읽는다. Batch 1의 cycle 1은 0인 미측정값으로 보존하고 `is_observed=False`로 표시한다. 기준은 명시적으로 cycle 2다. 나머지 신규 배터리는 첫 cycle 기준이다.
+- MIT의 `b2c7/8/9/15/16`은 각각 `b1c0/1/2/3/4`의 연속 측정이다. 이 5개는 원래 기준 용량과 `physical_battery_id`를 공유하고 `cycle`에 앞 구간 길이를 더한다. 원래 번호는 `source_cycle`에 보존한다. 기록은 합치지 않으며 train/test 분리 시 동일 physical ID를 함께 묶어야 한다. [제작자 연결 코드](https://github.com/rdbraatz/data-driven-prediction-of-battery-cycle-life-before-capacity-degradation/blob/master/Load%20Data.ipynb).
+- MIT Batch 3의 `b3c2/23/32/37/42/43`은 제작자가 noisy channel로 지정했다. 모두 보존하고 `known_collection_issue`로 표시하며 기본 window에서 제외한다. 전체 수명이나 최종 용량을 기준으로 다른 배터리를 자동 제거하지 않는다.
+- CALCE: `Discharge_Capacity(Ah)`는 누적값이다. cycle별로 방전 종료 누적값에서 방전 직전 누적값을 뺀다. 2.7 V까지 방전되지 않았거나 시작이 잘린 관측은 부분 방전으로 보존하고 예측에서 제외한다. 기준은 첫 완료 관측이다. 용량 증가·급변만으로 제거하지 않는다. [제작자 시험 조건](https://web.calce.umd.edu/batteries/data/).
+- CALCE 원본 `Cycle_Index`는 날짜별로 다시 시작한다. 시간순 관측 번호를 `cycle`, 원본 번호를 `source_cycle`로 기록한다. 중복 측정 구간의 용량·상태가 같으면 한 번만 사용하며 원본 파일 이름을 모두 남긴다. 일치하지 않는 겹침은 실패 처리한다. 실제 장비 cycle 누락 여부는 이 번호만으로 확정할 수 없다.
+- 선택 열 `segment_id`가 있으면 `observed_windows`는 같은 segment 안에서만 window를 만든다. CALCE는 원본 파일을 segment로 구분하며 최대 50 cycle이라 현재 64→16 window가 없다. 예측 전에 context를 줄이거나 파일 간 연속성을 확인한다. MIT는 원본 배터리 기록을 segment로 유지한다.
 
 ```python
 from pathlib import Path

@@ -1,0 +1,5 @@
+battery_id,batch,reference_method,reference_cycle,reference_capacity_ah
+CS2_35,cs2_1c,first_complete_observed_discharge,1,1.1384600762004149
+CS2_36,cs2_1c,first_complete_observed_discharge,1,1.144814424904546
+CS2_37,cs2_1c,first_complete_observed_discharge,1,1.134949299218925
+CS2_38,cs2_1c,first_complete_observed_discharge,1,1.1395230638631519

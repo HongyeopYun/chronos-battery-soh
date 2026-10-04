@@ -57,6 +57,8 @@ XJTU 2C 배터리 8개의 [Audit 및 공통 SOH 포맷](docs/common_soh_format.m
 
 XJTU 3C 배터리 15개는 `python scripts/preprocess_xjtu_3c.py`로 추출합니다. 필수 오류 확인만 수행하고 [3C SOH 곡선과 요약](results/data_audit/xjtu_3c/xjtu_3c_report.md)을 저장합니다. 이후 cycle은 3C 충전·1C 방전이며, 전체 데이터는 `data/processed/XJTU/3C/`에 있습니다.
 
+NASA 4개, MIT 3개 batch의 140개 기록, CALCE CS2 배터리 4개도 `python scripts/preprocess_remaining_batteries.py`로 공통 SOH 포맷에 추출합니다. [전체 가공 현황과 곡선](results/data_audit/battery_datasets_overview.md)에서 그룹별 결과를 확인할 수 있습니다. MIT의 연속 측정 배터리와 초기 0 용량, CALCE의 누적 용량·중복 내보내기·파일 경계를 구분합니다. CALCE는 현재 파일당 최대 50 cycle이므로 64→16 예측은 입력 길이 또는 파일 연결 규칙을 먼저 정해야 합니다.
+
 기존 `.venv`는 그대로 사용할 수 있습니다. 현재 확인한 환경은 Python 3.12.10과 Intel Arc B390 XPU입니다.
 새 환경에서는 장치에 맞는 PyTorch를 먼저 설치한 뒤 나머지 패키지를 설치하세요.
 Intel GPU용 설치 인덱스는 [PyTorch 공식 안내](https://github.com/pytorch/pytorch/blob/main/docs/source/notes/get_start_xpu.md)를 따릅니다.

@@ -14,7 +14,7 @@ SOH_COLUMNS = ["dataset", "battery_id", "cycle", "capacity_ah", "soh", "capacity
 BATTERY_REQUIRED = ["dataset", "battery_id", "batch", "reference_method", "reference_cycle",
                     "reference_capacity_ah", "source_file", "source_sha256", "cycle_number_source"]
 EXCLUDED_FLAGS = {"initial_capacity_test", "nonfinite_capacity", "nonpositive_capacity",
-                  "unexpected_protocol"}
+                  "unexpected_protocol", "known_collection_issue"}
 
 
 def sha256(path):
@@ -94,6 +94,9 @@ def observed_windows(rows, context_length=64, prediction_length=16, excluded_fla
     c = np.lib.stride_tricks.sliding_window_view(cycles, total)
     mask = np.lib.stride_tricks.sliding_window_view(valid, total).all(axis=1)
     mask &= (np.diff(c, axis=1) == 1).all(axis=1)
+    if "segment_id" in rows:
+        segments = np.lib.stride_tricks.sliding_window_view(rows.segment_id.to_numpy(), total)
+        mask &= (segments == segments[:, :1]).all(axis=1)
     return {"context": v[mask, :context_length].copy(), "target": v[mask, context_length:].copy(),
             "forecast_start": c[mask, context_length].copy(), "target_cycle": c[mask, context_length:].copy()}
 
