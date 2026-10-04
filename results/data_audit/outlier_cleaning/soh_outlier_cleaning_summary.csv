@@ -1,0 +1,8 @@
+group,rows_before,removed,rows_after,windows_before,windows_after
+xjtu_2c,3219,0,3219,2579,2579
+xjtu_3c,3742,0,3742,2542,2542
+nasa_aging,636,0,636,320,320
+mit_batch1,38811,2,38809,35131,35081
+mit_batch2,24920,2,24918,21128,20968
+mit_batch3,51007,0,51007,38080,38080
+calce_cs2_1c,3937,0,3937,0,0

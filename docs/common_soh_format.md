@@ -64,6 +64,23 @@
 
 ## Zero-shot 입력 준비
 
+예측용 급등 이상치 제거본은 다음 명령으로 별도 생성한다. [규칙·제거 수·전후 그림](../results/data_audit/outlier_cleaning/soh_outlier_cleaning_report.md)을 확인할 수 있다.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\clean_soh_outliers.py
+```
+
+`configs/soh_outlier_cleaning.json`에 고정한 보수적 규칙을 사용한다. 이전 최대 10개 유효 관측이 최소 5개 있을 때, 현재 SOH가 1.2 초과이고 과거 중앙값보다 0.2(20%p) 초과 높으면 `capacity_outlier`로 표시한다. 배터리·protocol·segment·cycle 연속성이 바뀌면 과거 이력을 다시 시작한다. 이후 관측과 전체 수명 통계로 판정하지 않는다. 작은 회복·급격한 열화·순간 하락은 이 규칙의 자동 제거 대상이 아니다.
+
+`data/processed/clean/<group>/soh.csv`는 해당 급등 관측을 제외한 데이터이며 기존 묶음은 그대로 보존한다. 같은 폴더의 `soh_flagged.csv`는 모든 행에 제외 표시를 남긴 비교용 데이터다. 정규화 기준·cycle 번호는 바꾸지 않고 보간하지 않는다. `observed_windows`는 제거로 생긴 cycle 간격을 건너뛰지 않는다. 표시본을 넘기면 `capacity_outlier`도 항상 제외하며, 기존 초기 시험·알 수 없는 protocol·수집 문제 제외 규칙도 유지한다.
+
+```python
+soh, batteries, manifest = load_bundle(Path("data/processed/clean/mit_batch1"))
+windows = observed_windows(soh[soh.battery_id == "b1c18"], 64, 16)
+```
+
+현재 4개 관측과 이들을 포함한 210개 window를 제외했다. target의 품질 제외 여부는 그 측정값을 관측한 후 결정되며, 정제된 평가 구간과 원래 구간은 다르다. 제거 전후 성능을 비교할 때 같은 평가 구간을 사용하고 제외 수를 함께 보고한다. 기존 NASA 02·03 실험 결과를 재평가한 것은 아니다.
+
 NASA·MIT·CALCE는 다음 명령으로 추출한다. dataset을 제한하려면 `--datasets mit calce`처럼 지정한다.
 
 ```powershell

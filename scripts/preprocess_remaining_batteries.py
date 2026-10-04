@@ -144,6 +144,10 @@ def write_overview():
               "- CALCE는 중복 내보내기를 제거하고 파일별 측정 구간을 구분했다. 파일당 최대 50 cycle이므로 현재 64→16 window는 없다. 예측 시 context를 줄이거나 파일 간 연속성을 확인해야 한다.",
               "- NASA 공통 포맷은 기존 02·03 실험과 같은 Q/Q1 기준이다.",
               "- 전체 CSV는 `data/processed/<dataset>/<group>/`에 저장하며 Git에서 제외한다. 검토 파일명에는 dataset과 group을 넣었다.", ""]
+    if (ROOT / "results/data_audit/outlier_cleaning/soh_outlier_cleaning_report.md").exists():
+        lines += ["예측용 급등 이상치 제거본: `data/processed/clean/<group>/`. "
+                  "[제거 목록·전후 그림·window 수](outlier_cleaning/soh_outlier_cleaning_report.md). "
+                  "위 표는 기존 가공본 기준이며 제거본 수치는 해당 보고서에 기록했다.", ""]
     (ROOT / "results/data_audit/battery_datasets_overview.md").write_text("\n".join(lines), encoding="utf-8")
 
 

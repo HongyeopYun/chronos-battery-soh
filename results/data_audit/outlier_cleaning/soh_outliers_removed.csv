@@ -1,0 +1,5 @@
+group,dataset,battery_id,cycle,capacity_ah,soh,past_median_soh,history_count,rule
+mit_batch1,mit,b1c0,12,1.5390544,1.4374427238081793,1.0028903812609673,10,large_upward_capacity_spike
+mit_batch1,mit,b1c18,40,2.8840845,2.7050875071107296,1.0033083357680597,10,large_upward_capacity_spike
+mit_batch2,mit,b2c12,253,1.4891191,1.3948015063026122,0.9518629648279613,10,large_upward_capacity_spike
+mit_batch2,mit,b2c44,248,1.5447184,1.4484311849604994,0.997905908698069,10,large_upward_capacity_spike

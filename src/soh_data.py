@@ -14,7 +14,7 @@ SOH_COLUMNS = ["dataset", "battery_id", "cycle", "capacity_ah", "soh", "capacity
 BATTERY_REQUIRED = ["dataset", "battery_id", "batch", "reference_method", "reference_cycle",
                     "reference_capacity_ah", "source_file", "source_sha256", "cycle_number_source"]
 EXCLUDED_FLAGS = {"initial_capacity_test", "nonfinite_capacity", "nonpositive_capacity",
-                  "unexpected_protocol", "known_collection_issue"}
+                  "unexpected_protocol", "known_collection_issue", "capacity_outlier"}
 
 
 def sha256(path):
@@ -78,7 +78,8 @@ def observed_windows(rows, context_length=64, prediction_length=16, excluded_fla
         raise ValueError("Pass exactly one battery to observed_windows")
     if rows.cycle.duplicated().any() or not rows.cycle.is_monotonic_increasing:
         raise ValueError("Duplicate or unordered cycle numbers")
-    excluded = EXCLUDED_FLAGS if excluded_flags is None else set(excluded_flags)
+    excluded = set(EXCLUDED_FLAGS if excluded_flags is None else excluded_flags)
+    excluded.add("capacity_outlier")
     cycles = rows.cycle.to_numpy(dtype=np.int64)
     values = rows.soh.to_numpy(dtype=np.float64)
     valid = (rows.is_observed.to_numpy(dtype=bool) & np.isfinite(values) &
