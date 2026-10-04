@@ -20,19 +20,17 @@ from src.xjtu_preprocessing import preprocess
 
 def report(data, audit, manifest, output, bundle):
     output.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(bundle / "audit.csv", output / "audit.csv")
-    shutil.copy2(bundle / "batteries.csv", output / "batteries.csv")
-    shutil.copy2(bundle / "manifest.json", output / "manifest.json")
-    shutil.copy2(bundle / "schema.json", output / "schema.json")
+    for name in ("audit.csv", "batteries.csv", "manifest.json", "schema.json"):
+        shutil.copy2(bundle / name, output / f"xjtu_2c_{name}")
     preview = pd.concat([rows.iloc[sorted(set(range(min(3, len(rows)))) |
                                               set(range(max(0, len(rows)-2), len(rows))))]
                          for _, rows in data.groupby(["dataset", "battery_id"], sort=False)],
                         ignore_index=True) if len(data) else data
-    preview.to_csv(output / "soh_preview.csv", index=False, float_format="%.17g")
+    preview.to_csv(output / "xjtu_2c_soh_preview.csv", index=False, float_format="%.17g")
     events = data[data.quality_flags.str.contains("initial_capacity_test|protocol_transition|large_soh_change", regex=True)].copy()
     changes = data.groupby(["dataset", "battery_id"], sort=False).soh.diff()
     events["soh_change"] = changes.loc[events.index]
-    events.to_csv(output / "quality_events.csv", index=False, float_format="%.17g")
+    events.to_csv(output / "xjtu_2c_quality_events.csv", index=False, float_format="%.17g")
     if len(data):
         fig, axes = plt.subplots(2, 4, figsize=(15, 7), sharey=True)
         for ax, (battery, rows) in zip(axes.flat, data.groupby("battery_id", sort=False)):
@@ -46,7 +44,7 @@ def report(data, audit, manifest, output, bundle):
         axes.flat[0].legend(fontsize=8)
         fig.suptitle("XJTU Batch 1: 2C charge / 1C discharge\nAll measured cycles retained; cycle 1 is excluded only when constructing forecast windows")
         fig.tight_layout()
-        fig.savefig(output / "soh_curves.png", dpi=180)
+        fig.savefig(output / "xjtu_2c_soh_curves.png", dpi=180)
         plt.close(fig)
     lines = ["# XJTU 2C 데이터 Audit 및 공통 SOH 추출", "",
              f"상태: **{manifest['status']}**. 배터리 {manifest['n_batteries']}개, cycle 관측 {manifest['n_rows']:,}개.", "",
@@ -70,16 +68,16 @@ def report(data, audit, manifest, output, bundle):
                          f"{row['last_soh']:.6f} | {row['n_capacity_increases']} | {row['n_large_soh_changes']} | {row['n_prediction_windows']} | {row['status']} |")
     lines += ["", "`passed_with_notes`는 오류가 아니라 초기 시험 조건 차이·용량 증가 관측 등을 기록했다는 뜻이다.",
               "정규화 기준 Q1을 유지하므로 cycle 2의 SOH가 1보다 작은 것은 정상이다. 용량 증가를 열화 제거 대상으로 취급하지 않는다.", "",
-              "큰 SOH 변화는 측정 이상인지 실제 거동인지 확정하지 않았다. `quality_events.csv`에 초기 시험·조건 전환·큰 변화의 cycle을 기록했다.", "",
-              "![XJTU 2C SOH curves](soh_curves.png)", "", "## 산출물", "",
+              "큰 SOH 변화는 측정 이상인지 실제 거동인지 확정하지 않았다. `xjtu_2c_quality_events.csv`에 초기 시험·조건 전환·큰 변화의 cycle을 기록했다.", "",
+              "![XJTU 2C SOH curves](xjtu_2c_soh_curves.png)", "", "## 산출물", "",
               f"전체 공통 데이터: `{bundle.relative_to(ROOT) if bundle.is_relative_to(ROOT) else bundle}`.",
               "`soh.csv`, `batteries.csv`, `audit.csv`, `schema.json`, `manifest.json`을 저장했다.",
               "전체 가공 데이터는 gitignore 대상이다. 이 보고서 폴더에는 audit·메타데이터·해시·40행 미리보기·그림을 보관한다.", "",
               "```powershell", ".\\.venv\\Scripts\\python.exe scripts\\preprocess_xjtu_2c.py", "```", ""]
-    (output / "report.md").write_text("\n".join(lines), encoding="utf-8")
-    write_json(output / "report_provenance.json", {"bundle_manifest_sha256": sha256(bundle / "manifest.json"),
+    (output / "xjtu_2c_report.md").write_text("\n".join(lines), encoding="utf-8")
+    write_json(output / "xjtu_2c_report_provenance.json", {"bundle_manifest_sha256": sha256(bundle / "manifest.json"),
         "report_script_sha256": sha256(Path(__file__)),
-        "report_artifact_sha256": {p.name: sha256(p) for p in sorted(output.iterdir()) if p.is_file() and p.name != "report_provenance.json"}})
+        "report_artifact_sha256": {p.name: sha256(p) for p in sorted(output.iterdir()) if p.is_file() and p.name != "xjtu_2c_report_provenance.json"}})
 
 
 def main():
@@ -94,7 +92,7 @@ def main():
     report(data, audit, manifest, args.report_dir.resolve(), args.output.resolve())
     print(audit.to_string(index=False), flush=True)
     print("BUNDLE=" + str(args.output.resolve()), flush=True)
-    print("REPORT=" + str((args.report_dir / "report.md").resolve()), flush=True)
+    print("REPORT=" + str((args.report_dir / "xjtu_2c_report.md").resolve()), flush=True)
     if manifest["status"] != "complete":
         raise SystemExit("Extraction audit failed; inspect audit.csv before forecasting")
 

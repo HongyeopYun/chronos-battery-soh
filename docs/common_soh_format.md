@@ -38,7 +38,7 @@
 - cycle 번호는 공개 MAT `data` 배열의 1-based 위치다. 제작자 코드와 같은 인덱스이지만 원래 장비 기록의 누락 여부까지 검증한 것은 아니다. `cycle_number_source`에 이 한계를 기록한다.
 - `summary.cycle_life`는 metadata로 보존하며 행을 자르는 기준으로 사용하지 않는다.
 - 용량 증가·SOH > 1은 각각 `capacity_increase`, `soh_above_one`으로 표시하고 보존한다. 보간, 평활화, clipping, 강제 단조 감소를 하지 않는다.
-- 같은 시험 조건에서 직전 cycle 대비 SOH 변화의 절댓값이 0.01(1%p)을 초과하면 `large_soh_change`로 표시한다. 이는 설정 가능한 검토 기준이며 측정 오류 판정이나 예측 제외 기준이 아니다. 시험 조건 변경은 `protocol_transition`으로 구분한다. 주요 표시가 있는 관측은 보고서의 `quality_events.csv`에도 저장한다.
+- 같은 시험 조건에서 직전 cycle 대비 SOH 변화의 절댓값이 0.01(1%p)을 초과하면 `large_soh_change`로 표시한다. 이는 설정 가능한 검토 기준이며 측정 오류 판정이나 예측 제외 기준이 아니다. 시험 조건 변경은 `protocol_transition`으로 구분한다. 주요 표시가 있는 관측은 보고서의 `xjtu_2c_quality_events.csv`에도 저장한다.
 - NaN·무한대·0 이하 용량도 행을 유지하고 표시한다. 초기 기준 용량 자체가 유효하지 않으면 대체 기준을 자동 선택하지 않고 해당 파일을 실패로 기록한다.
 - [제작자의 실험 설명](https://wang-fujin.github.io/)과 공개 MAT의 cycle 설명을 함께 사용한다. 다른 XJTU batch의 부분 방전·기준 시험 측정은 별도 추출 규칙이 필요하다.
 
@@ -50,7 +50,9 @@
 .\.venv\Scripts\python.exe scripts\preprocess_xjtu_3c.py
 ```
 
-3C 설정은 `configs/xjtu_3c_preprocess.json`, 전체 데이터는 `data/processed/XJTU/3C/`에 저장한다. 검토용 결과는 [3C SOH 곡선과 요약](../results/data_audit/xjtu_3c/report.md), `soh_curves.png`, `batteries.csv`, 간소화한 `audit.csv`만 보관한다. 정상적인 필수 확인 결과는 `passed`다. 전체 데이터 묶음의 스키마·해시는 로컬 manifest에 유지한다.
+3C 설정은 `configs/xjtu_3c_preprocess.json`, 전체 데이터는 `data/processed/XJTU/3C/`에 저장한다. 검토용 결과는 [3C SOH 곡선과 요약](../results/data_audit/xjtu_3c/xjtu_3c_report.md), `xjtu_3c_soh_curves.png`, `xjtu_3c_batteries.csv`, 간소화한 `xjtu_3c_audit.csv`만 보관한다. 정상적인 필수 확인 결과는 `passed`다. 전체 데이터 묶음의 스키마·해시는 로컬 manifest에 유지한다.
+
+`results/data_audit/`의 검토용 파일은 `<dataset>_<group>_<내용>.<확장자>`로 이름을 붙인다. 예: `xjtu_2c_audit.csv`, `xjtu_3c_soh_curves.png`. 파일만 따로 열거나 복사해도 데이터셋과 시험 그룹을 구분할 수 있다. `data/processed/`의 공통 데이터 묶음은 기존 공통 파일명과 로더 규칙을 사용한다.
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\preprocess_xjtu_2c.py

@@ -31,9 +31,9 @@
 `passed_with_notes`는 오류가 아니라 초기 시험 조건 차이·용량 증가 관측 등을 기록했다는 뜻이다.
 정규화 기준 Q1을 유지하므로 cycle 2의 SOH가 1보다 작은 것은 정상이다. 용량 증가를 열화 제거 대상으로 취급하지 않는다.
 
-큰 SOH 변화는 측정 이상인지 실제 거동인지 확정하지 않았다. `quality_events.csv`에 초기 시험·조건 전환·큰 변화의 cycle을 기록했다.
+큰 SOH 변화는 측정 이상인지 실제 거동인지 확정하지 않았다. `xjtu_2c_quality_events.csv`에 초기 시험·조건 전환·큰 변화의 cycle을 기록했다.
 
-![XJTU 2C SOH curves](soh_curves.png)
+![XJTU 2C SOH curves](xjtu_2c_soh_curves.png)
 
 ## 산출물
 

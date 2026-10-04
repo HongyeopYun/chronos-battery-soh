@@ -1,0 +1,14 @@
+{
+  "bundle_manifest_sha256": "a7a01dca68fa29258f4a7cbbf33b3f5e68ae226ca0db906cc68e02cd003cc24f",
+  "report_script_sha256": "f7d4dfc9404b641a9944faff14cb374f6d35c33964da94f9c19f30d42d56aeeb",
+  "report_artifact_sha256": {
+    "xjtu_2c_audit.csv": "395bde5a10591b6183fd480b2c816bf93c5a351a06c06a2c9b6b3eb783edc8f5",
+    "xjtu_2c_batteries.csv": "644498c9950aba534911cdce5576eec3fe11a990cfca6c1ab0c0aa23d5cebd3e",
+    "xjtu_2c_manifest.json": "a7a01dca68fa29258f4a7cbbf33b3f5e68ae226ca0db906cc68e02cd003cc24f",
+    "xjtu_2c_quality_events.csv": "0a0ff8683d1027d78dd84ccaa80913a8a0938c1b41770e477b47d452998d8e2c",
+    "xjtu_2c_report.md": "84da5c0038a0323f3ace8da02d99d80e0b6279af1c1a534e0c24fe6c9cbc35a9",
+    "xjtu_2c_schema.json": "78a2284e0c14c13132b4ce2c7b4e41adc70b5e78d00f8a95d11524fd33d85fe3",
+    "xjtu_2c_soh_curves.png": "15b9bae3f70c849761c07f7e69a9c082de323eb9e62b3ee5c4f002eb0c300d51",
+    "xjtu_2c_soh_preview.csv": "6ac0acf2d917ea205a385c16f48befede5366c66d569f411ae1392b1a7a44736"
+  }
+}
