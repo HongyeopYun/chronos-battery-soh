@@ -17,15 +17,54 @@ def policy():
     return json.loads((ROOT / "configs/xjtu_2c_preprocess.json").read_text(encoding="utf-8"))
 
 
-def save_source(path, q, descriptions=None, cycle_life=None):
-    descriptions = descriptions or [INITIAL_DESCRIPTION] + [NORMAL_DESCRIPTION] * (len(q)-1)
+def save_source(path, q, descriptions=None, cycle_life=None, rate=2):
+    descriptions = descriptions or [INITIAL_DESCRIPTION] + [f"{rate}C charge and 1C discharge"] * (len(q)-1)
     savemat(path, {"summary": {"discharge_capacity_Ah": np.array(q), "charge_capacity_Ah": np.full(len(q), 999.),
                               "cycle_life": len(q) if cycle_life is None else cycle_life,
-                              "description": "2C charge experiment"},
+                              "description": f"{rate}C charge experiment"},
                    "data": np.array([{"description": d} for d in descriptions], dtype=object)})
 
 
 class CommonSOHTests(unittest.TestCase):
+    def test_3c_essential_bundle_preserves_curve_and_checks_protocol(self):
+        selection = json.loads((ROOT / "configs/xjtu_3c_preprocess.json").read_text(encoding="utf-8"))
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            raw = root / "raw"
+            raw.mkdir()
+            q = np.linspace(2., 1.6, 90)
+            q[49] = 2.1  # Recovery and SOH > 1 must survive essential-only checks.
+            for i in range(1, 16):
+                save_source(raw / f"3C_battery-{i}.mat", q, rate=3)
+            data, batteries, audit, manifest = preprocess(raw, root / "processed", selection)
+            loaded, _, _ = load_bundle(root / "processed")
+            self.assertEqual(manifest["status"], "complete")
+            self.assertEqual(batteries.battery_id.tolist(), [f"batch2_3C_battery-{i}" for i in range(1, 16)])
+            self.assertTrue((batteries.charge_rate_c == 3).all())
+            self.assertTrue((batteries.discharge_rate_c == 1).all())
+            self.assertTrue((audit.status == "passed").all())
+            self.assertEqual(int(audit.n_prediction_windows.sum()), 150)
+            self.assertNotIn("n_large_soh_changes", audit.columns)
+            rows = loaded[loaded.battery_id == "batch2_3C_battery-1"]
+            np.testing.assert_allclose(rows.capacity_ah, q)
+            self.assertEqual(rows.iloc[49].quality_flags, "")
+            self.assertEqual(rows.iloc[1].protocol_id, "cccv_3c_charge_1c_discharge")
+            self.assertEqual(len(observed_windows(rows)["target"]), 10)
+            save_source(raw / "3C_battery-1.mat", [2., float("nan"), 0., 1.8], rate=3,
+                        descriptions=[INITIAL_DESCRIPTION, "3C charge and 1C discharge", "3C charge and 1C discharge", "partial discharge"])
+            _, _, failed = extract_battery(raw / "3C_battery-1.mat", selection)
+            self.assertEqual(failed["status"], "failed")
+            self.assertEqual(failed["n_nonfinite_capacity"], 1)
+            self.assertEqual(failed["n_nonpositive_capacity"], 1)
+            self.assertEqual(failed["n_unexpected_protocol"], 1)
+            with self.assertRaisesRegex(ValueError, "do not match"):
+                extract_battery(raw / "3C_battery-1.mat", dict(selection, normal_charge_rate_c=2))
+            with self.assertRaisesRegex(ValueError, "Not an XJTU"):
+                extract_battery(raw / "3C_battery-1.mat", policy())
+            (raw / "3C_battery-15.mat").unlink()
+            with self.assertRaisesRegex(ValueError, "Expected exactly"):
+                preprocess(raw, root / "missing", selection)
+
     def test_extracts_discharge_and_keeps_initial_reference_and_recovery(self):
         with TemporaryDirectory() as temporary:
             source = Path(temporary) / "2C_battery-1.mat"

@@ -1,6 +1,6 @@
 # 데이터셋 Audit 및 공통 SOH 포맷 v1
 
-데이터셋마다 측정 조건을 보존하면서 cycle별 용량과 SOH를 같은 구조로 저장한다. 최초 구현은 XJTU Batch 1의 2C 충전 배터리 8개다. 현재 NASA 02·03의 데이터·실험 코드와 저장된 결과는 유지한다.
+데이터셋마다 측정 조건을 보존하면서 cycle별 용량과 SOH를 같은 구조로 저장한다. XJTU Batch 1의 2C 충전 배터리 8개와 Batch 2의 3C 충전 배터리 15개를 지원한다. 현재 NASA 02·03의 데이터·실험 코드와 저장된 결과는 유지한다.
 
 ## 공통 데이터 묶음
 
@@ -43,6 +43,14 @@
 - [제작자의 실험 설명](https://wang-fujin.github.io/)과 공개 MAT의 cycle 설명을 함께 사용한다. 다른 XJTU batch의 부분 방전·기준 시험 측정은 별도 추출 규칙이 필요하다.
 
 ## 실행과 결과
+
+3C는 필수 확인과 SOH 곡선 중심으로 간소화했다. `summary.discharge_capacity_Ah`와 cycle 수 일치, 유효한 용량, 첫 cycle의 초기 시험 및 이후 3C 충전·1C 방전 조건, 공통 포맷의 기본키·Q/Q1 일관성을 확인한다. 용량 회복·급변은 곡선에서 확인하며 별도 이벤트 목록이나 변화량 임계값 Audit을 만들지 않는다. 모든 관측값을 보존하는 원칙과 초기 시험을 예측 window에서 제외하는 규칙은 2C와 같다. 기존 2C 결과는 유지한다.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\preprocess_xjtu_3c.py
+```
+
+3C 설정은 `configs/xjtu_3c_preprocess.json`, 전체 데이터는 `data/processed/XJTU/3C/`에 저장한다. 검토용 결과는 [3C SOH 곡선과 요약](../results/data_audit/xjtu_3c/report.md), `soh_curves.png`, `batteries.csv`, 간소화한 `audit.csv`만 보관한다. 정상적인 필수 확인 결과는 `passed`다. 전체 데이터 묶음의 스키마·해시는 로컬 manifest에 유지한다.
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\preprocess_xjtu_2c.py

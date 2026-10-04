@@ -1,10 +1,8 @@
-"""Audit and extract XJTU Batch 1 (2C charging) into the common SOH format."""
+"""Extract XJTU Batch 1/2 into the common SOH format."""
 from __future__ import annotations
 
 import gc
-import json
 from pathlib import Path
-import re
 
 import numpy as np
 import pandas as pd
@@ -15,12 +13,30 @@ from src.soh_data import (SCHEMA_VERSION, SOH_COLUMNS, load_bundle, observed_win
 
 INITIAL_DESCRIPTION = "0.5C charge and 0.2C discharge [test capacity]"
 NORMAL_DESCRIPTION = "2C charge and 1C discharge"
+PROFILES = {"batch1": (2, 8), "batch2": (3, 15)}
+
+
+def source_profile(policy):
+    if policy["dataset"] != "xjtu" or policy["batch"] not in PROFILES:
+        raise ValueError("This extractor supports XJTU Batch 1 and 2 only")
+    rate, count = PROFILES[policy["batch"]]
+    if (policy["normal_charge_rate_c"] != rate or policy["normal_discharge_rate_c"] != 1
+            or policy["expected_batteries"] != count
+            or policy["source_pattern"] != f"{rate}C_battery-*.mat"
+            or policy["initial_charge_rate_c"] != .5 or policy["initial_discharge_rate_c"] != .2):
+        raise ValueError("Source selection and rates do not match the XJTU batch")
+    if policy.get("audit_level", "detailed") not in {"detailed", "essential"}:
+        raise ValueError("Unsupported audit level")
+    return rate, count
 
 
 def extract_battery(path, policy):
     path = Path(path)
-    if not re.fullmatch(r"2C_battery-[1-8]\.mat", path.name):
-        raise ValueError(f"Not an XJTU Batch-1 source: {path.name}")
+    rate, count = source_profile(policy)
+    if path.name not in {f"{rate}C_battery-{i}.mat" for i in range(1, count + 1)}:
+        raise ValueError(f"Not an XJTU {policy['batch']} source: {path.name}")
+    normal_description = f"{rate}C charge and 1C discharge"
+    detailed = policy.get("audit_level", "detailed") == "detailed"
     raw = loadmat(path, simplify_cells=True, variable_names=["summary", "data"])
     summary, data = raw["summary"], raw["data"]
     data = [data] if isinstance(data, dict) else list(data)
@@ -29,7 +45,7 @@ def extract_battery(path, policy):
         raise ValueError("Capacity and raw cycle counts do not match")
     if not np.isfinite(q[0]) or q[0] <= 0:
         raise ValueError("First-cycle reference capacity is invalid; no fallback normalization is allowed")
-    if str(summary["description"]).strip() != "2C charge experiment":
+    if str(summary["description"]).strip() != f"{rate}C charge experiment":
         raise ValueError("Unexpected summary experiment description")
     battery = f"{policy['batch']}_{path.stem}"
     descriptions = [str(c["description"]).strip() for c in data]
@@ -37,7 +53,7 @@ def extract_battery(path, policy):
     rows = []
     for i, (capacity, value, description) in enumerate(zip(q, soh, descriptions)):
         flags = []
-        expected = INITIAL_DESCRIPTION if i == 0 else NORMAL_DESCRIPTION
+        expected = INITIAL_DESCRIPTION if i == 0 else normal_description
         if i == 0:
             flags.append("initial_capacity_test")
         if description != expected:
@@ -46,20 +62,20 @@ def extract_battery(path, policy):
             flags.append("nonfinite_capacity")
         elif capacity <= 0:
             flags.append("nonpositive_capacity")
-        if i and np.isfinite(capacity) and np.isfinite(q[i-1]) and capacity > q[i-1]:
+        if detailed and i and np.isfinite(capacity) and np.isfinite(q[i-1]) and capacity > q[i-1]:
             flags.append("capacity_increase")
-        if i and description != descriptions[i-1]:
+        if detailed and i and description != descriptions[i-1]:
             flags.append("protocol_transition")
-        if (i and description == descriptions[i-1] and np.isfinite(value) and np.isfinite(soh[i-1])
+        if (detailed and i and description == descriptions[i-1] and np.isfinite(value) and np.isfinite(soh[i-1])
                 and abs(value - soh[i-1]) > policy["large_soh_change_threshold"]):
             flags.append("large_soh_change")
-        if np.isfinite(value) and value > 1:
+        if detailed and np.isfinite(value) and value > 1:
             flags.append("soh_above_one")
         rows.append({"dataset": policy["dataset"], "battery_id": battery, "cycle": i + 1,
                      "capacity_ah": capacity, "soh": value,
                      "capacity_kind": "unknown" if description != expected else ("reference_test" if i == 0 else "full_discharge"),
                      "is_observed": True, "quality_flags": ";".join(flags),
-                     "protocol_id": "unknown" if description != expected else ("initial_capacity_test" if i == 0 else "cccv_2c_charge_1c_discharge"),
+                     "protocol_id": "unknown" if description != expected else ("initial_capacity_test" if i == 0 else f"cccv_{rate}c_charge_1c_discharge"),
                      "cycle_description": description})
     frame = pd.DataFrame(rows, columns=SOH_COLUMNS)
     metadata = {"dataset": policy["dataset"], "battery_id": battery, "batch": policy["batch"],
@@ -77,7 +93,7 @@ def extract_battery(path, policy):
     windows = observed_windows(frame, policy["context_length"], policy["prediction_length"],
                                policy["prediction_excluded_flags"])
     n_invalid = int((~np.isfinite(q) | (q <= 0)).sum())
-    n_protocol = sum(d != (INITIAL_DESCRIPTION if i == 0 else NORMAL_DESCRIPTION)
+    n_protocol = sum(d != (INITIAL_DESCRIPTION if i == 0 else normal_description)
                      for i, d in enumerate(descriptions))
     notes = ["initial_cycle_protocol_change", "cycle_numbers_from_array_position"]
     if np.any(np.diff(q) > 0):
@@ -105,6 +121,13 @@ def extract_battery(path, policy):
              "prediction_ready": bool(len(windows["target"])) and not (n_invalid or n_protocol),
              "first_forecast_cycle": int(windows["forecast_start"][0]) if len(windows["target"]) else None,
              "notes": ";".join(notes), "error": ""}
+    if not detailed:
+        audit = {key: audit[key] for key in [
+            "dataset", "battery_id", "source_file", "status", "n_source_cycles", "n_extracted_cycles",
+            "n_nonfinite_capacity", "n_nonpositive_capacity", "n_unexpected_protocol",
+            "reference_capacity_ah", "last_soh", "n_prediction_windows", "error"]}
+        if not n_invalid and not n_protocol:
+            audit["status"] = "passed"
     del raw, data
     gc.collect()
     return frame, metadata, audit
@@ -114,13 +137,12 @@ def preprocess(raw_directory, destination, policy):
     raw_directory, destination = Path(raw_directory).resolve(), Path(destination).resolve()
     if policy["schema_version"] != SCHEMA_VERSION or policy["reference_method"] != "first_cycle" or policy["reference_cycle"] != 1:
         raise ValueError("Unsupported schema or normalization policy")
-    if policy["dataset"] != "xjtu" or policy["batch"] != "batch1":
-        raise ValueError("This extractor supports XJTU Batch 1 only")
-    if not np.isfinite(policy["large_soh_change_threshold"]) or policy["large_soh_change_threshold"] <= 0:
+    rate, count = source_profile(policy)
+    if policy.get("audit_level", "detailed") == "detailed" and (not np.isfinite(policy["large_soh_change_threshold"]) or policy["large_soh_change_threshold"] <= 0):
         raise ValueError("Large-change audit threshold must be positive and finite")
     paths = sorted(raw_directory.glob(policy["source_pattern"]), key=lambda p: int(p.stem.split("-")[-1]))
-    if len(paths) != policy["expected_batteries"] or {p.name for p in paths} != {f"2C_battery-{i}.mat" for i in range(1, 9)}:
-        raise ValueError("Expected exactly 2C_battery-1.mat through 2C_battery-8.mat")
+    if len(paths) != count or {p.name for p in paths} != {f"{rate}C_battery-{i}.mat" for i in range(1, count + 1)}:
+        raise ValueError(f"Expected exactly {rate}C_battery-1.mat through {rate}C_battery-{count}.mat")
     if raw_directory == destination or raw_directory in destination.parents:
         raise ValueError("Processed output must be outside the raw directory")
     destination.mkdir(parents=True, exist_ok=True)
@@ -128,7 +150,7 @@ def preprocess(raw_directory, destination, policy):
                 "source_files": {p.name: sha256(p) for p in paths},
                 "implementation_sha256": {"src/soh_data.py": sha256(Path(__file__).with_name("soh_data.py")),
                                            "src/xjtu_preprocessing.py": sha256(Path(__file__))},
-                "scope": "XJTU Batch 1 only; no prediction or training performed",
+                "scope": f"XJTU {policy['batch']} only; no prediction or training performed",
                 "cycle_semantics": "1-based positions in the published MAT data array; acquisition gaps cannot be independently inferred",
                 "interpolation": "none", "smoothing": "none", "rows_dropped": 0}
     write_json(destination / "manifest.json", manifest)
@@ -143,7 +165,7 @@ def preprocess(raw_directory, destination, policy):
             metadata.append(battery)
             audits.append(audit)
         except (ValueError, KeyError, TypeError, OSError, AssertionError) as error:
-            audits.append({"dataset": "xjtu", "battery_id": f"batch1_{path.stem}", "source_file": path.name,
+            audits.append({"dataset": "xjtu", "battery_id": f"{policy['batch']}_{path.stem}", "source_file": path.name,
                            "status": "failed", "error": f"{type(error).__name__}: {error}"})
     data = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=SOH_COLUMNS)
     batteries = pd.DataFrame(metadata)
