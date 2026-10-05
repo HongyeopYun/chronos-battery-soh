@@ -1,4 +1,4 @@
-# NASA battery SOH forecasting with Chronos
+# Battery SOH forecasting with Chronos
 
 02는 Chronos T5 zero-shot, 03은 배터리 단위 leave-one-battery-out(LOBO) LoRA 실험입니다.
 데이터 처리·추론은 `src/soh_experiment.py`를 공유하고, 현재 03의 학습·선택은 `src/soh_checkpoint.py`를 사용합니다.
@@ -53,9 +53,9 @@ EOS 제외 진단은 `scripts/diagnose_training.py`로 별도 실행했으며, �
 
 ## 환경과 실행
 
-XJTU 2C 배터리 8개의 [Audit 및 공통 SOH 포맷](docs/common_soh_format.md)을 추가했습니다. `python scripts/preprocess_xjtu_2c.py`로 추출하며, 검토 결과는 [XJTU 2C 보고서](results/data_audit/xjtu_2c/xjtu_2c_report.md)에 있습니다. Q1 기준으로 모든 cycle을 보존하고 초기 시험은 예측용 window 생성 단계에서 제외합니다.
+XJTU 2C 배터리 8개의 [Audit 및 공통 SOH 포맷](docs/common_soh_format.md)을 추가했습니다. `python scripts/preprocess_xjtu.py --group 2c`로 추출하며, 검토 결과는 [XJTU 2C 보고서](results/data_audit/xjtu_2c/xjtu_2c_report.md)에 있습니다. Q1 기준으로 모든 cycle을 보존하고 초기 시험은 예측용 window 생성 단계에서 제외합니다.
 
-XJTU 3C 배터리 15개는 `python scripts/preprocess_xjtu_3c.py`로 추출합니다. 필수 오류 확인만 수행하고 [3C SOH 곡선과 요약](results/data_audit/xjtu_3c/xjtu_3c_report.md)을 저장합니다. 이후 cycle은 3C 충전·1C 방전이며, 전체 데이터는 `data/processed/XJTU/3C/`에 있습니다.
+XJTU 3C 배터리 15개는 `python scripts/preprocess_xjtu.py --group 3c`로 추출합니다. 필수 오류 확인만 수행하고 [3C SOH 곡선과 요약](results/data_audit/xjtu_3c/xjtu_3c_report.md)을 저장합니다. 이후 cycle은 3C 충전·1C 방전이며, 전체 데이터는 `data/processed/XJTU/3C/`에 있습니다. `--group all`로 두 그룹을 추출하고, `--reports-only`로 기존 가공본의 보고서·곡선만 갱신할 수 있습니다. 두 그룹 모두 검토 폴더에는 audit·배터리 메타데이터·보고서·곡선만 보관합니다.
 
 NASA 4개, MIT 3개 batch의 140개 기록, CALCE CS2 배터리 4개도 `python scripts/preprocess_remaining_batteries.py`로 공통 SOH 포맷에 추출합니다. [전체 가공 현황과 곡선](results/data_audit/battery_datasets_overview.md)에서 그룹별 결과를 확인할 수 있습니다. MIT의 연속 측정 배터리와 초기 0 용량, CALCE의 누적 용량·중복 내보내기·파일 경계를 구분합니다. CALCE는 현재 파일당 최대 50 cycle이므로 64→16 예측은 입력 길이 또는 파일 연결 규칙을 먼저 정해야 합니다.
 
@@ -148,6 +148,6 @@ LoRA adapter는 `models/<run_id>/<battery>_train<seed>/`에 저장합니다. git
 
 ## 이전 실험
 
-개선 전의 수정 중이던 노트북과 실행 출력은 `notebooks/archive/20260923_before_improvements/`에 그대로 복사해 두었습니다.
+개선 전 노트북은 Git 이력에 보관합니다. 별도 archive와 로컬 복구 백업은 정리했으며, 이전 archive는 커밋 `f5bf4cc`에서 복원할 수 있습니다.
 `results/metrics/`의 기존 결과도 보존합니다. 과거 실험은 20 samples 및 lower median을 사용했으므로 새 실험과 점수만 직접 비교하지 마세요.
 검토 내용은 `results/notebook_review_2026-09-23.md`에 있습니다.

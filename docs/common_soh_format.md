@@ -38,16 +38,16 @@
 - cycle 번호는 공개 MAT `data` 배열의 1-based 위치다. 제작자 코드와 같은 인덱스이지만 원래 장비 기록의 누락 여부까지 검증한 것은 아니다. `cycle_number_source`에 이 한계를 기록한다.
 - `summary.cycle_life`는 metadata로 보존하며 행을 자르는 기준으로 사용하지 않는다.
 - 용량 증가·SOH > 1은 각각 `capacity_increase`, `soh_above_one`으로 표시하고 보존한다. 보간, 평활화, clipping, 강제 단조 감소를 하지 않는다.
-- 같은 시험 조건에서 직전 cycle 대비 SOH 변화의 절댓값이 0.01(1%p)을 초과하면 `large_soh_change`로 표시한다. 이는 설정 가능한 검토 기준이며 측정 오류 판정이나 예측 제외 기준이 아니다. 시험 조건 변경은 `protocol_transition`으로 구분한다. 주요 표시가 있는 관측은 보고서의 `xjtu_2c_quality_events.csv`에도 저장한다.
+- 같은 시험 조건에서 직전 cycle 대비 SOH 변화의 절댓값이 0.01(1%p)을 초과하면 `large_soh_change`로 표시한다. 이는 설정 가능한 검토 기준이며 측정 오류 판정이나 예측 제외 기준이 아니다. 시험 조건 변경은 `protocol_transition`으로 구분한다. 이 표시는 공통 데이터의 `quality_flags`에서 확인하며 별도 이벤트 CSV는 만들지 않는다.
 - NaN·무한대·0 이하 용량도 행을 유지하고 표시한다. 초기 기준 용량 자체가 유효하지 않으면 대체 기준을 자동 선택하지 않고 해당 파일을 실패로 기록한다.
 - [제작자의 실험 설명](https://wang-fujin.github.io/)과 공개 MAT의 cycle 설명을 함께 사용한다. 다른 XJTU batch의 부분 방전·기준 시험 측정은 별도 추출 규칙이 필요하다.
 
 ## 실행과 결과
 
-3C는 필수 확인과 SOH 곡선 중심으로 간소화했다. `summary.discharge_capacity_Ah`와 cycle 수 일치, 유효한 용량, 첫 cycle의 초기 시험 및 이후 3C 충전·1C 방전 조건, 공통 포맷의 기본키·Q/Q1 일관성을 확인한다. 용량 회복·급변은 곡선에서 확인하며 별도 이벤트 목록이나 변화량 임계값 Audit을 만들지 않는다. 모든 관측값을 보존하는 원칙과 초기 시험을 예측 window에서 제외하는 규칙은 2C와 같다. 기존 2C 결과는 유지한다.
+2C·3C 추출과 보고서 생성은 `scripts/preprocess_xjtu.py` 하나로 실행한다. 3C는 필수 확인과 SOH 곡선 중심으로 간소화했다. `summary.discharge_capacity_Ah`와 cycle 수 일치, 유효한 용량, 첫 cycle의 초기 시험 및 이후 3C 충전·1C 방전 조건, 공통 포맷의 기본키·Q/Q1 일관성을 확인한다. 용량 회복·급변은 곡선에서 확인하며 별도 이벤트 목록이나 변화량 임계값 Audit을 만들지 않는다. 모든 관측값을 보존하는 원칙과 초기 시험을 예측 window에서 제외하는 규칙은 2C와 같다. 기존 2C 데이터와 상세 품질 표시는 유지한다.
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\preprocess_xjtu_3c.py
+.\.venv\Scripts\python.exe scripts\preprocess_xjtu.py --group 3c
 ```
 
 3C 설정은 `configs/xjtu_3c_preprocess.json`, 전체 데이터는 `data/processed/XJTU/3C/`에 저장한다. 검토용 결과는 [3C SOH 곡선과 요약](../results/data_audit/xjtu_3c/xjtu_3c_report.md), `xjtu_3c_soh_curves.png`, `xjtu_3c_batteries.csv`, 간소화한 `xjtu_3c_audit.csv`만 보관한다. 정상적인 필수 확인 결과는 `passed`다. 전체 데이터 묶음의 스키마·해시는 로컬 manifest에 유지한다.
@@ -55,10 +55,10 @@
 `results/data_audit/`의 검토용 파일은 `<dataset>_<group>_<내용>.<확장자>`로 이름을 붙인다. 예: `xjtu_2c_audit.csv`, `xjtu_3c_soh_curves.png`. 파일만 따로 열거나 복사해도 데이터셋과 시험 그룹을 구분할 수 있다. `data/processed/`의 공통 데이터 묶음은 기존 공통 파일명과 로더 규칙을 사용한다.
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\preprocess_xjtu_2c.py
+.\.venv\Scripts\python.exe scripts\preprocess_xjtu.py --group 2c
 ```
 
-설정은 `configs/xjtu_2c_preprocess.json`, 전체 데이터는 `data/processed/XJTU/2C/`, 검토용 결과는 `results/data_audit/xjtu_2c/`에 저장한다. 전체 가공 데이터는 Git에서 제외하고 Audit·metadata·manifest·schema·미리보기·SOH 그림은 보관한다. 원본 파일은 읽기만 한다.
+설정은 `configs/xjtu_2c_preprocess.json`, 전체 데이터는 `data/processed/XJTU/2C/`, 검토용 결과는 `results/data_audit/xjtu_2c/`에 저장한다. 두 그룹 모두 검토 폴더에는 audit·배터리 metadata·보고서·SOH 곡선만 보관한다. manifest·schema는 전체 데이터 묶음에서 관리하며 중복 복사나 미리보기 CSV를 만들지 않는다. 원본 파일은 읽기만 한다. `--group all`은 두 그룹을 처리하고 `--reports-only`는 기존 가공본에서 보고서·곡선만 다시 만든다.
 
 파일 하나라도 해석이나 Audit에 실패하면 manifest가 `audit_failed`가 되고 CLI가 실패 종료한다. `src.soh_data.load_bundle`도 이 상태의 데이터를 예측에 넘기지 않는다. `complete`일 때는 산출물 해시와 기본키·정규화 일관성을 다시 검사한다. 같은 입력·코드·설정으로 다시 실행하면 동일한 데이터 CSV를 생성한다.
 

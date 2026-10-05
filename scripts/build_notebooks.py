@@ -1,14 +1,12 @@
 """Build experiment notebooks, preserving outputs of unchanged cells."""
 import hashlib
 from pathlib import Path
-import shutil
 import sys
 
 import nbformat as nbf
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-ARCHIVE = ROOT / "notebooks" / "archive" / "20260923_before_improvements"
 
 SETUP = '''from pathlib import Path
 import sys
@@ -50,7 +48,7 @@ MAT의 방전 용량으로 `SOH = Qk / Q1`을 구성합니다. 실제 최근 64�
 
 R²는 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`로 계산한 뒤 배터리를 동일 가중치로 평균합니다. 1은 완벽한 예측, 0은 평가 target 평균을 항상 예측한 수준이며 음수도 가능합니다. Horizon/개별 window 점수는 해당 범위의 평균을 기준으로 합니다. 상수 target은 NaN입니다. 원본 실행 기록은 보존하고 R²를 포함한 파생 평가를 `results/evaluation_r2/`에 저장합니다.
 
-이전 노트북과 실행 출력은 `archive/20260923_before_improvements/`에 보관했습니다."""),
+이전 노트북은 Git 이력에 보관했습니다. 20-sample 실험의 결과는 `results/metrics/`에서 확인할 수 있습니다."""),
     ("code", SETUP),
     ("markdown", "## 원본 데이터 및 평가 윈도우\n정규화에는 첫 관측만 사용합니다. 배터리별 오차를 동일 가중치로 평균합니다."),
     ("code", '''soh_data = load_soh(PROJECT_ROOT, CONFIG)
@@ -166,11 +164,6 @@ display(Image(filename=str(DIAGNOSIS / "diagnosis_comparison.png"), width=1000))
 
 def write_notebook(name, cells):
     destination = ROOT / "notebooks" / name
-    backup = ARCHIVE / name
-    if destination.exists() and not backup.exists():
-        ARCHIVE.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(destination, backup)
-        assert hashlib.sha256(destination.read_bytes()).digest() == hashlib.sha256(backup.read_bytes()).digest()
     previous = nbf.read(destination, as_version=4) if destination.exists() else None
     notebook = nbf.v4.new_notebook()
     if previous is not None:

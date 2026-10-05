@@ -12,7 +12,7 @@ Junction과 hard link는 이 PC의 파일시스템 설정이며 Git에 포함되
 
 ## 노트북 정리
 
-이전 버전으로 저장됐던 02·03은 `notebooks/.ipynb_checkpoints/before_cleanup_20261001_141826/`에 백업하고 최신 커밋 기준으로 복구했다. 이 백업도 Git에서 제외한다.
+이전 버전으로 저장됐던 02·03은 2026-10-01에 최신 커밋 기준으로 복구했다. 2026-10-05 폴더 정리에서 예전 archive와 로컬 복구 백업을 제거했다. 복구 백업의 코드가 Git 이력과 같은지 확인했으며, 이전 archive는 커밋 `f5bf4cc`에서 확인할 수 있다. 노트북 생성기는 별도 archive를 다시 만들지 않는다.
 
 VS Code에 이전 노트북 탭이나 커널이 열려 있다면 탭을 닫고 현재 `chronos-battery-soh/notebooks/`의 파일을 다시 연 뒤 `.venv` 커널을 재시작한다. 생성 코드를 실행할 때는 다음 명령을 사용한다. 동일한 셀의 출력은 유지하고 내용이 바뀐 셀의 출력은 비운다.
 
@@ -21,3 +21,5 @@ VS Code에 이전 노트북 탭이나 커널이 열려 있다면 탭을 닫고 �
 ```
 
 기존 zero-shot, 과거 LoRA, 현재 LoRA의 데이터·예측·adapter 해시를 다시 검사한다. 완료된 호환 실행이 검증되면 저장된 결과를 사용한다. 현재 결과 확인에는 `FORCE_RERUN = False`를 유지한다.
+
+현재 데이터 가공은 `scripts/preprocess_xjtu.py`, `scripts/preprocess_remaining_batteries.py`, `scripts/clean_soh_outliers.py`로 실행한다. XJTU 2C·3C의 별도 CLI는 공통 CLI로 통합했다. 데이터 검토 결과는 `results/data_audit/`의 그룹별 보고서와 곡선을 사용한다. 예전 실행 로그와 당시 6개 테스트 통과를 적은 임시 검증 요약은 제거했고, 실제 재현성 검사·실험 manifest·원시 예측·adapter·R² 평가표는 유지한다.

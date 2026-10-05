@@ -52,8 +52,8 @@ R²는 저장된 예측에서 추가 계산했다. 배터리·seed별 전체 win
 ## 노트북을 읽거나 다시 실행할 때
 
 - [02](../notebooks/02_chronos_zeroshot.ipynb)의 마지막 절에 고정 zero-shot 지표가 있다.
-- [03](../notebooks/03_chronos_lora_lobo.ipynb)의 앞부분은 기존 EOS 포함 + refit 실험, 마지막 절은 저장된 EOS 제외 진단이다. 마지막 절은 CSV/PNG를 읽으며 새 학습을 하지 않는다.
-- `FORCE_RERUN=True` 또는 `scripts/run_experiment.py lora --force`는 **기존 LoRA 프로토콜**을 재실행한다. EOS 제외 실험으로 바뀌지 않는다. 후속 학습 명령은 진단 보고서에 있다.
+- [03](../notebooks/03_chronos_lora_lobo.ipynb)의 앞부분은 현재 EOS loss 제외·validation 유지·학습률 3개·best-checkpoint 실험, 마지막 절은 저장된 과거 EOS 제외 진단이다. 마지막 절은 CSV/PNG를 읽으며 새 학습을 하지 않는다.
+- 현재 03의 `FORCE_RERUN=True`는 best-checkpoint 실험을 재실행한다. `scripts/run_experiment.py lora --force`는 **기존 EOS 포함·epoch/refit 프로토콜**을 재실행한다. 두 실행 방식은 구분한다.
 - 노트북 마지막 절은 2026-09-29의 고정 결과다. 앞부분에서 설정을 바꾸어 새 run을 만들면 둘은 다른 실험이 된다.
 - `scripts/build_notebooks.py`가 노트북의 원본 템플릿이다. 동일한 셀의 기존 출력은 유지하며, 내용이 바뀐 코드 셀은 출력을 비운다.
 - `cuda-fullft`의 CUDA·KL·검증 정책 실험은 별도 브랜치의 다른 프로토콜이다. 그 결과와 여기의 개선율을 직접 비교하지 않는다.
