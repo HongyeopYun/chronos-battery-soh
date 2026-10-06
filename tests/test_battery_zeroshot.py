@@ -10,7 +10,7 @@ import pandas as pd
 
 from src.battery_zeroshot import (
     ZeroShotConfig, baseline_predictions, battery_zeroshot, prepare_battery_windows,
-    score_prediction, verify_battery_zeroshot,
+    refresh_battery_zeroshot, score_prediction, verify_battery_zeroshot, weighted_quantile_loss,
 )
 from src.soh_data import sha256, write_json
 from src.soh_experiment import load_config, load_soh, make_windows
@@ -49,11 +49,86 @@ def fake_predict(pipeline, context, config, seed):
         (len(context), config.num_samples, config.prediction_length)).copy()
 
 
-def fake_report(directory, *args):
+def fake_report(directory, *args, **kwargs):
     (directory / "report.md").write_text("test report", encoding="utf-8")
 
 
 class BatteryZeroShotTests(unittest.TestCase):
+    def test_wql_hand_calculation_scaling_quantile_direction_and_zero_denominator(self):
+        target = np.array([[2.]])
+        samples = np.array([[[1.]]])
+        self.assertAlmostEqual(weighted_quantile_loss(target, samples), .5)
+        self.assertAlmostEqual(weighted_quantile_loss(target * 10, samples * 10), .5)
+        self.assertAlmostEqual(weighted_quantile_loss(target, samples, (.9,)), .9)
+        self.assertAlmostEqual(weighted_quantile_loss(target, np.array([[[3.]]]), (.9,)), .1)
+        self.assertEqual(weighted_quantile_loss(target, target[:, None]), 0)
+        self.assertTrue(np.isnan(weighted_quantile_loss(np.zeros((1, 1)), samples)))
+        for levels in [(), (0.,), (1.,), (.5, .5), (.9, .1), (float("nan"),)]:
+            with self.assertRaises(ValueError):
+                weighted_quantile_loss(target, samples, levels)
+        with self.assertRaises(ValueError):
+            weighted_quantile_loss(target, np.ones((2, 1, 1)))
+
+    def test_picp_includes_interval_boundaries_and_all_metric_table_levels(self):
+        target = np.array([[1., 9.], [0., 10.]])
+        samples = np.broadcast_to(np.array([0., 10.])[None, :, None], (2, 2, 2)).copy()
+        record = {"dataset": "test", "battery_id": "test", "physical_battery_id": "test",
+                  "windows": {"target": target, "forecast_start": np.array([10, 20])}}
+        row, horizons, windows = score_prediction(record, np.full((2, 2), 5.), "Chronos", "median", samples=samples)
+        self.assertEqual(row["picp80"], .5)
+        self.assertEqual(row["width80"], 8.)
+        self.assertEqual([w["picp80"] for w in windows], [1., 0.])
+        self.assertEqual([h["picp80"] for h in horizons], [.5, .5])
+        for h, values in enumerate(horizons):
+            self.assertAlmostEqual(values["wql"], weighted_quantile_loss(target[:, h:h+1], samples[:, :, h:h+1]))
+        for i, values in enumerate(windows):
+            self.assertAlmostEqual(values["wql"], weighted_quantile_loss(target[i:i+1], samples[i:i+1]))
+        baseline, h, w = score_prediction(record, np.full((2, 2), 5.), "LastValue", "point")
+        self.assertTrue(all(np.isnan(values["wql"]) and np.isnan(values["picp80"]) for values in [baseline, *h, *w]))
+        float_samples = np.broadcast_to(np.array([1.01, 1.17], dtype=np.float32)[None, :, None], (2, 2, 2)).copy()
+        float_row, _, _ = score_prediction(record, np.full((2, 2), 1.09), "Chronos", "median", samples=float_samples)
+        quantiles = np.quantile(float_samples.astype(np.float64), [.1, .9], axis=1, method="linear")
+        self.assertEqual(float_row["width80"], (quantiles[1] - quantiles[0]).mean())
+
+    def test_wql_normalizes_across_targets_before_averaging_windows(self):
+        target = np.array([[1.], [100.]])
+        samples = np.array([[[0.]], [[100.]]])
+        self.assertAlmostEqual(weighted_quantile_loss(target, samples), 1 / 101)
+        per_window_average = np.mean([weighted_quantile_loss(target[i:i+1], samples[i:i+1]) for i in range(2)])
+        self.assertAlmostEqual(per_window_average, .5)
+
+    def test_metric_refresh_preserves_forecasts_and_original_manifest_without_inference(self):
+        with TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            bundle = save_bundle(base / "input", sizes=(10,))
+            cfg = ZeroShotConfig(context_length=3, prediction_length=2, num_samples=5, inference_seeds=(42,))
+            with patch("src.battery_zeroshot.fresh_pipeline", return_value=object()), \
+                 patch("src.battery_zeroshot.predict_samples", side_effect=fake_predict), \
+                 patch("src.battery_zeroshot.clear_device_cache"), \
+                 patch("src.battery_zeroshot_plots.write_report", side_effect=fake_report):
+                run = battery_zeroshot(bundle, cfg, base / "output")
+            manifest_path = run / "manifest.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["signature"]["implementation_sha256"]["battery_zeroshot.py"] = "earlier metric code"
+            write_json(manifest_path, manifest)
+            original = manifest_path.read_bytes()
+            raw = {p.name: sha256(p) for p in (run / "predictions").glob("*.npz")}
+            with patch("src.battery_zeroshot.fresh_pipeline") as factory, \
+                 patch("src.battery_zeroshot.predict_samples") as predict, \
+                 patch("src.battery_zeroshot_plots.write_report", side_effect=fake_report):
+                refresh_battery_zeroshot(run)
+                factory.assert_not_called(); predict.assert_not_called()
+                self.assertEqual(battery_zeroshot(bundle, cfg, base / "output"), run)
+                factory.assert_not_called()
+            self.assertEqual((run / "inference_manifest.json").read_bytes(), original)
+            self.assertEqual(raw, {p.name: sha256(p) for p in (run / "predictions").glob("*.npz")})
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            self.assertEqual(manifest["evaluation_protocol"]["primary_metrics"], ["rmse", "r2", "wql", "picp80"])
+            manifest["signature"]["implementation_sha256"]["soh_experiment.py"] = "changed inference"
+            write_json(manifest_path, manifest)
+            with self.assertRaisesRegex(ValueError, "inference/data implementation changed"):
+                refresh_battery_zeroshot(run)
+
     def test_preparation_preserves_gaps_masks_segments_and_sampling_identity(self):
         with TemporaryDirectory() as temporary:
             bundle = save_bundle(Path(temporary) / "input", flags={1: "initial_capacity_test", 50: "capacity_outlier"}, gap=70, segment=80)
@@ -104,7 +179,7 @@ class BatteryZeroShotTests(unittest.TestCase):
                 reference = battery[(battery.model == "Chronos") & (battery.estimator == "median")].rmse.mean()
                 actual = macro[(macro.model == "Chronos") & (macro.estimator == "median")].rmse_mean.iloc[0]
                 self.assertAlmostEqual(actual, reference)
-                self.assertTrue({"r2", "coverage80", "crps"}.issubset(metrics.columns))
+                self.assertTrue({"rmse", "r2", "wql", "picp80", "width80", "crps"}.issubset(metrics.columns))
                 single = battery_zeroshot(bundle, replace(cfg, battery_ids=("NA",)), base / "output")
                 self.assertEqual(verify_battery_zeroshot(single)["batteries_evaluated"], 1)
                 self.assertNotEqual(single, run)

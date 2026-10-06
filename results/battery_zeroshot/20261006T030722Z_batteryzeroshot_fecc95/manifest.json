@@ -49,8 +49,8 @@
     },
     "bundle_manifest_sha256": "aab68ab47c562c288fe9f984ba70fd194d482a67e39468084b3ef2a5c72e2b8c",
     "implementation_sha256": {
-      "battery_zeroshot.py": "7d8191bfac9cce9cf6ddce6ba61e4513232a382194071284ea9aef2fa650b315",
-      "battery_zeroshot_plots.py": "9f41a9880cdae0cfbfed7c0adfb73cc1fc3b8cb6e8edcbe6ab1db0572ac9ea50",
+      "battery_zeroshot.py": "da4307f8341da8d3cad43fbcd6cb1185f2577fdbc4e6cfa1c598ea9a7c40f58f",
+      "battery_zeroshot_plots.py": "3fc459f0fe3e08b8774a576c476a6040e54975ae9deaeb0e8faade7e57579afe",
       "soh_data.py": "587a744ab8f0ff335537a9a0d53c3118a844f571fc6f7f96e7b4356e8a7bdfc1",
       "soh_experiment.py": "7c9c3cbd7bad48ee97ea83ac040255354016782d2d35ea74020831ab96fa39a9",
       "soh_evaluation.py": "548cdd400d48faa7f26a09a46790b920513756c5bded72146f9da59e3c5eceb7",
@@ -103,15 +103,16 @@
   "protocol": "Observed rolling contexts; no training, clipping, interpolation or renormalization. Equal battery-record weights, seeds averaged. Overlapping windows are not independent.",
   "finished_at": "2026-10-06T03:08:20.564855+00:00",
   "artifact_sha256": {
-    "battery_summary.csv": "0923a58b1b4ed0c6436de9a8b8dc41e07579a84c2e7628bc2309c9d606771aeb",
+    "battery_summary.csv": "bffa7a972b4de110ccdabb2bcb7ff5e76749caa69ced73b3b50efeee1423a33d",
     "coverage.csv": "847691732bea63eb8de49fef3367a4c77fce18ce7feb4f1bd143d113b05d5250",
     "forecast_windows_01.png": "5a8157ecf03bbfbed65a9a77c0056640ea201820409d581f6e101c9c92bb6d70",
     "forecast_windows_02.png": "3361a20968503e957f7baeda9311d45b34b71fa3efaaa0f89ea8c8b6f8773232",
     "forecast_windows_03.png": "502c24e537e3455b3dc0269fd13a4145d5dc8929978a9ca759fe440e2e34825e",
     "forecast_windows_04.png": "92418308816734c04b242a13d4996975366e74652ddb1598c1efb71e04c281a8",
-    "horizon_metrics.csv": "21e27b88cbed26936ea30597f1adb118d5d3c8cc21ed3fb613f609fc0b0c400c",
-    "macro_by_seed.csv": "97700993a9a28c5082fe64e7e5d350eaa3e2078bdfd60f91ae472a298d8e3ad4",
-    "metrics.csv": "b05fc850618d75543ef5d85e314ccd52c0320020f51d32b5f1588a6ac5767d96",
+    "horizon_metrics.csv": "d161df285d524df44e9db4bec9dbe0fabe8f491ba689966b9c466bb377dcd13a",
+    "inference_manifest.json": "4db1b4db7e29131f08ae9a16e912dc32da581be296cc1f956297a589f7b5e10b",
+    "macro_by_seed.csv": "1c1eec39c0bacaf2b5d42c15a25605a1f17ccc30b1b1db42c33508ede0da20b9",
+    "metrics.csv": "3612b329fe56cc4d90a4f24a0c45de8f539984287517b875885550999db86a42",
     "paired_comparison.csv": "b79993007a3e5cf3e1be23343ca162d97e7c8383eeaf01125e234aee1b831751",
     "predictions/0001_infer42.npz": "dcd7ec945f464a57b8dea09d0af9edb26a9cc37f4755c0262a994fac0ca1dd60",
     "predictions/0001_infer43.npz": "b62e1049da99cc6cc58394c9e66883c42dc40004656d0e63058c89d3a9d7d131",
@@ -158,8 +159,46 @@
     "predictions/0015_infer42.npz": "5a3b136cc01d1581948125ed506ab0466c13667c657f3a423d3bcd8a415e5256",
     "predictions/0015_infer43.npz": "a91b3f4f6daef226cc5cd4d5604edc0df89ea95981b912106e9da04fdc2091c4",
     "predictions/0015_infer44.npz": "50bcfff647b166c6b75e173d02cf7b97853b26a4a51b728e6255e43e781af29c",
-    "report.md": "c655b690051ed9cf25e73fd9dab5b77ad4d6449ab2a75a4ef814bb65396f1600",
-    "summary.csv": "9dcf519ed8c2541fb6119a8da6cbea17563db96932ec70ecf44ccfeae56a9a5c",
-    "window_metrics.csv": "ee005a11a038e7c4487d34e6929e96a84aee71e8821c67379670dfa71e4b166f"
-  }
+    "report.md": "956ae46325c55f5a7ae7fd6837922434e3fd4cc8cf567a9b0abb6520a3c4f042",
+    "summary.csv": "b001383df31c86da12517f83bf66e73f5783e49cc1acfeeea479deda902b9e47",
+    "window_metrics.csv": "49f6faced2f50013aa691125524a735d14f12566fa36e8ef86589dc9f717a224"
+  },
+  "prediction_provenance": {
+    "original_manifest": "inference_manifest.json",
+    "original_manifest_sha256": "4db1b4db7e29131f08ae9a16e912dc32da581be296cc1f956297a589f7b5e10b",
+    "note": "Predictions retain their original producer; metric updates do not repeat inference"
+  },
+  "evaluation_protocol": {
+    "primary_metrics": [
+      "rmse",
+      "r2",
+      "wql",
+      "picp80"
+    ],
+    "primary_point_estimator": "median",
+    "quantile_levels": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9
+    ],
+    "quantile_method": "linear",
+    "wql": "2 * mean_q(sum(max(q * (y - forecast_q), (q - 1) * (y - forecast_q)))) / sum(abs(y))",
+    "wql_zero_denominator": "NaN",
+    "picp80": "mean(q10 <= y <= q90); fraction, target 0.8",
+    "aggregation": "Calculate within each battery/seed; average seeds and give battery records equal weights",
+    "auxiliary_metrics": [
+      "width80",
+      "mae",
+      "crps",
+      "negative_rate",
+      "above2_rate"
+    ]
+  },
+  "metrics_updated_at": "2026-10-06T03:26:50.215502+00:00"
 }

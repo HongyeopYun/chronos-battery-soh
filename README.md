@@ -1,6 +1,6 @@
 # Battery SOH forecasting with Chronos
 
-공통 포맷으로 가공한 XJTU·NASA·MIT·CALCE는 [공통 zero-shot 함수와 노트북](docs/battery_zeroshot.md)으로 평가합니다. `battery_zeroshot(Path("data/processed/clean/xjtu_2c"))`에서 데이터 경로만 바꾸면 같은 추론·평가 규칙을 사용합니다. MAE·RMSE·R², LastValue/Linear 비교, CRPS·예측구간 포함률과 대표 곡선을 한 번에 저장합니다.
+공통 포맷으로 가공한 XJTU·NASA·MIT·CALCE는 [공통 zero-shot 함수와 노트북](docs/battery_zeroshot.md)으로 평가합니다. `battery_zeroshot(Path("data/processed/clean/xjtu_2c"))`에서 데이터 경로만 바꾸면 같은 추론·평가 규칙을 사용합니다. 주 지표는 RMSE·R²·WQL·PICP@80이며, 80% 구간 폭은 보조로 확인합니다. LastValue/Linear 비교와 대표 곡선도 함께 저장합니다.
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py data\processed\clean\xjtu_2c

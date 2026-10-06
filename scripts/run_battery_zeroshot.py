@@ -6,7 +6,8 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from src.battery_zeroshot import battery_zeroshot, load_zeroshot_config, prepare_battery_windows, verify_battery_zeroshot
+from src.battery_zeroshot import (battery_zeroshot, load_zeroshot_config, prepare_battery_windows,
+                                 refresh_battery_zeroshot, verify_battery_zeroshot)
 
 
 def main():
@@ -19,11 +20,15 @@ def main():
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--prepare-only", action="store_true", help="Check data/window coverage without loading the model")
     parser.add_argument("--audit", type=Path, help="Verify an existing run and recompute its metrics without inference")
+    parser.add_argument("--refresh-metrics", type=Path, help="Update metric tables/report from unchanged saved forecasts")
     args = parser.parse_args()
-    if args.audit:
+    if args.audit and args.refresh_metrics:
+        parser.error("Choose either --audit or --refresh-metrics")
+    if args.audit or args.refresh_metrics:
         if args.prepare_only or args.force or args.battery_ids or args.max_windows is not None:
-            parser.error("Audit uses the saved configuration; do not combine it with run overrides")
-        print(verify_battery_zeroshot(args.audit, args.bundle), flush=True)
+            parser.error("Saved-run commands use the saved configuration; do not combine them with run overrides")
+        action = refresh_battery_zeroshot if args.refresh_metrics else verify_battery_zeroshot
+        print(action(args.refresh_metrics or args.audit, args.bundle), flush=True)
         return
     if args.bundle is None:
         parser.error("Provide a common SOH bundle directory")

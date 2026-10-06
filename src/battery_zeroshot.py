@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 import re
+import shutil
 from uuid import uuid4
 
 import numpy as np
@@ -20,7 +21,18 @@ from src.soh_evaluation import point_scores
 from src.soh_checkpoint import distribution_scores
 
 ROOT = Path(__file__).resolve().parents[1]
-SCORES = ["rmse", "mae", "r2", "crps", "coverage80", "width80", "negative_rate", "above2_rate"]
+PRIMARY_SCORES = ["rmse", "r2", "wql", "picp80"]
+PROBABILITY_SCORES = ["wql", "picp80", "width80", "crps", "negative_rate", "above2_rate"]
+SCORES = [*PRIMARY_SCORES, "width80", "mae", "crps", "negative_rate", "above2_rate"]
+WQL_QUANTILES = tuple(i / 10 for i in range(1, 10))
+EVALUATION_PROTOCOL = {
+    "primary_metrics": PRIMARY_SCORES, "primary_point_estimator": "median",
+    "quantile_levels": WQL_QUANTILES, "quantile_method": "linear",
+    "wql": "2 * mean_q(sum(max(q * (y - forecast_q), (q - 1) * (y - forecast_q)))) / sum(abs(y))",
+    "wql_zero_denominator": "NaN", "picp80": "mean(q10 <= y <= q90); fraction, target 0.8",
+    "aggregation": "Calculate within each battery/seed; average seeds and give battery records equal weights",
+    "auxiliary_metrics": ["width80", "mae", "crps", "negative_rate", "above2_rate"],
+}
 IDENTITY = ["dataset", "battery_id", "physical_battery_id", "model", "estimator", "inference_seed"]
 TABLES = ["metrics.csv", "horizon_metrics.csv", "window_metrics.csv", "battery_summary.csv",
           "macro_by_seed.csv", "summary.csv", "paired_comparison.csv"]
@@ -106,19 +118,56 @@ def baseline_predictions(windows):
     return _baselines(windows)
 
 
+def quantile_loss_values(target, samples, quantile_levels=WQL_QUANTILES):
+    """Return mean twice-pinball loss at each window/horizon, before normalization."""
+    target, samples = np.asarray(target, dtype=np.float64), np.asarray(samples, dtype=np.float64)
+    levels = np.asarray(quantile_levels, dtype=np.float64)
+    if (target.ndim != 2 or not target.size or samples.ndim != 3 or not samples.shape[1]
+            or samples.shape[0::2] != target.shape or not np.isfinite(target).all() or not np.isfinite(samples).all()):
+        raise ValueError("Expected finite targets [windows, horizon] and samples [windows, samples, horizon]")
+    if levels.ndim != 1 or not levels.size or not np.isfinite(levels).all() or np.any((levels <= 0) | (levels >= 1)) or np.any(np.diff(levels) <= 0):
+        raise ValueError("Quantile levels must be strictly increasing within (0, 1)")
+    quantiles = np.quantile(samples, levels, axis=1, method="linear")
+    error = target[None] - quantiles
+    q = levels[:, None, None]
+    return 2 * np.maximum(q * error, (q - 1) * error).mean(axis=0)
+
+
+def normalized_quantile_loss(target, loss):
+    denominator = np.abs(target).sum()
+    return float(loss.sum() / denominator) if denominator else float("nan")
+
+
+def weighted_quantile_loss(target, samples, quantile_levels=WQL_QUANTILES):
+    return normalized_quantile_loss(np.asarray(target), quantile_loss_values(target, samples, quantile_levels))
+
+
+def interval_metrics(target, loss, coverage, width):
+    return {"wql": normalized_quantile_loss(target, loss), "picp80": float(coverage.mean()),
+            "width80": float(width.mean())}
+
+
 def score_prediction(record, prediction, model, estimator, seed=-1, samples=None):
     windows, tags = record["windows"], {k: record[k] for k in IDENTITY[:3]}
     tags.update(model=model, estimator=estimator, inference_seed=seed)
     target = windows["target"]
     row = {**tags, **point_scores(target, prediction), "n_windows": len(target),
-           **{k: float("nan") for k in SCORES[3:]}}
+           **{k: float("nan") for k in PROBABILITY_SCORES}}
+    probability = None
     if samples is not None:
         distribution = distribution_scores(target, samples)
-        row.update({k: distribution[k] for k in SCORES[3:]})
-    horizons = [{**tags, "horizon": h + 1, **point_scores(target[:, h:h+1], prediction[:, h:h+1])}
-                for h in range(target.shape[1])]
-    window_rows = [{**tags, "forecast_start": int(cycle), **point_scores(target[i:i+1], prediction[i:i+1])}
-                   for i, cycle in enumerate(windows["forecast_start"])]
+        summary = summarize_samples(np.asarray(samples, dtype=np.float64))
+        probability = (quantile_loss_values(target, samples),
+                       (target >= summary["q10"]) & (target <= summary["q90"]), summary["q90"] - summary["q10"])
+        row.update(interval_metrics(target, *probability))
+        row.update({k: distribution[k] for k in ["crps", "negative_rate", "above2_rate"]})
+    def probability_block(index):
+        return interval_metrics(target[index], *(value[index] for value in probability)) if probability is not None else {
+            k: float("nan") for k in ["wql", "picp80", "width80"]}
+    horizons = [{**tags, "horizon": h + 1, **point_scores(target[:, h:h+1], prediction[:, h:h+1]),
+                 **probability_block((slice(None), slice(h, h+1)))} for h in range(target.shape[1])]
+    window_rows = [{**tags, "forecast_start": int(cycle), **point_scores(target[i:i+1], prediction[i:i+1]),
+                    **probability_block((slice(i, i+1), slice(None)))} for i, cycle in enumerate(windows["forecast_start"])]
     return row, horizons, window_rows
 
 
@@ -166,15 +215,20 @@ def run_signature(bundle, config):
             "versions": environment["versions"], "device": environment["device"]}
 
 
-def verify_battery_zeroshot(directory, bundle=None, config=None):
-    directory = Path(directory).resolve()
-    manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
+def verified_forecasts(directory, manifest, bundle, config, allow_metric_update=False):
+    """Check saved inputs/samples before scoring or upgrading evaluation tables."""
     if manifest["schema_version"] != 1 or manifest["kind"] != "battery_zeroshot" or manifest["status"] != "complete":
         raise ValueError("Unsupported or incomplete battery zero-shot run")
-    config = config or ZeroShotConfig(**manifest["config"])
-    bundle = Path(bundle).resolve() if bundle else (ROOT / manifest["bundle"]).resolve()
     records, coverage, _, _ = prepare_battery_windows(bundle, config)
-    if manifest["signature"] != run_signature(bundle, config):
+    signature = run_signature(bundle, config)
+    if allow_metric_update:
+        for key in ["schema_version", "config", "bundle_manifest_sha256", "versions", "device"]:
+            if manifest["signature"][key] != signature[key]:
+                raise ValueError(f"Cannot update metrics: forecast identity changed ({key})")
+        for name in ["soh_data.py", "soh_experiment.py"]:
+            if manifest["signature"]["implementation_sha256"][name] != signature["implementation_sha256"][name]:
+                raise ValueError(f"Cannot update metrics: inference/data implementation changed ({name})")
+    elif manifest["signature"] != signature:
         raise ValueError("Zero-shot data, code, configuration or environment changed")
     required = {*TABLES, "coverage.csv", "report.md"}
     expected_predictions = {f"predictions/{r['record_id']}_infer{s}.npz" for r in records for s in config.inference_seeds}
@@ -187,6 +241,15 @@ def verify_battery_zeroshot(directory, bundle=None, config=None):
     actual_predictions = {p.relative_to(directory).as_posix() for p in (directory / "predictions").glob("*.npz")}
     if actual_predictions != expected_predictions:
         raise ValueError("Prediction inventory differs from the configured batteries/seeds")
+    provenance = manifest.get("prediction_provenance")
+    if provenance:
+        original = (directory / provenance["original_manifest"]).resolve()
+        if not original.is_relative_to(directory) or sha256(original) != provenance["original_manifest_sha256"]:
+            raise ValueError("Original inference provenance changed")
+        original_manifest = json.loads(original.read_text(encoding="utf-8"))
+        for name in expected_predictions:
+            if manifest["artifact_sha256"][name] != original_manifest["artifact_sha256"][name]:
+                raise ValueError("Predictions differ from their original inference provenance")
     for record in records:
         for seed in config.inference_seeds:
             with np.load(directory / f"predictions/{record['record_id']}_infer{seed}.npz", allow_pickle=False) as saved:
@@ -199,14 +262,61 @@ def verify_battery_zeroshot(directory, bundle=None, config=None):
                     raise ValueError("Saved forecast shape or seed differs")
                 for key, value in summarize_samples(saved["samples"]).items():
                     np.testing.assert_allclose(saved[key], value, rtol=1e-12, atol=1e-12)
+    return records, coverage
+
+
+def verify_battery_zeroshot(directory, bundle=None, config=None):
+    directory = Path(directory).resolve()
+    manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
+    config = config or ZeroShotConfig(**manifest["config"])
+    bundle = Path(bundle).resolve() if bundle else (ROOT / manifest["bundle"]).resolve()
+    records, coverage = verified_forecasts(directory, manifest, bundle, config)
+    if manifest.get("evaluation_protocol") != json.loads(json.dumps(EVALUATION_PROTOCOL)):
+        raise ValueError("Evaluation metric definitions differ")
     tables = {"coverage.csv": coverage, **evaluation_tables(records, directory)}
     for name, expected in tables.items():
         pd.testing.assert_frame_equal(pd.read_csv(directory / name, keep_default_na=False, na_values=[""],
                                       dtype={k: str for k in ["record_id", *IDENTITY[:3]]}),
                                       expected, check_dtype=False, check_exact=False, rtol=1e-10, atol=1e-12)
     return {"batteries_evaluated": len(records), "batteries_skipped": int((coverage.evaluated_windows == 0).sum()),
-            "windows": int(coverage.evaluated_windows.sum()), "prediction_files": len(expected_predictions),
+            "windows": int(coverage.evaluated_windows.sum()), "prediction_files": len(records) * len(config.inference_seeds),
             "scope": manifest["scope"], "artifacts_verified": True, "metrics_recomputed": True}
+
+
+def refresh_battery_zeroshot(directory, bundle=None):
+    """Upgrade metrics without inference; preserve original prediction provenance."""
+    directory = Path(directory).resolve()
+    manifest_path = directory / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    config = ZeroShotConfig(**manifest["config"])
+    bundle = Path(bundle).resolve() if bundle else (ROOT / manifest["bundle"]).resolve()
+    records, coverage = verified_forecasts(directory, manifest, bundle, config, allow_metric_update=True)
+    predictions = {p.name: sha256(p) for p in (directory / "predictions").glob("*.npz")}
+    tables = evaluation_tables(records, directory)
+    original = directory / "inference_manifest.json"
+    if not original.exists():
+        shutil.copy2(manifest_path, original)
+    manifest.setdefault("prediction_provenance", {"original_manifest": original.name,
+        "original_manifest_sha256": sha256(original), "note": "Predictions retain their original producer; metric updates do not repeat inference"})
+    manifest.update(status="updating_metrics")
+    write_json(manifest_path, manifest)
+    try:
+        for name, frame in tables.items():
+            frame.to_csv(directory / name, index=False)
+        from src.battery_zeroshot_plots import write_report
+        write_report(directory, records, coverage, config, manifest["scope"], tables, reuse_figures=True)
+        if predictions != {p.name: sha256(p) for p in (directory / "predictions").glob("*.npz")}:
+            raise ValueError("Raw forecasts changed during the metric update")
+        manifest.update(status="complete", signature=run_signature(bundle, config), evaluation_protocol=EVALUATION_PROTOCOL,
+            metrics_updated_at=datetime.now(timezone.utc).isoformat(),
+            artifact_sha256={p.relative_to(directory).as_posix(): sha256(p) for p in sorted(directory.rglob("*"))
+                             if p.is_file() and p.name != "manifest.json"})
+        write_json(manifest_path, manifest)
+        return verify_battery_zeroshot(directory, bundle, config)
+    except Exception as error:
+        manifest.update(status="metric_update_failed", error=f"{type(error).__name__}: {error}")
+        write_json(manifest_path, manifest)
+        raise
 
 
 def battery_zeroshot(bundle, config=None, output_root=ROOT / "results/battery_zeroshot", force=False):
@@ -231,7 +341,8 @@ def battery_zeroshot(bundle, config=None, output_root=ROOT / "results/battery_ze
     manifest = {"schema_version": 1, "kind": "battery_zeroshot", "run_id": run_id, "status": "running",
                 "started_at": datetime.now(timezone.utc).isoformat(), "config": asdict(config),
                 "bundle": str(bundle.relative_to(ROOT).as_posix()) if bundle.is_relative_to(ROOT) else str(bundle),
-                "signature": signature, "environment": _environment(ROOT, resolve_device(config.device)),
+                "signature": signature, "evaluation_protocol": EVALUATION_PROTOCOL,
+                "environment": _environment(ROOT, resolve_device(config.device)),
                 "scope": "smoke" if config.max_windows_per_battery is not None else ("strided" if config.stride != 1 else "full"),
                 "protocol": "Observed rolling contexts; no training, clipping, interpolation or renormalization. Equal battery-record weights, seeds averaged. Overlapping windows are not independent."}
     write_json(directory / "manifest.json", manifest)

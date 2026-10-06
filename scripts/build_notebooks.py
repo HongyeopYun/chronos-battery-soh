@@ -187,7 +187,7 @@ BATTERY_ZERO = [
 
 `DATA_BUNDLE`만 바꾸어 XJTU·NASA·MIT·CALCE의 공통 SOH 포맷을 평가한다. 데이터 추출·학습은 이 노트북에서 하지 않는다. 기존 NASA 02·03은 별도 기록으로 유지한다.
 
-최근 실제 관측 64 cycle → 다음 16 cycle, 100 samples, 추론 seed 42/43/44가 기본값이다. 초기 시험·이상치·누락 cycle·segment 경계는 공통 데이터 규칙으로 처리한다. 같은 window에서 마지막 관측 유지·선형 추세와 비교하고 MAE·RMSE·R²·CRPS·80% 구간 포함률을 저장한다.
+최근 실제 관측 64 cycle → 다음 16 cycle, 100 samples, 추론 seed 42/43/44가 기본값이다. 초기 시험·이상치·누락 cycle·segment 경계는 공통 데이터 규칙으로 처리한다. 같은 window에서 마지막 관측 유지·선형 추세와 비교하고 RMSE·R²·WQL·PICP@80을 주 지표로 저장한다. 80% 구간 폭은 보조 지표다.
 
 `SMOKE_CHECK=True`는 배터리별 초반·중반·후반 window 3개만 확인한다. 이는 실행 검증용이며 전체 성능 평가와 구분한다. [사용법](../docs/battery_zeroshot.md)."""),
     ("code", '''from pathlib import Path
@@ -219,10 +219,18 @@ display(coverage)'''),
     ("code", '''RUN = battery_zeroshot(DATA_BUNDLE, CONFIG, force=FORCE_RERUN)
 display(verify_battery_zeroshot(RUN, DATA_BUNDLE, CONFIG))
 print("Report:", RUN / "report.md")'''),
-    ("markdown", "## 성능과 대표 예측 구간\n배터리·추론 seed마다 같은 target으로 평가한다. seed를 평균하고 배터리 기록마다 같은 가중치를 준다. 겹치는 window는 독립 표본이 아니다. 중앙값과 sample mean을 구분한다."),
-    ("code", '''display(pd.read_csv(RUN / "summary.csv"))
-display(pd.read_csv(RUN / "battery_summary.csv"))
-display(pd.read_csv(RUN / "paired_comparison.csv"))
+    ("markdown", "## 성능과 대표 예측 구간\n배터리·추론 seed마다 같은 target으로 평가한다. seed를 평균하고 배터리 기록마다 같은 가중치를 준다. 겹치는 window는 독립 표본이 아니다. 주 점예측은 samples의 중앙값이다. WQL은 0.1~0.9의 9개 분위수 손실을 평균하고 배터리·seed 안에서 target 절댓값 합으로 정규화한다. PICP@80은 q10~q90의 실제 포함률이며 아래 표에서는 백분율로 표시한다. 명목값 80%에 가까운지 구간 폭과 함께 확인한다. 점예측 기준 모델의 확률 지표는 비워 둔다. Sample mean·MAE·CRPS는 CSV에서 보조로 확인할 수 있다."),
+    ("code", '''summary = pd.read_csv(RUN / "summary.csv")
+primary = summary[summary.estimator != "mean"]
+display(primary[["model", "estimator", "rmse_mean", "r2_mean", "wql_mean", "picp80_mean"]]
+        .style.format({"picp80_mean": "{:.1%}"}, na_rep="—"))
+display(primary[primary.model == "Chronos"][["model", "width80_mean"]])
+battery = pd.read_csv(RUN / "battery_summary.csv")
+display(battery[battery.estimator != "mean"]
+        [["dataset", "battery_id", "model", "estimator", "rmse", "r2", "wql", "picp80"]]
+        .style.format({"picp80": "{:.1%}"}, na_rep="—"))
+comparison = pd.read_csv(RUN / "paired_comparison.csv")
+display(comparison[comparison.estimator == "median"])
 for figure in sorted(RUN.glob("forecast_windows_*.png")):
     display(Image(filename=str(figure), width=1100))'''),
 ]

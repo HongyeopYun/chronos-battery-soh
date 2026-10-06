@@ -53,18 +53,25 @@ CALCE는 파일 segment당 최대 50 cycle이라 기본 64→16 설정에서 실
 | 파일 | 내용 |
 |---|---|
 | `manifest.json` | 입력 데이터 경로·해시, 모델 revision, 설정, 환경, full/smoke 범위, 결과 해시 |
+| `inference_manifest.json` | 지표를 갱신한 실행에서만 생성하는 원본 추론 manifest; 당시 코드·환경·예측 해시 보존 |
 | `coverage.csv` | 전체 관측 수, 유효·평가 window 수, window가 없어 제외한 기록 |
 | `predictions/*.npz` | 실제 context/target, 원본 cycle 번호, 원시 samples, median/mean, q10/q90 |
-| `metrics.csv` | 배터리·seed·모델·집계별 MAE·RMSE·R²와 확률 예측 점수 |
+| `metrics.csv` | 배터리·seed·모델·집계별 RMSE·R²·WQL·PICP@80 및 보조 지표 |
 | `battery_summary.csv`, `summary.csv` | seed 평균과 배터리 기록에 같은 가중치를 준 macro 점수 |
 | `macro_by_seed.csv` | 추론 seed별 macro 점수 |
-| `horizon_metrics.csv`, `window_metrics.csv` | horizon·예측 시작 cycle별 MAE·RMSE·R² |
+| `horizon_metrics.csv`, `window_metrics.csv` | horizon·예측 시작 cycle별 RMSE·R²·WQL·PICP@80 및 구간 폭·MAE |
 | `paired_comparison.csv` | 같은 평가 구간에서 Chronos와 LastValue/Linear 비교 |
 | `report.md`, `forecast_windows_*.png` | 요약 및 배터리별 초반·중반·후반 예측 곡선 |
 
 원시 예측 NPZ는 로컬에 보관하고 Git에서는 제외한다. 보고서·지표·곡선·해시는 커밋한다. 다른 PC에서 예측 파일이 없으면 재검산·완료 실행 재사용은 불가능하며 원본 데이터를 준비해 다시 실행해야 한다.
 
-LastValue는 마지막 실제 관측을 유지하고 Linear는 context의 최소제곱 직선을 연장한다. 두 기준 모델은 Chronos와 동일한 window와 target을 사용한다. Chronos의 sample median과 sample mean을 모두 평가하며 CRPS·80% 구간 포함률/폭·비정상 sample 비율도 계산한다. 기준 점예측에는 확률 구간을 만들지 않는다.
+주 결과표는 **RMSE·R²·WQL·PICP@80** 네 지표를 사용한다. RMSE·R²의 주 점예측은 Chronos samples의 중앙값이다. 80% 구간 폭(`width80`)은 보조로 표시하고 sample mean 점예측·MAE·CRPS·비정상 sample 비율은 CSV에 유지한다.
+
+LastValue는 마지막 실제 관측을 유지하고 Linear는 context의 최소제곱 직선을 연장한다. 두 기준 모델은 Chronos와 동일한 window와 target을 사용한다. 기준 점예측에는 확률 구간을 만들지 않으므로 WQL·PICP@80·구간 폭은 NaN으로 저장하고 결과표에는 `—`로 표시한다.
+
+WQL은 samples에서 선형 보간으로 구한 **0.1~0.9의 9개 분위수**를 동일 가중치로 사용한다. 분위수별 오차 `e = y - forecast_q`에 대해 `WQL = 2 × mean_q(sum(max(q × e, (q - 1) × e))) / sum(abs(y))`다. 각 배터리·seed의 모든 window/horizon target을 합쳐 정규화한 뒤 seed와 배터리 기록을 평균한다. 개별 window WQL의 단순 평균과는 다르다. Horizon/window 표는 해당 범위 안에서 같은 식을 계산한다. 분모가 0이면 NaN이며 낮을수록 좋다. [AWS의 분위수 손실 정의](https://docs.aws.amazon.com/forecast/latest/dg/metrics.html)를 참고하며, 이 구현의 평균 분위수와 분모 0 처리 규칙은 위와 같이 고정한다.
+
+PICP@80은 `mean(q10 <= y <= q90)`이다. 경계값을 포함하며 CSV의 `picp80`은 0~1 비율, 보고서는 백분율이다. **명목값 80%에 가까운지** 확인하고 구간 폭을 함께 해석한다. 단순히 높을수록 좋은 지표는 아니다. 기존 NASA 실험의 `coverage80`과 같은 포함률 정의이며 새 공통 표에서는 `picp80`으로 이름을 통일한다. 구간 폭은 `mean(q90 - q10)`으로 SOH 비율 단위다.
 
 R²는 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`로 계산한다. 상수 target 또는 관측 수 2개 미만이면 NaN, 음수도 유효하다. Horizon/window 표는 각 평가 범위의 target 평균을 사용한다. Macro는 seed 점수를 평균하고 배터리 **기록**마다 같은 가중치를 준다. MIT의 연속 측정 기록을 독립 물리 배터리로 세거나 여러 batch의 macro 점수를 무조건 평균하지 않는다.
 
@@ -73,11 +80,16 @@ R²는 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`로 계�
 ```powershell
 # 모델 추론 없이 저장 예측·지표·입력·해시 재검산
 .\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py --audit results\battery_zeroshot\실행폴더
+
+# 지표 구현을 바꾼 뒤 기존 samples로 결과표만 갱신
+.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py --refresh-metrics results\battery_zeroshot\실행폴더
 ```
+
+`--refresh-metrics`는 원본 입력·설정·추론 코드·저장 예측을 먼저 검사한다. 기존 manifest를 `inference_manifest.json`으로 보존하고, 원시 NPZ와 곡선 PNG를 바꾸지 않고 지표·보고서만 갱신한다. 현재 manifest에는 원본 추론 기록의 해시와 새 평가 규칙을 기록한다. 모델 추론은 다시 실행하지 않으며 로컬 원시 예측 파일이 필요하다.
 
 ## 2026-10-06 실행 검증
 
-XJTU 23개 배터리에서 대표 window 세 개씩, 총 69개 window를 100 samples·seed 42/43/44로 실제 추론했다. 저장 samples에서 지표를 재계산하고 파일 해시·target·cycle 번호를 확인했다. 이 기록은 함수의 실행 검증이며 전체 성능 평가가 아니다.
+XJTU 23개 배터리에서 대표 window 세 개씩, 총 69개 window를 100 samples·seed 42/43/44로 실제 추론했다. 저장 samples에서 네 주 지표를 재계산하고 파일 해시·target·cycle 번호를 확인했다. 지표 갱신 시 원시 예측과 곡선은 유지했다. 이 기록은 함수의 실행 검증이며 전체 성능 평가가 아니다.
 
 | 그룹 | 배터리 | 검증 window | 전체 eligible windows | 결과 |
 |---|---:|---:|---:|---|
