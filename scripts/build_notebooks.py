@@ -182,6 +182,53 @@ def write_notebook(name, cells):
     print(destination)
 
 
+BATTERY_ZERO = [
+    ("markdown", """# 공통 SOH 데이터의 Chronos zero-shot
+
+`DATA_BUNDLE`만 바꾸어 XJTU·NASA·MIT·CALCE의 공통 SOH 포맷을 평가한다. 데이터 추출·학습은 이 노트북에서 하지 않는다. 기존 NASA 02·03은 별도 기록으로 유지한다.
+
+최근 실제 관측 64 cycle → 다음 16 cycle, 100 samples, 추론 seed 42/43/44가 기본값이다. 초기 시험·이상치·누락 cycle·segment 경계는 공통 데이터 규칙으로 처리한다. 같은 window에서 마지막 관측 유지·선형 추세와 비교하고 MAE·RMSE·R²·CRPS·80% 구간 포함률을 저장한다.
+
+`SMOKE_CHECK=True`는 배터리별 초반·중반·후반 window 3개만 확인한다. 이는 실행 검증용이며 전체 성능 평가와 구분한다. [사용법](../docs/battery_zeroshot.md)."""),
+    ("code", '''from pathlib import Path
+from dataclasses import replace
+import sys
+import pandas as pd
+from IPython.display import display, Image
+
+PROJECT_ROOT = next(p for p in (Path.cwd().resolve(), *Path.cwd().resolve().parents)
+                    if (p / "src/battery_zeroshot.py").is_file())
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+from src.battery_zeroshot import (
+    battery_zeroshot, load_zeroshot_config, prepare_battery_windows, verify_battery_zeroshot,
+)
+
+DATA_BUNDLE = PROJECT_ROOT / "data/processed/clean/xjtu_2c"
+SMOKE_CHECK = False
+FORCE_RERUN = False
+CONFIG = load_zeroshot_config(PROJECT_ROOT / "configs/battery_zeroshot.json")
+if SMOKE_CHECK:
+    CONFIG = replace(CONFIG, max_windows_per_battery=3)
+print(DATA_BUNDLE)
+print(CONFIG)'''),
+    ("markdown", "## 평가 가능한 구간 확인\n전체 관측 수와 평가 가능한 window 수, 제외 배터리를 먼저 확인한다. CALCE는 기본 64→16 설정에서 유효 window가 없다."),
+    ("code", '''_, coverage, _, _ = prepare_battery_windows(DATA_BUNDLE, CONFIG)
+display(coverage)'''),
+    ("markdown", "## Zero-shot 실행\n데이터·코드·환경·설정과 산출물이 모두 일치하는 완료 실행은 재사용한다. 실행마다 별도 폴더에 저장한다."),
+    ("code", '''RUN = battery_zeroshot(DATA_BUNDLE, CONFIG, force=FORCE_RERUN)
+display(verify_battery_zeroshot(RUN, DATA_BUNDLE, CONFIG))
+print("Report:", RUN / "report.md")'''),
+    ("markdown", "## 성능과 대표 예측 구간\n배터리·추론 seed마다 같은 target으로 평가한다. seed를 평균하고 배터리 기록마다 같은 가중치를 준다. 겹치는 window는 독립 표본이 아니다. 중앙값과 sample mean을 구분한다."),
+    ("code", '''display(pd.read_csv(RUN / "summary.csv"))
+display(pd.read_csv(RUN / "battery_summary.csv"))
+display(pd.read_csv(RUN / "paired_comparison.csv"))
+for figure in sorted(RUN.glob("forecast_windows_*.png")):
+    display(Image(filename=str(figure), width=1100))'''),
+]
+
+
 if __name__ == "__main__":
     write_notebook("02_chronos_zeroshot.ipynb", ZERO)
     write_notebook("03_chronos_lora_lobo.ipynb", LORA)
+    write_notebook("battery_zeroshot.ipynb", BATTERY_ZERO)

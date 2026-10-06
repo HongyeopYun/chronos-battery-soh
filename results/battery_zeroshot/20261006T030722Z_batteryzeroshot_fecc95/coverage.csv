@@ -1,0 +1,16 @@
+record_id,dataset,battery_id,physical_battery_id,n_rows,eligible_windows,evaluated_windows,status
+0001,xjtu,batch2_3C_battery-1,batch2_3C_battery-1,299,219,3,ready
+0002,xjtu,batch2_3C_battery-2,batch2_3C_battery-2,292,212,3,ready
+0003,xjtu,batch2_3C_battery-3,batch2_3C_battery-3,286,206,3,ready
+0004,xjtu,batch2_3C_battery-4,batch2_3C_battery-4,322,242,3,ready
+0005,xjtu,batch2_3C_battery-5,batch2_3C_battery-5,297,217,3,ready
+0006,xjtu,batch2_3C_battery-6,batch2_3C_battery-6,322,242,3,ready
+0007,xjtu,batch2_3C_battery-7,batch2_3C_battery-7,319,239,3,ready
+0008,xjtu,batch2_3C_battery-8,batch2_3C_battery-8,270,190,3,ready
+0009,xjtu,batch2_3C_battery-9,batch2_3C_battery-9,287,207,3,ready
+0010,xjtu,batch2_3C_battery-10,batch2_3C_battery-10,164,84,3,ready
+0011,xjtu,batch2_3C_battery-11,batch2_3C_battery-11,131,51,3,ready
+0012,xjtu,batch2_3C_battery-12,batch2_3C_battery-12,212,132,3,ready
+0013,xjtu,batch2_3C_battery-13,batch2_3C_battery-13,226,146,3,ready
+0014,xjtu,batch2_3C_battery-14,batch2_3C_battery-14,147,67,3,ready
+0015,xjtu,batch2_3C_battery-15,batch2_3C_battery-15,168,88,3,ready
