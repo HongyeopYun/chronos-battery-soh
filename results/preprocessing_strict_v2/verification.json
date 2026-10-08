@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "checks": [
+    "bundle checksums and common schema",
+    "original values, cycle IDs and reference metadata preserved",
+    "all forecast context and target cycles eligible and consecutive",
+    "CALCE repeat segmentation stable",
+    "all old capacity-outlier exclusions preserved"
+  ],
+  "groups": [
+    {
+      "group": "nasa_aging",
+      "rows": 636,
+      "batteries": 4,
+      "eligible": 633,
+      "windows": 83,
+      "verified": true
+    },
+    {
+      "group": "xjtu_2c",
+      "rows": 3219,
+      "batteries": 8,
+      "eligible": 3209,
+      "windows": 2577,
+      "verified": true
+    },
+    {
+      "group": "xjtu_3c",
+      "rows": 3742,
+      "batteries": 15,
+      "eligible": 3727,
+      "windows": 2542,
+      "verified": true
+    },
+    {
+      "group": "calce_cs2_1c",
+      "rows": 3937,
+      "batteries": 4,
+      "eligible": 3801,
+      "windows": 69,
+      "verified": true
+    },
+    {
+      "group": "mit_batch1",
+      "rows": 38811,
+      "batteries": 46,
+      "eligible": 38728,
+      "windows": 34325,
+      "verified": true
+    },
+    {
+      "group": "mit_batch2",
+      "rows": 24920,
+      "batteries": 48,
+      "eligible": 24898,
+      "windows": 19635,
+      "verified": true
+    },
+    {
+      "group": "mit_batch3",
+      "rows": 51007,
+      "batteries": 46,
+      "eligible": 31371,
+      "windows": 25398,
+      "verified": true
+    }
+  ],
+  "test_suite": {
+    "tests_run": 48,
+    "status": "passed"
+  }
+}

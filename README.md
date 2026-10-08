@@ -1,12 +1,16 @@
 # Battery SOH forecasting with Chronos
 
-공통 포맷으로 가공한 XJTU·NASA·MIT·CALCE는 [공통 zero-shot 함수와 노트북](docs/battery_zeroshot.md)으로 평가합니다. `battery_zeroshot(Path("data/processed/clean/xjtu_2c"))`에서 데이터 경로만 바꾸면 같은 추론·평가 규칙을 사용합니다. 주 지표는 RMSE·R²·WQL·PICP@80이며, 80% 구간 폭은 보조로 확인합니다. LastValue/Linear 비교와 대표 곡선도 함께 저장합니다.
+전체 원시 기록을 다시 확인한 [전처리 v2 결과·전후 곡선](results/preprocessing_strict_v2/report.md)과 [처리 기준](docs/strict_preprocessing.md)을 추가했습니다. 새 데이터는 `data/processed/strict_v2/<group>/`이며 원본과 기존 실험 결과는 보존합니다. 충·방전 조건 위반과 확인 보류를 구분하고 `quality_eligible` 마스크를 강제합니다. 특히 MIT 적분 대조 보류 및 CALCE 연속 창 감소를 확인해야 합니다. 기존 실험 스크립트의 `clean` 기본 경로는 이전 결과용이며, 새 데이터로 평가할 때는 `strict_v2` bundle을 명시해야 합니다.
+
+Chronos T5와 Chronos-2 비교는 [t5/c2 battery zero-shot](docs/t5-c2-battery.md)을 사용합니다. 설정·노트북·결과를 `t5-battery`, `c2-battery`로 구분하며, 전체·초·중·후반 모두 Mean window R²를 저장합니다. 전체 T5는 `results/t5-battery/<group>/`, 일부 배터리 비교는 모델별 `pilot/<group>/`, 기존 C2 전체는 `results/c2-battery/full/<group>/`입니다. 새 CALCE 64→16은 모델별 `calce64-16/calce_cs2_1c/`에 저장하며 [C2 노트북](notebooks/c2-battery.ipynb)의 기본 선택도 이 결과입니다. 기존 CALCE 32→8과 구분합니다.
+
+공통 포맷으로 가공한 XJTU·NASA·MIT·CALCE는 [공통 zero-shot 함수와 노트북](docs/battery_zeroshot.md)으로 평가합니다. 모든 R²는 한 예측창의 표준 R²를 계산한 뒤 창별 점수를 단순평균하고 seed·배터리를 동일 가중 평균하는 **Mean window R²**입니다. 전체·초·중·후반·NASA·LoRA도 같은 기준입니다. 기본 결과는 RMSE·R²·WQL·PICP@80·구간 폭의 요약표, 배터리별 점수와 그래프를 남깁니다. 새 CALCE는 64→16이며 이전 32→8과 구분합니다.
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py data\processed\clean\xjtu_2c
+.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py --all
 ```
 
-`--max-windows 3`은 배터리별 대표 window 세 개의 실행 검증이며 전체 성능 평가와 구분합니다. 새 결과는 `results/battery_zeroshot/`, 기존 NASA 실험 결과는 아래의 `results/runs/`에 보관합니다.
+새 결과는 `results/t5-battery/<group>/`에 보관합니다. `--max-windows 3`은 별도 smoke 폴더의 실행 검증입니다. 기존 NASA 실험 기록은 아래의 `results/runs/`에 있습니다.
 
 02는 Chronos T5 zero-shot, 03은 배터리 단위 leave-one-battery-out(LOBO) LoRA 실험입니다.
 데이터 처리·추론은 `src/soh_experiment.py`를 공유하고, 현재 03의 학습·선택은 `src/soh_checkpoint.py`를 사용합니다.
@@ -39,9 +43,9 @@ Zero-shot 대비 중앙값 RMSE는 `0.016307 → 0.014355`(11.97% 감소), CRPS�
 
 | 모델 | 중앙값 RMSE | 평균 예측 RMSE | CRPS | 중앙값 R² ↑ | 평균 예측 R² ↑ |
 |---|---:|---:|---:|---:|---:|
-| Zero-shot | 0.016307 | 0.018540 | 0.008769 | 0.676844 | 0.616669 |
-| 기존 LoRA | 0.016176 | 0.294040 | 0.017684 | 0.668538 | -65.167624 |
-| EOS loss 제외 LoRA | 0.014894 | 0.015011 | 0.007552 | 0.731631 | 0.732641 |
+| Zero-shot | 0.016307 | 0.018540 | 0.008769 | -0.748346 | -1.523772 |
+| 기존 LoRA | 0.016176 | 0.294040 | 0.017684 | -0.604101 | -882.239834 |
+| EOS loss 제외 LoRA | 0.014894 | 0.015011 | 0.007552 | -0.387276 | -0.521632 |
 
 고정 XPU 실행에서 네 배터리·세 추론 seed를 동일 가중치로 평균했습니다. 학습 seed는 42 하나입니다.
 EOS 제외는 사후 원인 진단이며, 모든 배터리·지표가 개선된 것은 아닙니다. 80% 구간 포함률은 약 74.46%로 낮아졌습니다.
@@ -53,11 +57,11 @@ EOS 제외 진단은 `scripts/diagnose_training.py`로 별도 실행했으며, �
 
 ## R² 성능평가
 
-현재 best-checkpoint LoRA의 macro R²는 중앙값 예측 **0.733519**, 평균 예측 **0.705528**이다. Zero-shot은 각각 **0.676844**, **0.616669**다.
-배터리·seed별 모든 window/horizon을 펼쳐 `R² = 1 - SSE/SST`를 계산한 뒤 배터리에 같은 가중치를 준다. 1은 완벽한 예측, 0은 평가 target 평균을 항상 예측한 수준이다. 음수도 가능하며 상수 target은 NaN이다. Horizon/window 평가는 각 범위의 평균을 사용한다.
+현재 best-checkpoint LoRA의 macro Mean window R²는 중앙값 예측 **−0.286455**, 평균 예측 **−0.709306**이다. Zero-shot은 각각 **−0.748346**, **−1.523772**다.
+각 창의 미래 실제 평균으로 `R² = 1 - SSE/SST`를 계산한 뒤 유효 창별 점수를 단순평균하고 seed·배터리에 같은 가중치를 준다. 음수는 유지하고 상수 창은 NaN으로 제외한다. Horizon 한 개는 창당 값이 한 개라 R²가 정의되지 않는다. 전체 점수는 초·중·후반 점수의 단순평균이 아니다.
 
 [R² 포함 평가표](results/evaluation_r2/README.md)에 baseline, 중앙값·평균 예측, 배터리·horizon·window, 현재 validation 후보·이력을 저장했다. 기존 실행의 해시와 원시 예측은 보존한다. R²는 보고용이며 checkpoint 선택 기준은 CRPS다.
-`python scripts/add_r2_metrics.py`로 재학습 없이 재생성한다. 과거 20-sample LoRA는 원시 예측이 없어 반올림된 RMSE로 계산한 근삿값임을 별도 CSV에 표시했다.
+`python scripts/add_r2_metrics.py`로 NASA·LoRA를 재학습 없이 재계산한다. 선택된 validation checkpoint는 저장 예측에서 계산하고 원시 예측이 없는 step과 20-sample LoRA는 NaN이다. 배터리 최소 패키지는 `python scripts/unify_window_r2.py`로 재추론하며 `results/window-r2/status.json`에서 진행 상황을 확인한다.
 
 ## 환경과 실행
 

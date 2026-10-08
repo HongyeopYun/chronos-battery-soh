@@ -1,0 +1,10 @@
+{
+  "status": "complete",
+  "finished_at": "2026-10-08T05:53:51.320700+00:00",
+  "inference_scoring_plot_seconds": 8.731095500057563,
+  "test_batteries": 12,
+  "windows_per_condition_per_seed": 1841,
+  "baseline_verified": true,
+  "matched_optuna_windows": true,
+  "direct_window_r2_verified": true
+}

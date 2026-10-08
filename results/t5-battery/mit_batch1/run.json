@@ -1,0 +1,53 @@
+{
+  "status": "complete",
+  "bundle": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\data\\processed\\clean\\mit_batch1",
+  "model": "amazon/chronos-t5-base",
+  "bundle_fingerprint": "af834152569fd3afa9f89a149fb66761ee7a113de73fc64d79adc8f39e4efd77",
+  "config": {
+    "model_id": "amazon/chronos-t5-base",
+    "revision": "ad294eaacead15db499b740ea4122266dd2a81a2",
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "auto",
+    "inference_batch_size": 32,
+    "num_samples": 100,
+    "inference_seeds": [
+      42
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "stride": 1,
+    "battery_ids": null,
+    "max_windows_per_battery": null
+  },
+  "device": "xpu",
+  "started_at": "2026-10-06T08:33:06.167152+00:00",
+  "scope": "full",
+  "retention": "Summary, battery metrics, forecast figures and settings only; no raw predictions",
+  "batteries_completed": 46,
+  "finished_at": "2026-10-06T09:58:21.878710+00:00",
+  "batteries_evaluated": 46,
+  "batteries_skipped": 0,
+  "evaluated_windows": 35081,
+  "figures": [
+    "forecast_windows_01.png",
+    "forecast_windows_02.png",
+    "forecast_windows_03.png",
+    "forecast_windows_04.png",
+    "forecast_windows_05.png",
+    "forecast_windows_06.png",
+    "forecast_windows_07.png",
+    "forecast_windows_08.png",
+    "forecast_windows_09.png",
+    "forecast_windows_10.png",
+    "forecast_windows_11.png",
+    "forecast_windows_12.png"
+  ],
+  "r2_definition": "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, centering on that window's actual future target mean; arithmetic mean of valid window scores within each battery/seed/phase, then equal seed and battery weights. Negative values are retained; constant windows or horizons shorter than 2 return NaN. No pooled/global or within-variance-weighted R2. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+  "r2_source": "New representative-window inference with saved 100-sample median settings; one eligible window nearest each observed-period third midpoint. Full original non-R2 metrics retained.",
+  "metrics_updated_at": "2026-10-06T12:23:09.419546+00:00",
+  "r2_scope": "representative_windows",
+  "r2_selected_windows": 138,
+  "r2_updated_at": "2026-10-07T10:19:57.745613+00:00"
+}

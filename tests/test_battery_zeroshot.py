@@ -3,6 +3,7 @@ from dataclasses import replace
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from functools import partial
 from unittest.mock import patch
 
 import numpy as np
@@ -16,6 +17,8 @@ from src.soh_data import sha256, write_json
 from src.soh_experiment import load_config, load_soh, make_windows
 
 ROOT = Path(__file__).resolve().parents[1]
+# These existing tests cover the optional detailed archive format.
+battery_zeroshot = partial(battery_zeroshot, minimal=False)
 
 
 def save_bundle(directory, sizes=(100,), flags=None, gap=None, segment=None, constant=False):

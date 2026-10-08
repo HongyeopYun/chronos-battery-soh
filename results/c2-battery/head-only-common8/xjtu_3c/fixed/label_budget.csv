@@ -1,0 +1,13 @@
+split,battery_id,context_start,context_end,label_start,label_end
+train,batch2_3C_battery-4,2,65,66,81
+train,batch2_3C_battery-4,82,145,146,161
+train,batch2_3C_battery-4,162,225,226,241
+train,batch2_3C_battery-4,242,305,306,321
+train,batch2_3C_battery-5,2,65,66,81
+train,batch2_3C_battery-5,66,129,130,145
+train,batch2_3C_battery-5,130,193,194,209
+train,batch2_3C_battery-5,210,273,274,289
+validation,batch2_3C_battery-6,2,65,66,81
+validation,batch2_3C_battery-6,82,145,146,161
+validation,batch2_3C_battery-6,162,225,226,241
+validation,batch2_3C_battery-6,242,305,306,321

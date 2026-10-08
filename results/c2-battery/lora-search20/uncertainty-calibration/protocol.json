@@ -1,0 +1,10 @@
+{
+  "method": "LoRA median + scale * (foundation quantile - foundation median)",
+  "scale": "max(1, higher empirical 80th percentile of validation absolute error / foundation half-width)",
+  "fitted_on": "Same 10 validation windows (160 target values); all scales fixed before test",
+  "nominal_coverage": 0.8,
+  "point_forecast": "Unchanged selected LoRA q0.5",
+  "training_performed": false,
+  "limitation": "Post hoc empirical calibration, not native LoRA uncertainty or a conformal guarantee; validation reused after model selection",
+  "test_status": "These test batteries were inspected previously; this additional phase is exploratory"
+}

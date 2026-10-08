@@ -1,0 +1,54 @@
+{
+  "step": 100,
+  "learning_rate": 1e-06,
+  "validation_loss": 3.534522533416748,
+  "validation_crossing_fraction": 0.0,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "trainable_fraction": 0.03057709598339653,
+  "trainable_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "selected_weights": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\models\\c2-head-common8\\calce_cs2_1c\\test_CS2_36.pt",
+  "selected_weights_sha256": "3a4620767c866e642378b13cb59f7e80d7bc280bb5cd7fd5b92018f6f7d53100",
+  "optimizer_subset_verified": true,
+  "frozen_parameters_verified": true,
+  "candidate_runtimes": [
+    {
+      "learning_rate": 1e-06,
+      "training_and_validation_seconds": 9.089784000068903
+    },
+    {
+      "learning_rate": 1e-05,
+      "training_and_validation_seconds": 9.955611700075679
+    }
+  ],
+  "baseline": {
+    "step": 0,
+    "learning_rate": 0.0,
+    "validation_loss": 3.5666775703430176,
+    "validation_crossing_fraction": 0.0,
+    "validation_invalid_interval_fraction": 0.0,
+    "eligible": true
+  },
+  "group": "calce_cs2_1c",
+  "fold_id": "test_CS2_36",
+  "selected_at": "2026-10-08T03:34:35.740759+00:00",
+  "source_ids": [
+    "CS2_35",
+    "CS2_38"
+  ],
+  "validation_ids": [
+    "CS2_37"
+  ],
+  "test_ids": [
+    "CS2_36"
+  ]
+}

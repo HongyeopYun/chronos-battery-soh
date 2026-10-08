@@ -53,8 +53,8 @@ Step 0이 가장 좋으면 미학습 adapter를 선택할 수 있다. 이는 LoR
 
 ### R² 추가 평가
 
-저장된 예측으로 중앙값·sample mean의 R²를 추가 계산한다. 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`를 구한 뒤 같은 가중치로 평균하며, horizon/window 표는 각 범위의 target 평균을 사용한다. 1은 완벽한 예측, 0은 해당 평가 target 평균을 항상 예측한 수준이고 음수도 유효하다. 상수 target은 NaN으로 남긴다.
-Validation 이력은 각 배터리·seed의 원래 RMSE와 target 분산으로 계산한다. 짧은 validation 구간은 분산이 작아 R²가 음수일 수 있다. R²는 보고용이며 후보 선택은 기존 CRPS 기준을 유지한다. 원본 기록을 보존하고 `results/evaluation_r2/`에 파생 평가와 출처를 저장한다.
+저장된 예측으로 중앙값·sample mean 각각의 Mean window R²를 계산한다. 각 예측창의 실제 미래 평균으로 `1 - SSE/SST`를 구한 뒤 유효 창별 점수를 단순평균하고 seed·배터리를 동일 가중 평균한다. 음수는 유지하고 상수 창은 NaN으로 제외한다. Horizon 한 개는 창당 값이 한 개이므로 R²를 정의할 수 없다.
+Validation은 각 후보의 선택된 checkpoint에 남은 `selected_validation/*.npz`에서 같은 방식으로 계산한다. 원시 예측이 없는 다른 step의 과거 이력은 NaN이다. 집계 RMSE로 창별 R² 평균을 복원하지 않는다. R²는 보고용이며 후보 선택은 기존 CRPS 기준이다. 원본 기록을 보존하고 `results/evaluation_r2/`에 파생 평가와 출처를 저장한다.
 
 ### 현재 실행의 재로딩 검사 보완
 

@@ -14,7 +14,9 @@ data/processed/*
 
 # Model weights and checkpoints
 models/
-results/battery_zeroshot/*/predictions/
+results/t5-battery/*/predictions/
+results/**/.forecast_*.npz
+results/**/.runtime/
 *.pt
 *.pth
 *.ckpt

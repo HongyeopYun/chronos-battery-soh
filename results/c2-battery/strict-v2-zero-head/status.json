@@ -1,0 +1,18 @@
+{
+  "started_at": "2026-10-08T09:37:06.522074+00:00",
+  "status": "complete",
+  "device": "xpu:0",
+  "protocol_sha256": "183ae88e9011832b1158c4cd756122f971c0aae48a6b36fe0661720e256a1ddf",
+  "updated_at": "2026-10-08T09:43:48.500157+00:00",
+  "group": "xjtu_3c",
+  "battery": "batch2_3C_battery-15",
+  "completed_in_group": 12,
+  "total_in_group": 12,
+  "zero_shot_finished_at": "2026-10-08T09:39:01.642538+00:00",
+  "fold": "fixed",
+  "head_mode": "retrain",
+  "all_head_selections_locked_at": "2026-10-08T09:43:00.486647+00:00",
+  "frozen_backbone_verified": true,
+  "finished_at": "2026-10-08T09:43:48.500157+00:00",
+  "verified_at": "2026-10-08T09:57:34.349433+00:00"
+}

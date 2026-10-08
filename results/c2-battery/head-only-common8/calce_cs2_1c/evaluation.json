@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "finished_at": "2026-10-08T03:37:13.987676+00:00",
+  "n_test_records": 4,
+  "n_test_windows": 1914,
+  "zero_shot_matches_existing_results": true,
+  "per_window_r2_independently_verified": true,
+  "interval_policy": "Raw quantiles; q10>q90 invalidates group PICP/width and propagates NaN",
+  "representative_batteries": [
+    "CS2_35",
+    "CS2_36",
+    "CS2_37",
+    "CS2_38"
+  ],
+  "representative_policy": "Up to four evenly spaced test record IDs, not performance-selected",
+  "predictions_retained": "Per-window R2, per-cell aggregate metrics and representative predictions; full temporary quantiles removed"
+}

@@ -13,37 +13,59 @@ from src.soh_experiment import (
 )
 
 R2_DEFINITION = (
-    "R2 = 1 - sum((target - prediction)^2) / sum((target - mean(target))^2). "
-    "Flatten all windows and horizons within each battery/seed; average seed scores "
-    "then give batteries equal weight. Horizon/window tables use their own target mean. "
-    "Negative values are valid; constant targets or fewer than 2 values return NaN. "
+    "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, "
+    "centering on that window's actual future target mean; arithmetic mean of valid "
+    "window scores within each battery/seed/phase, then equal seed and battery weights. "
+    "Negative values are retained; constant windows or horizons shorter than 2 return NaN. "
+    "No pooled/global or within-variance-weighted R2. "
     "R2 is a reporting metric only; checkpoint selection remains unchanged."
 )
 
 
 def r2_score(target, prediction):
+    """One-window standard R2, or arithmetic mean when passed window rows."""
+    return mean_window_r2(target, prediction)
+
+
+def point_scores(target, prediction):
+    return {**point_metrics(target, prediction), "r2": mean_window_r2(target, prediction)}
+
+
+def window_r2_values(target, prediction):
+    """Standard R2 per row/window; never combine levels across forecast windows."""
     target, prediction = np.asarray(target, dtype=np.float64), np.asarray(prediction, dtype=np.float64)
     if target.shape != prediction.shape or not target.size:
         raise ValueError("Targets and predictions must have matching nonempty shapes")
     if not np.isfinite(target).all() or not np.isfinite(prediction).all():
         raise ValueError("Nonfinite target or prediction")
-    denominator = np.square(target - target.mean()).sum()
-    if target.size < 2 or denominator == 0:
-        return float("nan")
-    return float(1 - np.square(target - prediction).sum() / denominator)
+    if target.ndim == 1:
+        target, prediction = target[None, :], prediction[None, :]
+    if target.ndim != 2:
+        raise ValueError("Expected [windows, horizon] or one 1D window")
+    denominator = np.square(target - target.mean(axis=1, keepdims=True)).sum(axis=1)
+    numerator = np.square(target - prediction).sum(axis=1)
+    valid = (denominator > 0) & (target.shape[1] >= 2)
+    result = np.full(len(target), np.nan)
+    result[valid] = 1 - numerator[valid] / denominator[valid]
+    return result
 
 
-def point_scores(target, prediction):
-    return {**point_metrics(target, prediction), "r2": r2_score(target, prediction)}
+def mean_window_r2(target, prediction):
+    values = window_r2_values(target, prediction)
+    valid = ~np.isnan(values)
+    return float(values[valid].mean()) if valid.any() else float("nan")
 
 
 def distribution_r2(target, samples):
     summary = summarize_samples(samples)
-    return {f"{estimator}_r2": r2_score(target, summary[estimator]) for estimator in ("median", "mean")}
+    return {f"{estimator}_r2": mean_window_r2(target, summary[estimator]) for estimator in ("median", "mean")}
 
 
 def _r2_from_rmse(target, rmse):
     target = np.asarray(target, dtype=np.float64)
+    # An aggregate RMSE cannot recover the arithmetic mean of individual R2s.
+    if target.ndim > 1 and target.shape[0] > 1:
+        return float("nan")
     variance = np.square(target - target.mean()).mean()
     return float(1 - float(rmse)**2 / variance) if target.size > 1 and variance > 0 else float("nan")
 
@@ -143,19 +165,25 @@ def export_run(root, directory):
         frame = enrich_distribution_table(frame, distribution_path)
         frame.to_csv(out / "distribution_metrics.csv", index=False)
 
-    # Every saved validation check retains per-battery, per-seed RMSE. This exact
-    # algebraic conversion avoids pretending an averaged RMSE is a pooled RMSE.
+    # Only selected-validation raw arrays survive; aggregate RMSE alone cannot
+    # reconstruct the mean of individual window R2 scores for other steps.
     history_rows = []
     for path in sorted((directory / "trials").glob("*/complete.json")):
         record = json.loads(path.read_text(encoding="utf-8"))
         for check in record["history"]:
             for row in check["validation"]["by_seed_and_battery"]:
                 target = temporal_split(series[row["battery"]], cfg)[1]["target"]
+                scores = {"median_r2": float("nan"), "mean_r2": float("nan")}
+                validation_path = path.parent / "selected_validation" / f"{row['battery']}_infer{row['inference_seed']}.npz"
+                if check["step"] == record["selected_step"] and validation_path.is_file():
+                    with np.load(validation_path, allow_pickle=False) as saved:
+                        np.testing.assert_allclose(saved["target"], target, rtol=0, atol=1e-12)
+                        scores = distribution_r2(saved["target"], saved["samples"])
+                    source_paths.add(validation_path)
                 history_rows.append({"test_battery": record["test_battery"], "train_seed": record["train_seed"],
                                      "learning_rate": record["learning_rate"], "step": check["step"],
                                      "selected_checkpoint": check["step"] == record["selected_step"], **row,
-                                     "median_r2": _r2_from_rmse(target, row["median_rmse"]),
-                                     "mean_r2": _r2_from_rmse(target, row["mean_rmse"])})
+                                     **scores})
     if history_rows:
         frame = pd.DataFrame(history_rows)
         frame.to_csv(out / "validation_history_by_battery_seed.csv", index=False)

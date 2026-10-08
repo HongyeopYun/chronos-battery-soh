@@ -1,0 +1,5 @@
+record_id,dataset,battery_id,physical_battery_id,n_rows,eligible_windows,evaluated_windows,status,role
+0001,nasa,B0005,B0005,168,10,10,ready,held_out_test
+0002,nasa,B0006,B0006,168,10,10,ready,held_out_test
+0003,nasa,B0007,B0007,168,10,10,ready,held_out_test
+0004,nasa,B0018,B0018,132,53,53,ready,held_out_test

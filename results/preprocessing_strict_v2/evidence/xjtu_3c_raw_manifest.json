@@ -1,0 +1,29 @@
+{
+  "status": "complete",
+  "feature_version": 1,
+  "group": "xjtu_3c",
+  "raw_files_checked": 15,
+  "n_cycles": 3742,
+  "source_sha256": {
+    "3C_battery-1.mat": "1113afe4045da763c5a5c0d70459fc539dd3bd63d43dbd509b2e67fc0a36bc2a",
+    "3C_battery-2.mat": "9eb4f3b460233517c6282752b7e82ea94125e5ca46cfbcd68d061bb6133950c0",
+    "3C_battery-3.mat": "adab52411a81117a3667e12970ccbef7b1df203825f4eef032c24aa45bbde4aa",
+    "3C_battery-4.mat": "215cbb928f5b96c51eadff261b7d9999e80f5f9451b6f605a3f0e5240948ef79",
+    "3C_battery-5.mat": "fc231a8fb49b98f75c890b3dc9015735924cca95792baacc63c9c308ae2b86bc",
+    "3C_battery-6.mat": "6fb0d9c903a08f4d63b1f072b59bb3e524e51ce4c820be8fd4499484171cb2b7",
+    "3C_battery-7.mat": "dc25f1fb18d3998dc841b10c74f39de8748a49f63a4e2b1e6a2f8a7b53a0dc83",
+    "3C_battery-8.mat": "9092219045c704cc4478939b5e3f1b473211e6272ed2d367e07f91f30e28b0c8",
+    "3C_battery-9.mat": "e2945d8099fcb33ae1818d823a85b74fe5a1e9ffde58679dccdcfeb2613614f3",
+    "3C_battery-10.mat": "d53020fecd245869707bf895b67fc390bec58e17980d4c4beca9e58860e6540f",
+    "3C_battery-11.mat": "4eabe4b1fc002933b8baf6ba13c042219adff83bd65efaf1f1ef62c26e6676b3",
+    "3C_battery-12.mat": "dc8653c43e4e41685160aff8a665aa01fd98d872ed968dcd65134039d26ea1e4",
+    "3C_battery-13.mat": "1a31b0fa07e89553cb68b7e70dcdd8531b2fe4019c72aed4b1c723c31a1ee50f",
+    "3C_battery-14.mat": "d3b22335d7897dcb7e1ccc9d3f1f33a041a9b4e5547aefff0b3809ee149ed766",
+    "3C_battery-15.mat": "2f1ee5357eece8650459489e39b39a0079e453f689f30c83893584cb4ea3a414"
+  },
+  "parent_manifest_sha256": "949984f5643364f8f2ea29303fcff7a3e966f04fb9b438e9585691f274918260",
+  "implementation_sha256": "7fc712258afb651dc92cb8a4e4cb6e0ea951b058a3e2212db711afb609ef1501",
+  "elapsed_seconds": 179.18800000008196,
+  "feature_sha256": "1ca5a66db94c152b50935b279d34f29fd18d4b79ed7962e26e52062e77106b13",
+  "provenance_note": "All these scans used the same in-memory extractor loaded at the first full-scan launch; subsequent rule and guard changes did not change these extracted numerical features."
+}

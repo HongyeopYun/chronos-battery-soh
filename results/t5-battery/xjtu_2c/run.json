@@ -1,0 +1,41 @@
+{
+  "status": "complete",
+  "bundle": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\data\\processed\\clean\\xjtu_2c",
+  "model": "amazon/chronos-t5-base",
+  "bundle_fingerprint": "680f653ff4976eb807b61a9b28918946c8f32c6a5af03f78416c33e5dd3e2e77",
+  "config": {
+    "model_id": "amazon/chronos-t5-base",
+    "revision": "ad294eaacead15db499b740ea4122266dd2a81a2",
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "auto",
+    "inference_batch_size": 32,
+    "num_samples": 100,
+    "inference_seeds": [
+      42
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "stride": 1,
+    "battery_ids": null,
+    "max_windows_per_battery": null
+  },
+  "device": "xpu",
+  "started_at": "2026-10-06T07:34:09.960900+00:00",
+  "scope": "full",
+  "retention": "Summary, battery metrics, forecast figures and settings only; no raw predictions",
+  "batteries_completed": 8,
+  "finished_at": "2026-10-06T07:38:46.605995+00:00",
+  "batteries_evaluated": 8,
+  "batteries_skipped": 0,
+  "evaluated_windows": 2579,
+  "figures": [
+    "forecast_windows_01.png",
+    "forecast_windows_02.png"
+  ],
+  "r2_definition": "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, centering on that window's actual future target mean; arithmetic mean of valid window scores within each battery/seed/phase, then equal seed and battery weights. Negative values are retained; constant windows or horizons shorter than 2 return NaN. No pooled/global or within-variance-weighted R2. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+  "r2_source": "Per-window predictions re-inferred with saved input/model/seed/batch settings; original RMSE cross-checked",
+  "metrics_updated_at": "2026-10-06T12:23:07.206937+00:00",
+  "r2_updated_at": "2026-10-07T09:10:28.654591+00:00"
+}

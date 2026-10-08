@@ -1,0 +1,15 @@
+{
+  "status": "complete",
+  "feature_version": 1,
+  "group": "mit_batch3",
+  "raw_files_checked": 1,
+  "n_cycles": 51007,
+  "source_sha256": {
+    "MIT_Batch_3.mat": "62c30e413b63e6144720e016deed3661fac8468641794a5807b123fe84717998"
+  },
+  "parent_manifest_sha256": "e7c0edc3c4fe85708e178d66128e22e5869d9c6aec3172316de543d6e0ccfa59",
+  "implementation_sha256": "7fc712258afb651dc92cb8a4e4cb6e0ea951b058a3e2212db711afb609ef1501",
+  "elapsed_seconds": 79.06200000003446,
+  "feature_sha256": "145d945bd3c4a16cb0d2de02e686642459c26dae40e5ff755f123f36f3a8532f",
+  "provenance_note": "All these scans used the same in-memory extractor loaded at the first full-scan launch; subsequent rule and guard changes did not change these extracted numerical features."
+}

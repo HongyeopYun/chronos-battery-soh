@@ -1,6 +1,6 @@
 {
   "source": "results\\diagnostics\\20260929",
-  "r2_definition": "R2 = 1 - sum((target - prediction)^2) / sum((target - mean(target))^2). Flatten all windows and horizons within each battery/seed; average seed scores then give batteries equal weight. Horizon/window tables use their own target mean. Negative values are valid; constant targets or fewer than 2 values return NaN. R2 is a reporting metric only; checkpoint selection remains unchanged.",
-  "metric_source_sha256": "548cdd400d48faa7f26a09a46790b920513756c5bded72146f9da59e3c5eceb7",
+  "r2_definition": "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, centering on that window's actual future target mean; arithmetic mean of valid window scores within each battery/seed/phase, then equal seed and battery weights. Negative values are retained; constant windows or horizons shorter than 2 return NaN. No pooled/global or within-variance-weighted R2. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+  "metric_source_sha256": "d940e13bee66184c9ad7e7e5dc1f498b0ffe3772906f245f07da9bc1ac6b991b",
   "method": "Original RMSE rechecked against raw sample arrays; R2 computed from the same arrays."
 }

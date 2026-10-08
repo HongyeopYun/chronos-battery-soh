@@ -1,0 +1,811 @@
+{
+  "results/c2-battery/calce64-16/calce_cs2_1c/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0304038794,
+      "r2": -14.6747824716,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0241623621,
+      "r2": -5.6949416812,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0237767554,
+      "r2": -3.0021454072,
+      "wql": 0.0155387561,
+      "picp80": 0.7823811484
+    },
+    {
+      "model": "c2-battery",
+      "phase": "early",
+      "rmse": 0.0218829482,
+      "r2": -3.5018796236,
+      "wql": 0.0103168965,
+      "picp80": 0.8085499502
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.0215410735,
+      "r2": -3.2174933042,
+      "wql": 0.0117118738,
+      "picp80": 0.779266481
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.02663843,
+      "r2": -2.0329739385,
+      "wql": 0.025956286,
+      "picp80": 0.7700202478
+    }
+  ],
+  "results/c2-battery/full/calce_cs2_1c/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0257840112,
+      "r2": -3556.948361816,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.022249706,
+      "r2": -389.1642298437,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0203105224,
+      "r2": -65.0337612593,
+      "wql": 0.0121142464,
+      "picp80": 0.7021233745
+    },
+    {
+      "model": "c2-battery",
+      "phase": "early",
+      "rmse": 0.0171399386,
+      "r2": -57.7934986077,
+      "wql": 0.008490919,
+      "picp80": 0.6942458723
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.0169928032,
+      "r2": -83.1006433147,
+      "wql": 0.0094513668,
+      "picp80": 0.6937051435
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.0245467785,
+      "r2": -55.1742187243,
+      "wql": 0.0227879702,
+      "picp80": 0.7179512032
+    }
+  ],
+  "results/c2-battery/full/mit_batch1/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0035415017,
+      "r2": -3.192743376,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0016280347,
+      "r2": -1.4354991824,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0010256968,
+      "r2": -0.6329962855,
+      "wql": 0.0004951914,
+      "picp80": 0.7103211411
+    },
+    {
+      "model": "c2-battery",
+      "phase": "early",
+      "rmse": 0.0004278289,
+      "r2": -0.8347733564,
+      "wql": 0.0002145667,
+      "picp80": 0.7206687164
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.000888903,
+      "r2": -1.5673925522,
+      "wql": 0.0004905118,
+      "picp80": 0.6976540159
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.0013369186,
+      "r2": 0.5177468437,
+      "wql": 0.0007464786,
+      "picp80": 0.7165291264
+    }
+  ],
+  "results/c2-battery/full/mit_batch2/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0076205593,
+      "r2": -17.4835363711,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.004515589,
+      "r2": -2.2160826775,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0020535033,
+      "r2": -0.669389364,
+      "wql": 0.0006803201,
+      "picp80": 0.7387881285
+    },
+    {
+      "model": "c2-battery",
+      "phase": "early",
+      "rmse": 0.0007876267,
+      "r2": -2.6927324382,
+      "wql": 0.0003570374,
+      "picp80": 0.6946435725
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.0022359405,
+      "r2": -0.4879292265,
+      "wql": 0.000580863,
+      "picp80": 0.7094635801
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.0016197696,
+      "r2": 0.8306891388,
+      "wql": 0.0010240966,
+      "picp80": 0.7985015115
+    }
+  ],
+  "results/c2-battery/full/mit_batch3/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0029509889,
+      "r2": -3.2812828331,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0013967291,
+      "r2": -0.4781342052,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0004157677,
+      "r2": 0.3315809461,
+      "wql": 0.0002054652,
+      "picp80": 0.7449009772
+    },
+    {
+      "model": "c2-battery",
+      "phase": "early",
+      "rmse": 0.0002444842,
+      "r2": -0.4589288128,
+      "wql": 0.0001327396,
+      "picp80": 0.7192927792
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.0002407496,
+      "r2": 0.46465487,
+      "wql": 0.0001299475,
+      "picp80": 0.7333106968
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.0006063476,
+      "r2": 0.8595553583,
+      "wql": 0.0003540984,
+      "picp80": 0.779075712
+    }
+  ],
+  "results/c2-battery/full/nasa_aging/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0217487141,
+      "r2": -2.7465146694,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0229937582,
+      "r2": -2.6283128896,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0157077685,
+      "r2": -0.6030800867,
+      "wql": 0.0121392868,
+      "picp80": 0.8007837344
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.0160282774,
+      "r2": -0.5420086299,
+      "wql": 0.0120265603,
+      "picp80": 0.84375
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.0138675795,
+      "r2": -0.6307486894,
+      "wql": 0.0117324953,
+      "picp80": 0.7534955845
+    }
+  ],
+  "results/c2-battery/full/xjtu_2c/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0062958059,
+      "r2": -2.9089578194,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0046393114,
+      "r2": -5.7080640135,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0026310301,
+      "r2": -0.2998733798,
+      "wql": 0.0015815787,
+      "picp80": 0.6487234957
+    },
+    {
+      "model": "c2-battery",
+      "phase": "early",
+      "rmse": 0.0016809453,
+      "r2": -1.6297154741,
+      "wql": 0.0010947506,
+      "picp80": 0.6344766556
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.0021390443,
+      "r2": -0.244972238,
+      "wql": 0.0013214322,
+      "picp80": 0.6124886867
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.0034310087,
+      "r2": 0.4129678951,
+      "wql": 0.0022214335,
+      "picp80": 0.6978558314
+    }
+  ],
+  "results/c2-battery/full/xjtu_3c/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0116445929,
+      "r2": -3.0159400081,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0117249134,
+      "r2": -13.7884493521,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0038370866,
+      "r2": 0.1535613149,
+      "wql": 0.0022937865,
+      "picp80": 0.6276449087
+    },
+    {
+      "model": "c2-battery",
+      "phase": "early",
+      "rmse": 0.0021898025,
+      "r2": -1.1133718314,
+      "wql": 0.0014281222,
+      "picp80": 0.6322090551
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.0023080495,
+      "r2": 0.1009712831,
+      "wql": 0.0013775834,
+      "picp80": 0.6944591135
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.0050721331,
+      "r2": 0.5508388439,
+      "wql": 0.0034044601,
+      "picp80": 0.5728291571
+    }
+  ],
+  "results/c2-battery/pilot/mit_batch3/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0028427169,
+      "r2": -3.2691202121,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0011923653,
+      "r2": -0.4142771687,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0003761351,
+      "r2": -0.0319994788,
+      "wql": 0.0002005659,
+      "picp80": 0.7192978152
+    },
+    {
+      "model": "c2-battery",
+      "phase": "early",
+      "rmse": 0.0002121073,
+      "r2": -0.7134253461,
+      "wql": 0.0001227546,
+      "picp80": 0.7187665686
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.0002561278,
+      "r2": -0.3275046999,
+      "wql": 0.00014149,
+      "picp80": 0.6927348634
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.0005500428,
+      "r2": 0.859377969,
+      "wql": 0.0003375239,
+      "picp80": 0.7475327541
+    }
+  ],
+  "results/c2-battery/pilot/xjtu_3c/c2-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0093439942,
+      "r2": -3.0822675886,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0086768812,
+      "r2": -11.7431647617,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "c2-battery",
+      "phase": "all",
+      "rmse": 0.0025120383,
+      "r2": 0.0239910419,
+      "wql": 0.0015144514,
+      "picp80": 0.6677186988
+    },
+    {
+      "model": "c2-battery",
+      "phase": "early",
+      "rmse": 0.0025483156,
+      "r2": -1.280829462,
+      "wql": 0.0016968644,
+      "picp80": 0.4867965368
+    },
+    {
+      "model": "c2-battery",
+      "phase": "middle",
+      "rmse": 0.0017258094,
+      "r2": -0.0666950659,
+      "wql": 0.0009998435,
+      "picp80": 0.7222358247
+    },
+    {
+      "model": "c2-battery",
+      "phase": "late",
+      "rmse": 0.0031887864,
+      "r2": 0.6683406935,
+      "wql": 0.0020848426,
+      "picp80": 0.6774462834
+    }
+  ],
+  "results/t5-battery/calce64-16/calce_cs2_1c/t5-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0304038794,
+      "r2": -14.6747824716,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0241623621,
+      "r2": -5.6949416812,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "t5-battery",
+      "phase": "all",
+      "rmse": 0.025190559,
+      "r2": -4.2605281572,
+      "wql": 0.01576466,
+      "picp80": 0.8025456106
+    },
+    {
+      "model": "t5-battery",
+      "phase": "early",
+      "rmse": 0.0232828252,
+      "r2": -6.4867789823,
+      "wql": 0.0105511448,
+      "picp80": 0.8285881042
+    },
+    {
+      "model": "t5-battery",
+      "phase": "middle",
+      "rmse": 0.0238743505,
+      "r2": -4.6519539495,
+      "wql": 0.0123146675,
+      "picp80": 0.7808415177
+    },
+    {
+      "model": "t5-battery",
+      "phase": "late",
+      "rmse": 0.0275495705,
+      "r2": -2.6573270164,
+      "wql": 0.025785445,
+      "picp80": 0.8011467514
+    }
+  ],
+  "results/t5-battery/calce_cs2_1c/summary.csv": [
+    {
+      "model": "Chronos",
+      "rmse": 0.0218912902,
+      "r2": -171.5383799393,
+      "wql": 0.0117827174,
+      "picp80": 0.8080439939
+    },
+    {
+      "model": "LastValue",
+      "rmse": 0.0257840112,
+      "r2": -3556.948361816,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "rmse": 0.022249706,
+      "r2": -389.1642298437,
+      "wql": null,
+      "picp80": null
+    }
+  ],
+  "results/t5-battery/mit_batch1/summary.csv": [
+    {
+      "model": "Chronos",
+      "rmse": 0.00224456,
+      "r2": -27.5997261443,
+      "wql": 0.0015603179,
+      "picp80": 0.4319236952,
+      "r2_scope": "representative_windows"
+    },
+    {
+      "model": "LastValue",
+      "rmse": 0.0035415017,
+      "r2": -3.2990346988,
+      "wql": null,
+      "picp80": null,
+      "r2_scope": "representative_windows"
+    },
+    {
+      "model": "Linear",
+      "rmse": 0.0016280347,
+      "r2": -0.3964315428,
+      "wql": null,
+      "picp80": null,
+      "r2_scope": "representative_windows"
+    }
+  ],
+  "results/t5-battery/mit_batch2/summary.csv": [
+    {
+      "model": "Chronos",
+      "rmse": 0.0036991196,
+      "r2": -24.8879611122,
+      "wql": 0.002075926,
+      "picp80": 0.4752090828
+    },
+    {
+      "model": "LastValue",
+      "rmse": 0.0076205593,
+      "r2": -17.4835363711,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "rmse": 0.004515589,
+      "r2": -2.2160826775,
+      "wql": null,
+      "picp80": null
+    }
+  ],
+  "results/t5-battery/mit_batch3/summary.csv": [
+    {
+      "model": "Chronos",
+      "rmse": 0.0019208333,
+      "r2": -37.3333978939,
+      "wql": 0.0014400347,
+      "picp80": 0.369433252,
+      "r2_scope": "representative_windows"
+    },
+    {
+      "model": "LastValue",
+      "rmse": 0.0029509889,
+      "r2": -3.5118424917,
+      "wql": null,
+      "picp80": null,
+      "r2_scope": "representative_windows"
+    },
+    {
+      "model": "Linear",
+      "rmse": 0.0013967291,
+      "r2": 0.0687589839,
+      "wql": null,
+      "picp80": null,
+      "r2_scope": "representative_windows"
+    }
+  ],
+  "results/t5-battery/nasa_aging/summary.csv": [
+    {
+      "model": "Chronos",
+      "rmse": 0.0162969748,
+      "r2": -0.7506824927,
+      "wql": 0.0126283671,
+      "picp80": 0.8089920765
+    },
+    {
+      "model": "LastValue",
+      "rmse": 0.0217487141,
+      "r2": -2.7465146694,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "rmse": 0.0229937582,
+      "r2": -2.6283128896,
+      "wql": null,
+      "picp80": null
+    }
+  ],
+  "results/t5-battery/pilot/mit_batch3/t5-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0028427169,
+      "r2": -3.2691202121,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0011923653,
+      "r2": -0.4142771687,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "t5-battery",
+      "phase": "all",
+      "rmse": 0.0017545494,
+      "r2": -47.1540619322,
+      "wql": 0.0013432684,
+      "picp80": 0.3449259965
+    },
+    {
+      "model": "t5-battery",
+      "phase": "early",
+      "rmse": 0.0015740904,
+      "r2": -133.1436094925,
+      "wql": 0.0014914778,
+      "picp80": 0.241712881
+    },
+    {
+      "model": "t5-battery",
+      "phase": "middle",
+      "rmse": 0.0008899707,
+      "r2": -17.9813781495,
+      "wql": 0.0008921374,
+      "picp80": 0.2815987282
+    },
+    {
+      "model": "t5-battery",
+      "phase": "late",
+      "rmse": 0.0024448409,
+      "r2": -4.1478764945,
+      "wql": 0.0017066917,
+      "picp80": 0.4992484468
+    }
+  ],
+  "results/t5-battery/pilot/xjtu_3c/t5-battery_summary.csv": [
+    {
+      "model": "LastValue",
+      "phase": "all",
+      "rmse": 0.0093439942,
+      "r2": -3.0822675886,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "phase": "all",
+      "rmse": 0.0086768812,
+      "r2": -11.7431647617,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "t5-battery",
+      "phase": "all",
+      "rmse": 0.0037627878,
+      "r2": -2.3807846952,
+      "wql": 0.0026186822,
+      "picp80": 0.5194689896
+    },
+    {
+      "model": "t5-battery",
+      "phase": "early",
+      "rmse": 0.0043413197,
+      "r2": -7.3258433628,
+      "wql": 0.0027521568,
+      "picp80": 0.6576839827
+    },
+    {
+      "model": "t5-battery",
+      "phase": "middle",
+      "rmse": 0.0031358564,
+      "r2": -2.7574397676,
+      "wql": 0.0021683171,
+      "picp80": 0.5890850515
+    },
+    {
+      "model": "t5-battery",
+      "phase": "late",
+      "rmse": 0.0041639352,
+      "r2": 0.0950987549,
+      "wql": 0.0031291155,
+      "picp80": 0.3804805459
+    }
+  ],
+  "results/t5-battery/xjtu_2c/summary.csv": [
+    {
+      "model": "Chronos",
+      "rmse": 0.00338674,
+      "r2": -2.2696158227,
+      "wql": 0.0024294234,
+      "picp80": 0.5074591384
+    },
+    {
+      "model": "LastValue",
+      "rmse": 0.0062958059,
+      "r2": -2.9089578194,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "rmse": 0.0046393114,
+      "r2": -5.7080640135,
+      "wql": null,
+      "picp80": null
+    }
+  ],
+  "results/t5-battery/xjtu_3c/summary.csv": [
+    {
+      "model": "Chronos",
+      "rmse": 0.0045434054,
+      "r2": -1.76616567,
+      "wql": 0.0030816711,
+      "picp80": 0.5185940004
+    },
+    {
+      "model": "LastValue",
+      "rmse": 0.0116445929,
+      "r2": -3.0159400081,
+      "wql": null,
+      "picp80": null
+    },
+    {
+      "model": "Linear",
+      "rmse": 0.0117249134,
+      "r2": -13.7884493521,
+      "wql": null,
+      "picp80": null
+    }
+  ]
+}

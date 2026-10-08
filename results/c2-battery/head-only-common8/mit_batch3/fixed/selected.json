@@ -1,0 +1,90 @@
+{
+  "step": 0,
+  "learning_rate": 0.0,
+  "validation_loss": 1.0707263946533203,
+  "validation_crossing_fraction": 0.03125,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "trainable_fraction": 0.03057709598339653,
+  "trainable_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "selected_weights": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\models\\c2-head-common8\\mit_batch3\\fixed.pt",
+  "selected_weights_sha256": "4d3d1e2bfc444f07dbd897c43021efed0fffec52a318478fbcdbb45e062d84d7",
+  "optimizer_subset_verified": true,
+  "frozen_parameters_verified": true,
+  "candidate_runtimes": [
+    {
+      "learning_rate": 1e-06,
+      "training_and_validation_seconds": 9.876639399910346
+    },
+    {
+      "learning_rate": 1e-05,
+      "training_and_validation_seconds": 9.794380999985151
+    }
+  ],
+  "baseline": {
+    "step": 0,
+    "learning_rate": 0.0,
+    "validation_loss": 1.0707263946533203,
+    "validation_crossing_fraction": 0.03125,
+    "validation_invalid_interval_fraction": 0.0,
+    "eligible": true
+  },
+  "group": "mit_batch3",
+  "fold_id": "fixed",
+  "selected_at": "2026-10-08T03:36:15.710334+00:00",
+  "source_ids": [
+    "b3c0",
+    "b3c1"
+  ],
+  "validation_ids": [
+    "b3c3"
+  ],
+  "test_ids": [
+    "b3c4",
+    "b3c5",
+    "b3c6",
+    "b3c7",
+    "b3c8",
+    "b3c9",
+    "b3c10",
+    "b3c11",
+    "b3c12",
+    "b3c13",
+    "b3c14",
+    "b3c15",
+    "b3c16",
+    "b3c17",
+    "b3c18",
+    "b3c19",
+    "b3c20",
+    "b3c21",
+    "b3c22",
+    "b3c24",
+    "b3c25",
+    "b3c26",
+    "b3c27",
+    "b3c28",
+    "b3c29",
+    "b3c30",
+    "b3c31",
+    "b3c33",
+    "b3c34",
+    "b3c35",
+    "b3c36",
+    "b3c38",
+    "b3c39",
+    "b3c40",
+    "b3c41",
+    "b3c44",
+    "b3c45"
+  ]
+}

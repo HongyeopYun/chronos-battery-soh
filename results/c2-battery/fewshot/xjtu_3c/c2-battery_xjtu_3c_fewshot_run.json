@@ -1,0 +1,51 @@
+{
+  "status": "complete",
+  "started_at": "2026-10-07T13:05:05.673130+00:00",
+  "group": "xjtu_3c",
+  "query_battery_ids": [
+    "batch2_3C_battery-1",
+    "batch2_3C_battery-2",
+    "batch2_3C_battery-3"
+  ],
+  "support_battery_ids": [
+    "batch2_3C_battery-4",
+    "batch2_3C_battery-5"
+  ],
+  "windows_per_battery": 30,
+  "selection": "Uniform eligible-window indices; both support contexts must end before query origin",
+  "scope": "Sampled paired windows of three selected query batteries",
+  "r2_scope": "sampled_windows",
+  "r2": "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, centering on that window's actual future target mean; arithmetic mean of valid window scores within each battery/seed/phase, then equal seed and battery weights. Negative values are retained; constant windows or horizons shorter than 2 return NaN. No pooled/global or within-variance-weighted R2. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+  "conditions": [
+    "SOH/0-shot",
+    "SOH+V+I/0-shot",
+    "SOH/1-shot",
+    "SOH+V+I/1-shot",
+    "SOH/2-shot",
+    "SOH+V+I/2-shot"
+  ],
+  "device": "xpu",
+  "model_id": "amazon/chronos-2",
+  "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "context_length": 64,
+  "prediction_length": 16,
+  "cross_learning": "One query per call; one/two disjoint support cells; batch_size equals total variates",
+  "cutoff": "Every input cycle < query forecast_start; no future covariates; no inference-time query mixing",
+  "support_time_semantics": "Conservative cycle-index cutoff, not a claim of calendar-time synchronization",
+  "bundle_fingerprint": "aab68ab47c562c288fe9f984ba70fd194d482a67e39468084b3ef2a5c72e2b8c",
+  "zero_shot_source": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\results\\c2-battery\\covariates\\xjtu_3c",
+  "support_raw_sha256": {
+    "batch2_3C_battery-4": "215cbb928f5b96c51eadff261b7d9999e80f5f9451b6f605a3f0e5240948ef79",
+    "batch2_3C_battery-5": "fc231a8fb49b98f75c890b3dc9015735924cca95792baacc63c9c308ae2b86bc"
+  },
+  "completed_queries": 90,
+  "future_invariance_verified": true,
+  "isolated_zero_shot_verified": true,
+  "finished_at": "2026-10-07T13:06:07.020914+00:00",
+  "figures": [
+    "c2-battery_xjtu_3c_fewshot_forecast_windows.png"
+  ],
+  "evaluated_windows_per_condition": 90,
+  "no_cross_origin_query_batching": true,
+  "model_parameters_unchanged": true
+}

@@ -133,7 +133,7 @@ Step 0을 선택한 모델은 {zero_count}/{len(choices)}개다. Step 0 결과�
 
 배터리와 추론 반복에 같은 가중치를 준 평균이다. `mean_rmse`는 sample mean으로 만든 점예측의 RMSE다. 비율 열은 0~1 단위다.
 
-`median_r2`와 `mean_r2`는 각 점예측의 결정계수 R²다. 배터리·seed마다 전체 window와 horizon을 펼쳐 `1 - SSE/SST`로 계산한 뒤 동일 가중 평균한다. 1이면 완전 예측, 0이면 평가 target의 평균 예측과 같고 음수도 유효하다. 정답이 상수이면 NaN이다. R²는 높을수록 좋으며 모델 선택에는 사용하지 않았다.
+`median_r2`와 `mean_r2`는 Mean window R²다. 각 창의 실제 미래 평균으로 `1 - SSE/SST`를 계산한 뒤 유효 창별 점수를 단순평균하고 seed·배터리를 동일 가중 평균한다. 음수는 유지하고 상수 target 창은 NaN으로 제외한다. Validation 후보 점수는 선택된 checkpoint의 저장 예측에서 계산하며 다른 step의 원시 예측이 없는 이력은 NaN이다. R²는 모델 선택에 사용하지 않았다.
 
 {md_table(main_table)}
 

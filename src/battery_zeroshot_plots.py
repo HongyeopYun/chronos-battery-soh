@@ -1,5 +1,6 @@
 """Small reports and representative window plots for common SOH zero-shot runs."""
 from pathlib import Path
+from contextlib import nullcontext
 
 import matplotlib
 matplotlib.use("Agg")
@@ -7,31 +8,47 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def forecast_figures(directory, records, config):
+def forecast_figures(directory, records, config, show_window_scores=False, model_label="Chronos",
+                     filename_prefix="", representative_description="Representative eligible windows", window_labels=None):
+    labels = window_labels or ['Early', 'Middle', 'Late']
     figures = []
     for page, start in enumerate(range(0, len(records), 4), 1):
         selected = records[start:start + 4]
         fig, axes = plt.subplots(len(selected), 3, figsize=(15, 3.2 * len(selected)), squeeze=False)
         for row_index, record in enumerate(selected):
             file = directory / f"predictions/{record['record_id']}_infer{config.inference_seeds[0]}.npz"
-            with np.load(file, allow_pickle=False) as saved:
+            with (nullcontext(record["forecast"]) if "forecast" in record else np.load(file, allow_pickle=False)) as saved:
                 indices = [0, len(saved["target"]) // 2, len(saved["target"]) - 1]
                 for col, index in enumerate(indices):
                     ax = axes[row_index, col]
+                    if "phase_available" in saved and not bool(saved["phase_available"][col]):
+                        ax.set_title(f"{record['battery_id']} | {labels[col]}")
+                        ax.text(.5, .5, f"No eligible {config.context_length} -> {config.prediction_length} window\nin this observed-period third",
+                                ha="center", va="center", transform=ax.transAxes, fontsize=10)
+                        ax.set_axis_off()
+                        continue
                     context_cycle, target_cycle = saved["context_cycle"][index], saved["target_cycle"][index]
                     ax.plot(context_cycle, saved["context"][index], color=".4", linewidth=1.2, label="Observed context")
                     ax.plot(target_cycle, saved["target"][index], color="black", linewidth=1.5, label="Actual SOH")
-                    ax.plot(target_cycle, saved["median"][index], color="#2878b5", linewidth=1.5, label="Chronos median")
+                    ax.plot(target_cycle, saved["median"][index], color="#2878b5", linewidth=1.5, label=f"{model_label} median")
                     ax.fill_between(target_cycle, saved["q10"][index], saved["q90"][index], color="#2878b5", alpha=.2, label="10-90% interval")
                     ax.axvline(target_cycle[0], color=".6", linestyle=":", linewidth=1)
-                    ax.set(title=f"{record['battery_id']} | {'Early/Middle/Late'.split('/')[col]} | cycle {int(target_cycle[0])}",
+                    ax.set(title=f"{record['battery_id']} | {labels[col]} | cycle {int(target_cycle[0])}",
                            xlabel="Source cycle", ylabel="SOH (Q / Q_ref)")
                     ax.grid(alpha=.2)
-        axes[0, 0].legend(fontsize=7, loc="best")
-        fig.suptitle(f"Chronos zero-shot | observed {config.context_length} -> future {config.prediction_length}\n"
-                     f"Representative eligible windows; inference seed {config.inference_seeds[0]}")
+                    if show_window_scores:
+                        from src.soh_evaluation import point_scores
+                        scores = point_scores(saved["target"][index:index+1], saved["median"][index:index+1])
+                        ax.text(.02, .04, f"RMSE={scores['rmse']:.4f} | window R2={scores['r2']:.2f}",
+                                transform=ax.transAxes, fontsize=8)
+        for ax in axes.flat:
+            if ax.get_legend_handles_labels()[0]:
+                ax.legend(fontsize=7, loc="best")
+                break
+        fig.suptitle(f"{model_label} zero-shot | observed {config.context_length} -> future {config.prediction_length}\n"
+                     f"{representative_description}; inference seed {config.inference_seeds[0]}")
         fig.tight_layout(rect=(0, 0, 1, .94))
-        path = directory / f"forecast_windows_{page:02d}.png"
+        path = directory / f"{filename_prefix}forecast_windows_{page:02d}.png"
         fig.savefig(path, dpi=150)
         plt.close(fig)
         figures.append(path.name)
@@ -69,8 +86,8 @@ def write_report(directory, records, coverage, config, scope, tables, reuse_figu
               "보조 지표:", "", "| 모델 | 80% 구간 폭 |", "|---|---:|"]
     for row in primary[primary.model == "Chronos"].to_dict("records"):
         lines.append(f"| {row['model']} | {row['width80_mean']:.6f} |")
-    lines += ["", "R²는 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`로 계산한다. "
-              "음수도 유지하고 상수 target은 NaN으로 둔다. seed 점수를 평균하고 배터리 기록마다 같은 가중치를 준다. "
+    lines += ["", "R²는 각 예측창의 실제 미래 평균으로 `1 - SSE/SST`를 계산한 뒤 창별 점수를 단순평균한다. "
+              "음수도 유지하고 상수 target 창은 NaN으로 제외한다. seed 점수를 평균하고 배터리 기록마다 같은 가중치를 준다. "
               "MIT의 연속 측정 기록은 별도 기록이며 이 요약을 독립 물리 배터리 개수로 해석하지 않는다.", "",
               "LastValue는 마지막 관측을 유지하고 Linear는 context의 최소제곱 직선을 연장한다. "
               "단순 기준 모델도 Chronos와 같은 target과 window에서 평가한다. 점예측 기준 모델의 WQL·PICP@80·구간 폭은 계산하지 않는다.", "",

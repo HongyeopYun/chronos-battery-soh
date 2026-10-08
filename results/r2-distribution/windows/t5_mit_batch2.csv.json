@@ -1,0 +1,62 @@
+{
+  "status": "complete",
+  "model": "amazon/chronos-t5-base",
+  "config": {
+    "model_id": "amazon/chronos-t5-base",
+    "revision": "ad294eaacead15db499b740ea4122266dd2a81a2",
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "auto",
+    "inference_batch_size": 32,
+    "num_samples": 100,
+    "inference_seeds": [
+      42
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "stride": 1,
+    "battery_ids": null,
+    "max_windows_per_battery": null
+  },
+  "scope": "representative_windows_all_metrics",
+  "bundle_fingerprint": "9e3495e1881ad69cdd92a43fb90ceb1042ddd6b487c47f064b79aee54c88fa77",
+  "source": "results\\t5-battery\\mit_batch2",
+  "started_at": "2026-10-07T14:48:44.580506+00:00",
+  "completed_batteries": 48,
+  "n_batteries": 48,
+  "n_windows": 143,
+  "summary": [
+    {
+      "phase": "all",
+      "rmse": 0.003394876421909091,
+      "r2": -32.712012347228786,
+      "wql": 0.002276508571603054,
+      "picp80": 0.423828125
+    },
+    {
+      "phase": "early",
+      "rmse": 0.002185214107760741,
+      "r2": -91.26750952116792,
+      "wql": 0.0019046068224342816,
+      "picp80": 0.28324468085106386
+    },
+    {
+      "phase": "middle",
+      "rmse": 0.003757554985934715,
+      "r2": -9.29940279815743,
+      "wql": 0.0023864819979390562,
+      "picp80": 0.6744791666666666
+    },
+    {
+      "phase": "late",
+      "rmse": 0.0031671343267995118,
+      "r2": 0.5104380635556856,
+      "wql": 0.002583557485735071,
+      "picp80": 0.3098958333333333
+    }
+  ],
+  "original_metrics_cross_checked": false,
+  "elapsed_seconds": 21.914930499973707,
+  "finished_at": "2026-10-07T14:49:06.511419+00:00"
+}

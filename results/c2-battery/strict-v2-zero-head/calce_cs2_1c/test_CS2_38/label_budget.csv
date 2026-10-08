@@ -1,0 +1,4 @@
+split,battery_id,index,context_start,context_end,label_start,label_end
+train,CS2_36,0,432,495,496,511
+train,CS2_37,0,367,430,431,446
+validation,CS2_35,0,234,297,298,313

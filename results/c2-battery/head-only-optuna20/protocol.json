@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "groups": [
+    "xjtu_2c",
+    "xjtu_3c"
+  ],
+  "train_windows": 20,
+  "validation_windows": 10,
+  "context": 64,
+  "horizon": 16,
+  "stride": 1,
+  "input": "SOH only",
+  "trainable": "output_patch_embedding only",
+  "trials_per_group": 16,
+  "lr_range": [
+    1e-07,
+    3e-05
+  ],
+  "maximum_steps": [
+    100,
+    200,
+    400
+  ],
+  "enqueued_candidates": [
+    [
+      1e-06,
+      100
+    ],
+    [
+      1e-05,
+      100
+    ],
+    [
+      1e-06,
+      400
+    ],
+    [
+      3e-06,
+      200
+    ]
+  ],
+  "search_seed": 42,
+  "confirmation_seeds": [
+    42,
+    43,
+    44
+  ],
+  "batch_size": 4,
+  "validation_frequency": 20,
+  "optimizer": "AdamW weight_decay=0 eps=1e-8; linear LR decay over maximum steps; gradient clip 1",
+  "selection": "Best validation quantile loss under unchanged crossing constraints; step zero included",
+  "confirmation": "Lock LR/max_steps; validation-best step per seed; original and alternate training windows; all reported",
+  "alternate_rule": "Stratified random non-overlapping label positions, seed 1042+cell number; same validation windows",
+  "pruning": false,
+  "sequential_trials": true,
+  "validation_refit": false,
+  "r2": "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, centering on that window's actual future target mean; arithmetic mean of valid window scores within each battery/seed/phase, then equal seed and battery weights. Negative values are retained; constant windows or horizons shorter than 2 return NaN. No pooled/global or within-variance-weighted R2. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+  "model_id": "amazon/chronos-2",
+  "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "versions": {
+    "optuna": "5.0.0",
+    "torch": "2.14.0+xpu"
+  },
+  "splits": {
+    "xjtu_2c": {
+      "fold_id": "fixed",
+      "train_ids": [
+        "batch1_2C_battery-4",
+        "batch1_2C_battery-5"
+      ],
+      "validation_ids": [
+        "batch1_2C_battery-6"
+      ],
+      "test_ids": [
+        "batch1_2C_battery-1",
+        "batch1_2C_battery-2",
+        "batch1_2C_battery-3",
+        "batch1_2C_battery-7",
+        "batch1_2C_battery-8"
+      ],
+      "bundle_sha256": "680f653ff4976eb807b61a9b28918946c8f32c6a5af03f78416c33e5dd3e2e77",
+      "label_budget_sha256": "99ce18cc3ffd1c11c684de767b40ab438d2d36531efde5319f8a6a10d93d19f5",
+      "previous_head_sha256": "4f1c21617fa42f2a0ad8dd119829bb7dce5f62bf944bd28d564315a3dbca2113"
+    },
+    "xjtu_3c": {
+      "fold_id": "fixed",
+      "train_ids": [
+        "batch2_3C_battery-4",
+        "batch2_3C_battery-5"
+      ],
+      "validation_ids": [
+        "batch2_3C_battery-6"
+      ],
+      "test_ids": [
+        "batch2_3C_battery-1",
+        "batch2_3C_battery-2",
+        "batch2_3C_battery-3",
+        "batch2_3C_battery-7",
+        "batch2_3C_battery-8",
+        "batch2_3C_battery-9",
+        "batch2_3C_battery-10",
+        "batch2_3C_battery-11",
+        "batch2_3C_battery-12",
+        "batch2_3C_battery-13",
+        "batch2_3C_battery-14",
+        "batch2_3C_battery-15"
+      ],
+      "bundle_sha256": "aab68ab47c562c288fe9f984ba70fd194d482a67e39468084b3ef2a5c72e2b8c",
+      "label_budget_sha256": "8de3136060b1b09052a6ef3b6dca2ef32c63a5c7269de9266f208a81436cfa57",
+      "previous_head_sha256": "4d1c45ae48d2a41f518e359374bad1faa816c8edad16c3c1e75c2526e9733b80"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "feature_version": 1,
+  "group": "xjtu_2c",
+  "raw_files_checked": 8,
+  "n_cycles": 3219,
+  "source_sha256": {
+    "2C_battery-1.mat": "336a0c25c9d6e4c18a231c0b4004edfb44fbd7808533490cddf4d073ce854dbb",
+    "2C_battery-2.mat": "55da58e12c472b4c447698770a9b4dbd9f56f96a64b89c4b9b07ac191ecc1201",
+    "2C_battery-3.mat": "5fe79f7fb1d7848ccec49845203d46ba4b1f9c551f6603f54a917bd06d57c59c",
+    "2C_battery-4.mat": "333a202e89686e7bafe4c28bb46d0a0a95f2e4699de9cebc58fa98b680bbf577",
+    "2C_battery-5.mat": "eb4ba517f8d1593e9e08697be1fb0a52e6f95be50311fcca1a0b10fc316b9cd8",
+    "2C_battery-6.mat": "8aa9ccbba5e0bcd58a3d8371cd9f6336d62ccd86554d6ba4c92e9a6efa6d8bee",
+    "2C_battery-7.mat": "35608e4781253e48c22729ad3bf15114a2d41c89e664f38e74977ee566975246",
+    "2C_battery-8.mat": "c3186b4f06e7a3d80a2a172739ab31611d7514203ec9fea653a1c630b0e2f636"
+  },
+  "parent_manifest_sha256": "a7a01dca68fa29258f4a7cbbf33b3f5e68ae226ca0db906cc68e02cd003cc24f",
+  "implementation_sha256": "7fc712258afb651dc92cb8a4e4cb6e0ea951b058a3e2212db711afb609ef1501",
+  "elapsed_seconds": 163.39099999994505,
+  "feature_sha256": "3a91c340bf711abc94bc8ab29a48a68f99cf72b3b588453ffedc86bb366374c8",
+  "provenance_note": "All these scans used the same in-memory extractor loaded at the first full-scan launch; subsequent rule and guard changes did not change these extracted numerical features."
+}

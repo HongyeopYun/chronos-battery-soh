@@ -1,0 +1,67 @@
+{
+  "status": "complete",
+  "started_at": "2026-10-08T03:12:54.436412+00:00",
+  "device": "xpu:0",
+  "training_performed": false,
+  "model_id": "amazon/chronos-2",
+  "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "context": 64,
+  "horizon": 16,
+  "stride": 1,
+  "cross_learning": false,
+  "source_selection": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\results\\c2-battery\\fewshot-partial-tuning\\xjtu_3c\\run.json",
+  "head_sha256": "4d1c45ae48d2a41f518e359374bad1faa816c8edad16c3c1e75c2526e9733b80",
+  "locked_learning_rate": 1e-06,
+  "locked_step": 100,
+  "train_ids_excluded": [
+    "batch2_3C_battery-4",
+    "batch2_3C_battery-5"
+  ],
+  "validation_ids_excluded": [
+    "batch2_3C_battery-6"
+  ],
+  "previous_test_ids": [
+    "batch2_3C_battery-1",
+    "batch2_3C_battery-2",
+    "batch2_3C_battery-3"
+  ],
+  "all_test_ids": [
+    "batch2_3C_battery-1",
+    "batch2_3C_battery-2",
+    "batch2_3C_battery-3",
+    "batch2_3C_battery-7",
+    "batch2_3C_battery-8",
+    "batch2_3C_battery-9",
+    "batch2_3C_battery-10",
+    "batch2_3C_battery-11",
+    "batch2_3C_battery-12",
+    "batch2_3C_battery-13",
+    "batch2_3C_battery-14",
+    "batch2_3C_battery-15"
+  ],
+  "additional_test_ids": [
+    "batch2_3C_battery-7",
+    "batch2_3C_battery-8",
+    "batch2_3C_battery-9",
+    "batch2_3C_battery-10",
+    "batch2_3C_battery-11",
+    "batch2_3C_battery-12",
+    "batch2_3C_battery-13",
+    "batch2_3C_battery-14",
+    "batch2_3C_battery-15"
+  ],
+  "finished_at": "2026-10-08T03:13:02.627943+00:00",
+  "evaluated_batteries": 12,
+  "evaluated_windows": 1841,
+  "skipped_ids": [],
+  "prediction_condition_order": [
+    "SOH/zero-shot",
+    "SOH/head"
+  ],
+  "existing_results_preserved": true,
+  "figures": [
+    "c2-head_forecast_windows_01.png",
+    "c2-head_forecast_windows_02.png",
+    "c2-head_forecast_windows_03.png"
+  ]
+}

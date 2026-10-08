@@ -1,0 +1,62 @@
+{
+  "status": "complete",
+  "model": "amazon/chronos-2",
+  "config": {
+    "model_id": "amazon/chronos-2",
+    "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+    "context_length": 32,
+    "prediction_length": 8,
+    "device": "auto",
+    "inference_batch_size": 32,
+    "num_samples": 100,
+    "inference_seeds": [
+      42
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "stride": 1,
+    "battery_ids": null,
+    "max_windows_per_battery": null
+  },
+  "scope": "all_windows",
+  "bundle_fingerprint": "ea3ea66133d9b84f8626a1daf256a6ff49392e95c6a883940ff79264cb2e791d",
+  "source": "results\\c2-battery\\full\\calce_cs2_1c",
+  "started_at": "2026-10-07T14:47:48.380901+00:00",
+  "completed_batteries": 4,
+  "n_batteries": 4,
+  "n_windows": 754,
+  "summary": [
+    {
+      "phase": "all",
+      "rmse": 0.02031052244265954,
+      "r2": -65.0337612592906,
+      "wql": 0.0121142464445786,
+      "picp80": 0.7021233744502675
+    },
+    {
+      "phase": "early",
+      "rmse": 0.01713993856004096,
+      "r2": -57.79349860770625,
+      "wql": 0.008490919043550654,
+      "picp80": 0.6942458722969024
+    },
+    {
+      "phase": "middle",
+      "rmse": 0.016992803209847005,
+      "r2": -83.1006433146924,
+      "wql": 0.009451366772230182,
+      "picp80": 0.6937051435406698
+    },
+    {
+      "phase": "late",
+      "rmse": 0.024546778508805878,
+      "r2": -55.17421872429061,
+      "wql": 0.022787970150559347,
+      "picp80": 0.7179512032085561
+    }
+  ],
+  "original_metrics_cross_checked": true,
+  "elapsed_seconds": 2.2344212998868898,
+  "finished_at": "2026-10-07T14:47:50.632493+00:00"
+}

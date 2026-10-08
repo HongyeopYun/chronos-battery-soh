@@ -1,6 +1,8 @@
 # 공통 데이터로 zero-shot 실행
 
-`src.battery_zeroshot.battery_zeroshot`는 공통 SOH 데이터 묶음을 받아 Chronos 추론·기준 모델 비교·성능평가·대표 곡선을 저장한다. XJTU·NASA·MIT·CALCE는 같은 함수에 데이터 경로만 바꿔 전달한다. 기존 NASA 전용 02·03 및 저장된 실험은 유지한다.
+이 문서는 전체 T5 평가와 최소 결과 형식에 관한 것이다. 모든 평가 R²를 Mean window R²로 통일했다. 모델별 설정·노트북·결과 이름은 `t5-battery`, `c2-battery`다. 초·중·후반 비교는 [t5-c2-battery](t5-c2-battery.md)에 설명한다.
+
+공통 SOH 묶음의 경로만 바꿔 Chronos zero-shot을 평가한다. 기본 결과는 점수표와 예측 그래프만 남기는 최소 패키지다.
 
 ```python
 from pathlib import Path
@@ -9,91 +11,56 @@ from src.battery_zeroshot import battery_zeroshot
 run = battery_zeroshot(Path("data/processed/clean/xjtu_2c"))
 ```
 
-MIT는 경로를 `data/processed/clean/mit_batch1` 등으로 바꾼다. [공통 SOH 포맷](common_soh_format.md)의 `soh.csv`, `batteries.csv`, `schema.json`, `manifest.json`이 필요하다. 개별 CSV만 직접 전달하지 않는다. 로더가 완료 상태·파일 해시·기본키·Q/Q_ref 일관성을 먼저 검사한다.
+입력은 [공통 SOH 포맷](common_soh_format.md)의 `soh.csv`, `batteries.csv`, `schema.json`, `manifest.json`이다. 데이터와 cycle 번호를 그대로 사용하며 학습·clipping·보간·평활화를 하지 않는다. 초기 시험·용량 이상치·수집 문제와 누락 cycle은 계속 제외한다. CALCE는 `calce_cross_file_windows=true`일 때 같은 배터리의 시간순 파일 경계를 연결한다. 원본 묶음의 segment는 수정하지 않는다.
 
-## 설정과 실행
+## 실행
 
-기본 설정은 `configs/battery_zeroshot.json`이다. NASA와 같은 모델 revision, context 64, horizon 16, 100 samples, seed 42/43/44, batch size 16을 사용한다. 학습·validation·LoRA 옵션은 없다. 데이터에 저장된 정규화 기준을 유지하고 clipping·보간·평활화를 하지 않는다.
+`configs/t5-battery.json`에서 모델 revision, context 64, horizon 16, 100 samples, seed 42, stride 1을 고정한다. 추론 batch size는 32다. 기존 3-seed 검증과 이번 1-seed 평가를 구분한다.
 
 ```powershell
-# 전체 eligible windows: XJTU 2C 2,579개, 3C 2,542개
-.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py data\processed\clean\xjtu_2c
-.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py data\processed\clean\xjtu_3c
+# 모든 준비된 데이터셋; CALCE도 64→16, stride 1 (새 출력 경로 사용)
+.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py --all --output-root results/t5-battery/new64-16
 
-# 모델을 불러오기 전에 window 수와 제외 기록만 확인
+# 묶음 하나
+.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py data\processed\clean\xjtu_2c
+
+# 모델 로드 전 window 수 확인
 .\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py data\processed\clean\mit_batch1 --prepare-only
 
-# 배터리별 초반·중반·후반 window 3개로 실행만 검증
+# 각 배터리 대표 window 세 개로 smoke check
 .\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py data\processed\clean\xjtu_2c --max-windows 3
-
-# 배터리 하나만 선택
-.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py data\processed\clean\xjtu_2c --battery-ids batch1_2C_battery-1
 ```
 
-[노트북](../notebooks/battery_zeroshot.ipynb)에서는 `DATA_BUNDLE`을 바꾸면 된다. `SMOKE_CHECK=True`는 window 3개만 사용하고, `False`는 기본 설정의 모든 window를 사용한다. 생성 원본은 `scripts/build_notebooks.py`에 있다.
+기존 CALCE 실행은 파일 경계를 끊어 **32→8**로 평가했다. 새 설정은 파일 경계 자체를 단절로 보지 않고, 같은 배터리의 시간순 관측으로 **64→16**을 평가한다. 누락·불완전 관측과 protocol 변경은 여전히 창을 끊는다. 달력 시간의 휴지는 별도 모델 입력하지 않으며 cycle은 기존 관측 기록 순번이다. 이전 결과는 보존하고 [CALCE 재실험](t5-c2-battery.md#calce-6416-재실험)으로 분리한다.
 
-설정을 Python에서 바꾸려면 `dataclasses.replace`를 사용한다.
+`--stride 16`은 모든 배터리를 평가하되 예측 시작점 간격을 늘린다. `--all --stride 16`에서도 CALCE는 stride 1이다. `--max-windows 3`은 유효 window 위치로 초·중·후반을 선택하며 target이나 오차로 고르지 않는다. Smoke 결과는 별도 `<group>_smoke` 폴더에 저장한다.
 
-```python
-from dataclasses import replace
-from src.battery_zeroshot import load_zeroshot_config
+## 최소 결과
 
-config = replace(load_zeroshot_config(), max_windows_per_battery=3)
-run = battery_zeroshot(Path("data/processed/clean/xjtu_3c"), config)
-```
-
-`max_windows_per_battery`는 유효 window의 인덱스를 균등 간격으로 선택하며 오차나 target 값으로 고르지 않는다. 실행 범위는 `smoke`로 표시한다. 제한 없이 stride 1이면 `full`, stride를 늘리면 `strided`다. 일부 window 결과를 전체 평가 성능으로 해석하지 않는다.
-
-CALCE는 파일 segment당 최대 50 cycle이라 기본 64→16 설정에서 실행하지 못한다. `--prepare-only`로 이를 확인할 수 있다. 짧은 context/horizon을 쓰려면 설정을 명시적으로 바꾸고 다른 길이의 실험으로 구분한다. 파일을 임의로 이어 붙이지 않는다.
-
-## 평가와 산출물
-
-실행별 결과는 `results/battery_zeroshot/<run_id>/`에 저장한다. 데이터 경로·모델·장치·설정·코드·패키지 버전과 입력 묶음 해시가 같은 완료 실행은 산출물 검사와 지표 재계산 후 재사용한다. `--force`는 새 실행을 만든다. 실패·중단 실행은 재사용하지 않는다.
+`results/t5-battery/<group>/`에 다음만 남긴다.
 
 | 파일 | 내용 |
 |---|---|
-| `manifest.json` | 입력 데이터 경로·해시, 모델 revision, 설정, 환경, full/smoke 범위, 결과 해시 |
-| `inference_manifest.json` | 지표를 갱신한 실행에서만 생성하는 원본 추론 manifest; 당시 코드·환경·예측 해시 보존 |
-| `coverage.csv` | 전체 관측 수, 유효·평가 window 수, window가 없어 제외한 기록 |
-| `predictions/*.npz` | 실제 context/target, 원본 cycle 번호, 원시 samples, median/mean, q10/q90 |
-| `metrics.csv` | 배터리·seed·모델·집계별 RMSE·R²·WQL·PICP@80 및 보조 지표 |
-| `battery_summary.csv`, `summary.csv` | seed 평균과 배터리 기록에 같은 가중치를 준 macro 점수 |
-| `macro_by_seed.csv` | 추론 seed별 macro 점수 |
-| `horizon_metrics.csv`, `window_metrics.csv` | horizon·예측 시작 cycle별 RMSE·R²·WQL·PICP@80 및 구간 폭·MAE |
-| `paired_comparison.csv` | 같은 평가 구간에서 Chronos와 LastValue/Linear 비교 |
-| `report.md`, `forecast_windows_*.png` | 요약 및 배터리별 초반·중반·후반 예측 곡선 |
+| `summary.csv` | Chronos 중앙값·LastValue·Linear의 macro RMSE, Mean window R², WQL, PICP@80, 구간 폭 |
+| `battery_metrics.csv` | 배터리 기록별 모델 점수, 평가 window 수, 제외 상태 |
+| `run.json` | 입력 묶음, 실행 조건, full/strided/smoke 범위, 완료 상태 |
+| `report.md` | 조건·점수·그래프를 묶은 보고서 |
+| `forecast_windows_*.png` | 배터리별 첫·중간·마지막 window의 context·실제 SOH·중앙값·80% 구간 |
 
-원시 예측 NPZ는 로컬에 보관하고 Git에서는 제외한다. 보고서·지표·곡선·해시는 커밋한다. 다른 PC에서 예측 파일이 없으면 재검산·완료 실행 재사용은 불가능하며 원본 데이터를 준비해 다시 실행해야 한다.
+전체 실행의 `summary.csv`와 `README.md`는 `results/t5-battery/` 바로 아래에 만든다. 그룹별 점수를 하나의 전체 macro로 합치지 않는다. MIT의 일부 연속 측정 기록은 동일 물리 배터리와 연관되므로 기록 수를 독립 물리 배터리 수로 해석하지 않는다.
 
-주 결과표는 **RMSE·R²·WQL·PICP@80** 네 지표를 사용한다. RMSE·R²의 주 점예측은 Chronos samples의 중앙값이다. 80% 구간 폭(`width80`)은 보조로 표시하고 sample mean 점예측·MAE·CRPS·비정상 sample 비율은 CSV에 유지한다.
+원시 samples, seed/window/horizon별 중복 CSV, mean 점예측, CRPS, 코드·환경 해시는 기본 결과에 남기지 않는다. 실행 중에는 완료한 배터리 점수와 대표 forecast만 임시 저장해 재개할 수 있게 하고 완료 시 임시 forecast 파일을 삭제한다. 입력 묶음과 설정이 같은 완료 패키지는 보관된 표·그림의 일관성을 확인한 뒤 재사용한다. `--force`는 같은 그룹 결과를 새로 계산한다.
 
-LastValue는 마지막 실제 관측을 유지하고 Linear는 context의 최소제곱 직선을 연장한다. 두 기준 모델은 Chronos와 동일한 window와 target을 사용한다. 기준 점예측에는 확률 구간을 만들지 않으므로 WQL·PICP@80·구간 폭은 NaN으로 저장하고 결과표에는 `—`로 표시한다.
+`--audit <그룹폴더>`는 최소 패키지의 표·그림 일관성을 확인한다. Mean window R²는 집계 RMSE만으로 복원할 수 없다. 구 정의의 결과를 갱신하려면 `python scripts/unify_window_r2.py`로 저장된 입력·모델·seed·batch 설정을 사용해 다시 추론한다. 완료한 패키지는 정의를 확인하고 재사용한다. 원시 예측이 필요한 실험에는 `--detailed` 또는 `minimal=False`를 사용할 수 있으며 상세 형식도 같은 Mean window R²를 사용한다.
 
-WQL은 samples에서 선형 보간으로 구한 **0.1~0.9의 9개 분위수**를 동일 가중치로 사용한다. 분위수별 오차 `e = y - forecast_q`에 대해 `WQL = 2 × mean_q(sum(max(q × e, (q - 1) × e))) / sum(abs(y))`다. 각 배터리·seed의 모든 window/horizon target을 합쳐 정규화한 뒤 seed와 배터리 기록을 평균한다. 개별 window WQL의 단순 평균과는 다르다. Horizon/window 표는 해당 범위 안에서 같은 식을 계산한다. 분모가 0이면 NaN이며 낮을수록 좋다. [AWS의 분위수 손실 정의](https://docs.aws.amazon.com/forecast/latest/dg/metrics.html)를 참고하며, 이 구현의 평균 분위수와 분모 0 처리 규칙은 위와 같이 고정한다.
+완료된 7개 그룹과 전체 요약표를 함께 갱신하려면 `python scripts/run_battery_zeroshot.py --refresh-metrics results/t5-battery`을 사용한다. 이 명령은 모델 추론을 실행하지 않는다.
 
-PICP@80은 `mean(q10 <= y <= q90)`이다. 경계값을 포함하며 CSV의 `picp80`은 0~1 비율, 보고서는 백분율이다. **명목값 80%에 가까운지** 확인하고 구간 폭을 함께 해석한다. 단순히 높을수록 좋은 지표는 아니다. 기존 NASA 실험의 `coverage80`과 같은 포함률 정의이며 새 공통 표에서는 `picp80`으로 이름을 통일한다. 구간 폭은 `mean(q90 - q10)`으로 SOH 비율 단위다.
+## 점수 해석
 
-R²는 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`로 계산한다. 상수 target 또는 관측 수 2개 미만이면 NaN, 음수도 유효하다. Horizon/window 표는 각 평가 범위의 target 평균을 사용한다. Macro는 seed 점수를 평균하고 배터리 **기록**마다 같은 가중치를 준다. MIT의 연속 측정 기록을 독립 물리 배터리로 세거나 여러 batch의 macro 점수를 무조건 평균하지 않는다.
+- **RMSE:** samples 중앙값의 오차. SOH 비율 단위이며 0.005는 약 0.5%p다.
+- **WQL:** 선형 분위수 0.1~0.9의 9개 twice-pinball loss를 동일 가중치로 평균하고 target 절댓값 합으로 정규화한다. 각 배터리·seed의 모든 window/horizon을 합쳐 계산한 뒤 seed·배터리 기록을 평균한다. 분모 0은 NaN이다. 낮을수록 좋다.
+- **PICP@80:** `mean(q10 <= y <= q90)`. CSV는 0~1, 보고서는 백분율이다. 명목값 80%에 얼마나 가까운지 구간 폭과 함께 본다.
+- **80% 구간 폭:** `mean(q90 - q10)`. SOH 비율 단위다.
+- **Mean window R² (`r2`):** 한 예측창의 실제 미래 평균으로 `1 − SSE_w/SST_w`를 계산하고 유효 창별 점수를 단순평균한다. Seed·배터리 기록에는 동일 가중치를 준다. 전체·초·중·후반 모두 같은 정의다. 그래프에는 해당 한 창의 R²를 표시한다. 음수는 유지하며 상수 target 창은 NaN으로 제외한다. 작은 분모에 epsilon을 더하지 않는다. 합산 SSE/SST나 내부 변동량 가중 R²는 사용하지 않는다.
 
-매 예측 시점에 최근 실제 관측을 새로 제공하는 rolling 평가다. 첫 64개만 알고 수명 전체를 재귀 예측하는 방식이 아니다. 초기 시험·용량 이상치·부분 방전·수집 문제는 예측 context와 target에서 제외하고, 누락 cycle이나 segment 경계를 건너 window를 만들지 않는다. 겹치는 window와 여러 추론 seed를 독립 데이터 표본으로 해석하지 않는다.
-
-```powershell
-# 모델 추론 없이 저장 예측·지표·입력·해시 재검산
-.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py --audit results\battery_zeroshot\실행폴더
-
-# 지표 구현을 바꾼 뒤 기존 samples로 결과표만 갱신
-.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py --refresh-metrics results\battery_zeroshot\실행폴더
-```
-
-`--refresh-metrics`는 원본 입력·설정·추론 코드·저장 예측을 먼저 검사한다. 기존 manifest를 `inference_manifest.json`으로 보존하고, 원시 NPZ와 곡선 PNG를 바꾸지 않고 지표·보고서만 갱신한다. 현재 manifest에는 원본 추론 기록의 해시와 새 평가 규칙을 기록한다. 모델 추론은 다시 실행하지 않으며 로컬 원시 예측 파일이 필요하다.
-
-## 2026-10-06 실행 검증
-
-XJTU 23개 배터리에서 대표 window 세 개씩, 총 69개 window를 100 samples·seed 42/43/44로 실제 추론했다. 저장 samples에서 네 주 지표를 재계산하고 파일 해시·target·cycle 번호를 확인했다. 지표 갱신 시 원시 예측과 곡선은 유지했다. 이 기록은 함수의 실행 검증이며 전체 성능 평가가 아니다.
-
-| 그룹 | 배터리 | 검증 window | 전체 eligible windows | 결과 |
-|---|---:|---:|---:|---|
-| XJTU 2C | 8 | 24 | 2,579 | [보고서·곡선](../results/battery_zeroshot/20261006T030616Z_batteryzeroshot_bf1d52/report.md) |
-| XJTU 3C | 15 | 45 | 2,542 | [보고서·곡선](../results/battery_zeroshot/20261006T030722Z_batteryzeroshot_fecc95/report.md) |
-
-NASA·MIT·CALCE도 같은 준비 함수로 읽었다. NASA는 기존 window 정의와 같고 MIT Batch 3의 수집 문제 배터리 6개는 기본 규칙대로 제외한다. CALCE 4개는 기본 길이에서 window가 없음을 표시한다. 이 단계에서 MIT·CALCE의 실제 모델 추론이나 새로운 전체 NASA 평가는 실행하지 않았다.
+LastValue는 마지막 실제 관측을 유지하고 Linear는 context의 최소제곱 직선을 연장한다. 같은 target/window를 사용하며 확률 구간이 없어 WQL·PICP·구간 폭은 비운다. 매 예측 시점에 최신 실제 context를 제공하는 rolling 평가이며, 수명 전체를 재귀 예측하는 실험과 구분한다. 겹치는 window는 독립 표본이 아니다.

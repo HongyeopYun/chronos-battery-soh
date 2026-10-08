@@ -1,0 +1,149 @@
+{
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "tuning": "head",
+  "trainable_parameter_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "optimizer_parameter_subset_verified": true,
+  "training_device": "xpu:0",
+  "max_steps": 100,
+  "global_step": 100,
+  "log_history": [
+    {
+      "eval_loss": 1.8919274806976318,
+      "eval_runtime": 0.3723,
+      "eval_samples_per_second": 80.589,
+      "eval_steps_per_second": 8.059,
+      "epoch": 0,
+      "step": 0
+    },
+    {
+      "loss": 1.6304000854492187,
+      "grad_norm": 20.044055938720703,
+      "learning_rate": 9.1e-05,
+      "epoch": 0.1,
+      "step": 10
+    },
+    {
+      "loss": 1.301814079284668,
+      "grad_norm": 16.71909523010254,
+      "learning_rate": 8.1e-05,
+      "epoch": 0.2,
+      "step": 20
+    },
+    {
+      "eval_loss": 1.4415830373764038,
+      "eval_runtime": 0.264,
+      "eval_samples_per_second": 113.63,
+      "eval_steps_per_second": 11.363,
+      "epoch": 0.2,
+      "step": 20
+    },
+    {
+      "loss": 1.5086151123046876,
+      "grad_norm": 24.348791122436523,
+      "learning_rate": 7.1e-05,
+      "epoch": 0.3,
+      "step": 30
+    },
+    {
+      "loss": 1.0805997848510742,
+      "grad_norm": 21.358766555786133,
+      "learning_rate": 6.1e-05,
+      "epoch": 0.4,
+      "step": 40
+    },
+    {
+      "eval_loss": 1.3988854885101318,
+      "eval_runtime": 0.2643,
+      "eval_samples_per_second": 113.499,
+      "eval_steps_per_second": 11.35,
+      "epoch": 0.4,
+      "step": 40
+    },
+    {
+      "loss": 0.9654399871826171,
+      "grad_norm": 10.816413879394531,
+      "learning_rate": 5.1000000000000006e-05,
+      "epoch": 0.5,
+      "step": 50
+    },
+    {
+      "loss": 0.8329613685607911,
+      "grad_norm": 10.550040245056152,
+      "learning_rate": 4.1e-05,
+      "epoch": 0.6,
+      "step": 60
+    },
+    {
+      "eval_loss": 1.3484570980072021,
+      "eval_runtime": 0.2756,
+      "eval_samples_per_second": 108.837,
+      "eval_steps_per_second": 10.884,
+      "epoch": 0.6,
+      "step": 60
+    },
+    {
+      "loss": 0.8267379760742187,
+      "grad_norm": 11.717065811157227,
+      "learning_rate": 3.1e-05,
+      "epoch": 0.7,
+      "step": 70
+    },
+    {
+      "loss": 0.9166459083557129,
+      "grad_norm": 8.799850463867188,
+      "learning_rate": 2.1e-05,
+      "epoch": 0.8,
+      "step": 80
+    },
+    {
+      "eval_loss": 1.340893268585205,
+      "eval_runtime": 0.2602,
+      "eval_samples_per_second": 115.312,
+      "eval_steps_per_second": 11.531,
+      "epoch": 0.8,
+      "step": 80
+    },
+    {
+      "loss": 0.7569811820983887,
+      "grad_norm": 10.969303131103516,
+      "learning_rate": 1.1000000000000001e-05,
+      "epoch": 0.9,
+      "step": 90
+    },
+    {
+      "loss": 0.7808746814727783,
+      "grad_norm": 44.65205001831055,
+      "learning_rate": 1.0000000000000002e-06,
+      "epoch": 1.0,
+      "step": 100
+    },
+    {
+      "eval_loss": 1.3277868032455444,
+      "eval_runtime": 0.27,
+      "eval_samples_per_second": 111.119,
+      "eval_steps_per_second": 11.112,
+      "epoch": 1.0,
+      "step": 100
+    },
+    {
+      "train_runtime": 14.3693,
+      "train_samples_per_second": 83.511,
+      "train_steps_per_second": 6.959,
+      "total_flos": 0.0,
+      "train_loss": 1.0601070165634154,
+      "epoch": 1.0,
+      "step": 100
+    }
+  ],
+  "best_step": 100,
+  "best_validation_loss": 1.3277868032455444,
+  "best_checkpoint": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\models\\c2-fewshot-head\\xjtu_3c\\SOH_V_I\\checkpoint-100"
+}

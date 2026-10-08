@@ -1,0 +1,56 @@
+{
+  "config": {
+    "model_id": "amazon/chronos-2",
+    "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "auto",
+    "inference_batch_size": 32,
+    "num_samples": 100,
+    "inference_seeds": [
+      42
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "stride": 1,
+    "battery_ids": null,
+    "max_windows_per_battery": null
+  },
+  "bundle": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\data\\processed\\clean\\mit_batch1",
+  "bundle_fingerprint": "af834152569fd3afa9f89a149fb66761ee7a113de73fc64d79adc8f39e4efd77",
+  "protocol": {
+    "r2": "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, centering on that window's actual future target mean; arithmetic mean of valid window scores within each battery/seed/phase, then equal seed and battery weights. Negative values are retained; constant windows or horizons shorter than 2 return NaN. No pooled/global or within-variance-weighted R2. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+    "phase": "Three equal cycle spans from first to last observed cycle of each measurement record. Each window belongs to the phase of its forecast start; its full horizon is scored. Boundary-crossing horizons stay in their start phase.",
+    "aggregation": "Arithmetic mean of per-window R2 within battery/phase, then equal battery-record macro. Other metrics retain their original aggregation. Overlapping windows are not independent; no pooled score across datasets.",
+    "prediction": "Median (q0.5); WQL at q0.1,...,q0.9; PICP@80 at q0.1/q0.9. No training, clipping, interpolation, smoothing or future target input. Chronos-2 cross_learning=False; one univariate task per window."
+  },
+  "status": "complete",
+  "model": "amazon/chronos-2",
+  "device": "xpu",
+  "started_at": "2026-10-07T06:30:57.472050+00:00",
+  "run_scope": "full",
+  "scope": "full; eligible windows at stride 1",
+  "prediction_method": "direct quantiles, float32, no sampling",
+  "batteries_completed": 46,
+  "batteries_evaluated": 46,
+  "batteries_skipped": 0,
+  "evaluated_windows": 35081,
+  "figures": [
+    "c2-battery_forecast_windows_01.png",
+    "c2-battery_forecast_windows_02.png",
+    "c2-battery_forecast_windows_03.png",
+    "c2-battery_forecast_windows_04.png",
+    "c2-battery_forecast_windows_05.png",
+    "c2-battery_forecast_windows_06.png",
+    "c2-battery_forecast_windows_07.png",
+    "c2-battery_forecast_windows_08.png",
+    "c2-battery_forecast_windows_09.png",
+    "c2-battery_forecast_windows_10.png",
+    "c2-battery_forecast_windows_11.png",
+    "c2-battery_forecast_windows_12.png"
+  ],
+  "finished_at": "2026-10-07T06:33:22.508141+00:00",
+  "r2_updated_at": "2026-10-07T08:46:11.292038+00:00",
+  "r2_source": "Per-window predictions re-inferred with saved input/model/seed/batch settings; original RMSE cross-checked"
+}

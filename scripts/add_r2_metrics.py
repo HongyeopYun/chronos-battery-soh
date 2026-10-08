@@ -9,7 +9,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from src.soh_evaluation import export_run, export_diagnosis, r2_score, _r2_from_rmse, R2_DEFINITION
+from src.soh_evaluation import export_run, export_diagnosis, mean_window_r2, R2_DEFINITION
 from src.soh_experiment import load_config, load_soh, make_windows, _baselines, point_metrics
 
 
@@ -26,24 +26,24 @@ def export_legacy():
                 windows = make_windows(series[row.Battery], cfg.context_length, cfg.prediction_length)
                 if name == "LoRA":
                     # The old CSV rounds RMSE to six decimals; no LoRA predictions survive.
-                    values.append(_r2_from_rmse(windows["target"], row.LoRA_RMSE))
+                    values.append(float("nan"))
                 else:
                     pred = zero[row.Battery] if name == "ZeroShot" else _baselines(windows)["LastValue" if name == "Last" else "Linear"]
                     np.testing.assert_allclose(point_metrics(windows["target"], pred)["rmse"],
                                                getattr(row, f"{name}_RMSE"), rtol=0, atol=5.1e-7)
-                    values.append(r2_score(windows["target"], pred))
+                    values.append(mean_window_r2(windows["target"], pred))
             batteries[f"{name}_R2"] = values
     macro = frame[frame.Battery == "Macro"].copy()
     for col in [c for c in batteries if c.endswith("_R2")]:
         macro[col] = batteries[col].mean()
     result = pd.concat([batteries, macro], ignore_index=True)
-    result["LoRA_R2_is_approximate"] = True
+    result["LoRA_R2_unavailable_without_predictions"] = True
     out = ROOT / "results/evaluation_r2/metrics"
     out.mkdir(parents=True, exist_ok=True)
     result.to_csv(out / source.name, index=False)
     (out / "README.md").write_text(
         "# 이전 20-sample 실험의 R²\n\nLast/Linear/ZeroShot은 원시 예측 또는 원래 baseline 수식에서 계산했다. "
-        "LoRA 원시 예측은 보관돼 있지 않아 소수점 6자리 RMSE와 해당 target 분산으로 복원한 **근삿값**이다. "
+        "LoRA 원시 예측은 없어 창별 R² 평균을 복원할 수 없으므로 NaN이다. "
         "현재 100-sample 실험과 구분한다. Macro는 배터리별 R²의 동일 가중 평균이다.\n", encoding="utf-8")
 
 
@@ -74,9 +74,9 @@ def main():
         + R2_DEFINITION + "\n\n"
         "원본 `results/runs`의 예측·학습 기록·선택·서명된 CSV는 보존하고, 여기에는 R²를 추가한 평가표를 저장한다. "
         "RMSE/MAE도 원시 예측에서 검산한다. 02·03 노트북과 현재 보고서는 이 평가표를 사용한다. "
-        "Validation 전체 이력은 seed별 원래 RMSE와 target 분산으로 같은 정의의 R²를 계산한다. "
+        "선택된 validation checkpoint는 저장 예측으로 계산한다. 원시 예측이 없는 다른 step 이력의 R²는 NaN이다. aggregate RMSE로 창별 R² 평균을 복원하지 않는다. "
         "이미 평균한 RMSE에서 macro R²를 역산하지 않는다.\n\n"
-        "R²는 1이면 완전 예측, 0이면 평가 target의 전체 평균을 항상 예측한 기준과 같다. "
+        "창별 R²는 1이면 완전 예측, 0이면 해당 창의 실제 미래 평균을 항상 예측한 기준과 같다. "
         "이 평균은 평가 구간의 사후 평균이므로 Last-value baseline과 다르다. 음수도 유효하며 자르지 않는다. "
         "정답이 상수이거나 값이 2개 미만이면 분모가 정의되지 않아 NaN으로 표시한다. "
         "짧고 변화가 작은 window의 R²는 매우 낮아질 수 있다. R² 차이는 퍼센트 개선율로 계산하지 않는다.\n", encoding="utf-8")

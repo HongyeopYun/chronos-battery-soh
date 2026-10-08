@@ -1,0 +1,23 @@
+{
+  "status": "complete",
+  "mode": "C2 full / T5 representative",
+  "completed": [
+    "c2/nasa_aging",
+    "c2/calce_cs2_1c",
+    "c2/xjtu_2c",
+    "c2/xjtu_3c",
+    "c2/mit_batch1",
+    "c2/mit_batch2",
+    "c2/mit_batch3",
+    "c2/calce_cs2_1c_legacy32",
+    "t5/nasa_aging",
+    "t5/calce_cs2_1c",
+    "t5/xjtu_2c",
+    "t5/xjtu_3c",
+    "t5/mit_batch1",
+    "t5/mit_batch2",
+    "t5/mit_batch3",
+    "t5/calce_cs2_1c_legacy32"
+  ],
+  "current": null
+}

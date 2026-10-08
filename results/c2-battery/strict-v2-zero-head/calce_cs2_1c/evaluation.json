@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "n_test_records": 4,
+  "n_test_windows": 69,
+  "head_mode": "retrain",
+  "identical_model_test_windows": true,
+  "window_r2_independently_verified": true,
+  "finished_at": "2026-10-08T09:43:02.938129+00:00"
+}

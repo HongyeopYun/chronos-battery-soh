@@ -1,0 +1,69 @@
+{
+  "status": "complete",
+  "started_at": "2026-10-07T12:11:10.711890+00:00",
+  "group": "xjtu_3c",
+  "battery_ids": [
+    "batch2_3C_battery-1",
+    "batch2_3C_battery-2",
+    "batch2_3C_battery-3"
+  ],
+  "selection": "File numbers 1,2,3; fixed independently of performance",
+  "scope": "Selected batteries; all eligible rolling windows; not full XJTU batch",
+  "config": {
+    "model_id": "amazon/chronos-2",
+    "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "auto",
+    "inference_batch_size": 32,
+    "num_samples": 100,
+    "inference_seeds": [
+      42
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "stride": 1,
+    "battery_ids": [
+      "batch2_3C_battery-1",
+      "batch2_3C_battery-2",
+      "batch2_3C_battery-3"
+    ],
+    "max_windows_per_battery": null
+  },
+  "device": "xpu",
+  "conditions": {
+    "SOH": [],
+    "SOH+V": [
+      "voltage_mean_600s"
+    ],
+    "SOH+I": [
+      "current_mean_600s"
+    ],
+    "SOH+V+I": [
+      "voltage_mean_600s",
+      "current_mean_600s"
+    ]
+  },
+  "feature_interval_seconds": [
+    0,
+    600
+  ],
+  "feature_aggregation": "Time-weighted voltage_V/current_A mean in a single current_A<-0.1 discharge segment; minutes converted to seconds; linear boundary interpolation; duplicate times keep last sample",
+  "input": "Past covariates only; one SOH target; cross_learning=False; no fine-tuning",
+  "r2": "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, centering on that window's actual future target mean; arithmetic mean of valid window scores within each battery/seed/phase, then equal seed and battery weights. Negative values are retained; constant windows or horizons shorter than 2 return NaN. No pooled/global or within-variance-weighted R2. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+  "bundle_fingerprint": "aab68ab47c562c288fe9f984ba70fd194d482a67e39468084b3ef2a5c72e2b8c",
+  "raw_sha256": {
+    "batch2_3C_battery-1": "1113afe4045da763c5a5c0d70459fc539dd3bd63d43dbd509b2e67fc0a36bc2a",
+    "batch2_3C_battery-2": "9eb4f3b460233517c6282752b7e82ea94125e5ca46cfbcd68d061bb6133950c0",
+    "batch2_3C_battery-3": "adab52411a81117a3667e12970ccbef7b1df203825f4eef032c24aa45bbde4aa"
+  },
+  "completed_tasks": 12,
+  "duplicate_discharge_timestamps": 8,
+  "finished_at": "2026-10-07T12:12:06.598244+00:00",
+  "evaluated_windows_per_condition": 637,
+  "figures": [
+    "c2-battery_xjtu_3c_vi_forecast_windows.png"
+  ],
+  "baseline_verified": true
+}

@@ -46,7 +46,7 @@ MAT의 방전 용량으로 `SOH = Qk / Q1`을 구성합니다. 실제 최근 64�
 
 모델 revision, 데이터 해시, 라이브러리 버전, seed와 예측 배열을 실행별로 저장합니다. 기본 설정은 100 samples, 추론 seed 42/43/44이며 점 예측은 보간 중앙값과 sample mean을 함께 보고합니다. `configs/experiment.json`에서 설정을 변경하세요.
 
-R²는 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`로 계산한 뒤 배터리를 동일 가중치로 평균합니다. 1은 완벽한 예측, 0은 평가 target 평균을 항상 예측한 수준이며 음수도 가능합니다. Horizon/개별 window 점수는 해당 범위의 평균을 기준으로 합니다. 상수 target은 NaN입니다. 원본 실행 기록은 보존하고 R²를 포함한 파생 평가를 `results/evaluation_r2/`에 저장합니다.
+R²는 각 예측창의 미래 실제 평균으로 `1 - SSE/SST`를 계산하고 창별 R²를 단순평균한 뒤 seed·배터리를 동일 가중 평균합니다. 상수 target 창은 NaN으로 제외하고 음수는 유지합니다. Horizon 하나는 창당 값이 한 개라 R²가 정의되지 않습니다. 원시 validation 예측이 없는 이력의 R²는 NaN입니다. 원본 실행 기록을 보존하며 새 평가는 `results/evaluation_r2/`에 저장합니다.
 
 이전 노트북은 Git 이력에 보관했습니다. 20-sample 실험의 결과는 `results/metrics/`에서 확인할 수 있습니다."""),
     ("code", SETUP),
@@ -74,8 +74,7 @@ display(metrics[metrics.model == "ZeroShot"].groupby("battery")[["coverage80", "
 plt.show()
 horizon_comparison(ZERO_RUN)
 plt.show()
-horizon_comparison(ZERO_EVAL, metric="r2")
-plt.show()'''),
+'''),
     ("markdown", """## 해석 시 주의
 
 - 한 실제 cycle이 최대 16개 평가 윈도우에 포함됩니다. 배터리 수는 4개입니다.
@@ -176,67 +175,65 @@ def write_notebook(name, cells):
         if cell is None:
             cell = nbf.v4.new_markdown_cell(source) if kind == "markdown" else nbf.v4.new_code_cell(source)
             cell.id = hashlib.sha256(f"{name}:{index}:{source}".encode()).hexdigest()[:12]
+        if kind == "code" and any(marker in source for marker in ("r2", "read_csv", "diagnostic_macro")):
+            # Metric definitions changed; never display an old saved score table.
+            cell.outputs = []
+            cell.execution_count = None
         notebook.cells.append(cell)
     nbf.validate(notebook)
     nbf.write(notebook, destination)
     print(destination)
 
 
-BATTERY_ZERO = [
-    ("markdown", """# 공통 SOH 데이터의 Chronos zero-shot
 
-`DATA_BUNDLE`만 바꾸어 XJTU·NASA·MIT·CALCE의 공통 SOH 포맷을 평가한다. 데이터 추출·학습은 이 노트북에서 하지 않는다. 기존 NASA 02·03은 별도 기록으로 유지한다.
 
-최근 실제 관측 64 cycle → 다음 16 cycle, 100 samples, 추론 seed 42/43/44가 기본값이다. 초기 시험·이상치·누락 cycle·segment 경계는 공통 데이터 규칙으로 처리한다. 같은 window에서 마지막 관측 유지·선형 추세와 비교하고 RMSE·R²·WQL·PICP@80을 주 지표로 저장한다. 80% 구간 폭은 보조 지표다.
+def model_battery_preview(tag):
+    default_scope = "calce64-16"
+    return [
+        ("markdown", f"""# {tag}: battery zero-shot 결과 확인
 
-`SMOKE_CHECK=True`는 배터리별 초반·중반·후반 window 3개만 확인한다. 이는 실행 검증용이며 전체 성능 평가와 구분한다. [사용법](../docs/battery_zeroshot.md)."""),
-    ("code", '''from pathlib import Path
-from dataclasses import replace
-import sys
+T5와 Chronos-2의 CALCE 재평가는 64→16·stride 1이며, 같은 배터리의 시간순 관측을 파일 경계를 넘어 사용한다. 누락·불완전 관측은 계속 제외한다. `SCOPE="calce64-16"`은 새 CALCE 실험, `pilot`은 일부 배터리 비교, `full`은 기존 C2 전체 결과(CALCE 32→8)다. 이 노트북은 저장된 결과만 읽으며 모델 추론을 자동 실행하지 않는다.
+
+전체·초·중·후반 모두 Mean window R²를 사용한다. 각 창의 표준 R²를 단순평균한 뒤 배터리를 동일 가중 평균한다. 모델 간 비교는 `results/t5-c2-battery-comparison/t5-c2-battery_summary.csv`에 있다.
+
+CALCE 실행: `python scripts/run_calce_zeroshot.py --model both`. Pilot 실행: `python scripts/run_battery_comparison.py --model both`. [조건과 파일 안내](../docs/t5-c2-battery.md)."""),
+        ("code", f"""from pathlib import Path
+import json
 import pandas as pd
 from IPython.display import display, Image
 
 PROJECT_ROOT = next(p for p in (Path.cwd().resolve(), *Path.cwd().resolve().parents)
-                    if (p / "src/battery_zeroshot.py").is_file())
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-from src.battery_zeroshot import (
-    battery_zeroshot, load_zeroshot_config, prepare_battery_windows, verify_battery_zeroshot,
-)
-
-DATA_BUNDLE = PROJECT_ROOT / "data/processed/clean/xjtu_2c"
-SMOKE_CHECK = False
-FORCE_RERUN = False
-CONFIG = load_zeroshot_config(PROJECT_ROOT / "configs/battery_zeroshot.json")
-if SMOKE_CHECK:
-    CONFIG = replace(CONFIG, max_windows_per_battery=3)
-print(DATA_BUNDLE)
-print(CONFIG)'''),
-    ("markdown", "## 평가 가능한 구간 확인\n전체 관측 수와 평가 가능한 window 수, 제외 배터리를 먼저 확인한다. CALCE는 기본 64→16 설정에서 유효 window가 없다."),
-    ("code", '''_, coverage, _, _ = prepare_battery_windows(DATA_BUNDLE, CONFIG)
-display(coverage)'''),
-    ("markdown", "## Zero-shot 실행\n데이터·코드·환경·설정과 산출물이 모두 일치하는 완료 실행은 재사용한다. 실행마다 별도 폴더에 저장한다."),
-    ("code", '''RUN = battery_zeroshot(DATA_BUNDLE, CONFIG, force=FORCE_RERUN)
-display(verify_battery_zeroshot(RUN, DATA_BUNDLE, CONFIG))
-print("Report:", RUN / "report.md")'''),
-    ("markdown", "## 성능과 대표 예측 구간\n배터리·추론 seed마다 같은 target으로 평가한다. seed를 평균하고 배터리 기록마다 같은 가중치를 준다. 겹치는 window는 독립 표본이 아니다. 주 점예측은 samples의 중앙값이다. WQL은 0.1~0.9의 9개 분위수 손실을 평균하고 배터리·seed 안에서 target 절댓값 합으로 정규화한다. PICP@80은 q10~q90의 실제 포함률이며 아래 표에서는 백분율로 표시한다. 명목값 80%에 가까운지 구간 폭과 함께 확인한다. 점예측 기준 모델의 확률 지표는 비워 둔다. Sample mean·MAE·CRPS는 CSV에서 보조로 확인할 수 있다."),
-    ("code", '''summary = pd.read_csv(RUN / "summary.csv")
-primary = summary[summary.estimator != "mean"]
-display(primary[["model", "estimator", "rmse_mean", "r2_mean", "wql_mean", "picp80_mean"]]
-        .style.format({"picp80_mean": "{:.1%}"}, na_rep="—"))
-display(primary[primary.model == "Chronos"][["model", "width80_mean"]])
-battery = pd.read_csv(RUN / "battery_summary.csv")
-display(battery[battery.estimator != "mean"]
-        [["dataset", "battery_id", "model", "estimator", "rmse", "r2", "wql", "picp80"]]
-        .style.format({"picp80": "{:.1%}"}, na_rep="—"))
-comparison = pd.read_csv(RUN / "paired_comparison.csv")
-display(comparison[comparison.estimator == "median"])
-for figure in sorted(RUN.glob("forecast_windows_*.png")):
-    display(Image(filename=str(figure), width=1100))'''),
-]
+                    if (p / "src/battery_model_zeroshot.py").is_file())
+MODEL = "{tag}"
+DATASET = "calce_cs2_1c"  # pilot/full에서는 다른 데이터셋을 선택할 수 있음
+SCOPE = "{default_scope}"
+RUN = PROJECT_ROOT / "results" / MODEL / SCOPE / DATASET
+print("Result:", RUN)
+print("Config:", PROJECT_ROOT / "configs" / (MODEL + ".json"))
+manifest = RUN / (MODEL + "_run.json")
+if manifest.is_file():
+    settings = json.loads(manifest.read_text(encoding="utf-8"))
+    print("Status:", settings["status"], "completed batteries:", settings.get("batteries_completed", 0))
+    print("Device:", settings["device"])
+else:
+    print("아직 이 그룹의 실행이 시작되지 않았습니다.")"""),
+        ("markdown", "## 구간별 점수\n관측 cycle 범위를 3등분하고 예측 시작 cycle로 구간을 정한다. R²는 한 예측창의 실제 미래 평균으로 계산한 뒤 해당 구간/전체의 창별 점수를 단순평균하고 배터리를 동일 가중 평균한다. 상수 창은 NaN으로 제외하고 음수는 유지한다. r2_n_windows·r2_undefined_windows로 유효·제외 창 수를 확인한다."),
+        ("code", """for suffix in ["summary.csv", "battery_metrics.csv"]:
+    path = RUN / (MODEL + "_" + suffix)
+    if path.is_file():
+        table = pd.read_csv(path, keep_default_na=False, na_values=[""])
+        display(table.style.format({"picp80": "{:.1%}"}, na_rep="—"))"""),
+        ("code", """coverage = RUN / (MODEL + "_coverage.csv")
+if coverage.is_file():
+    display(pd.read_csv(coverage, keep_default_na=False))"""),
+        ("markdown", "## 대표 SOH 곡선\n각 구간 중앙에 가장 가까운 유효 창 3개를 표시한다. 그래프의 window R²와 구간 전체 점수는 집계 범위가 다르다. 겹치는 예측창은 독립 표본이 아니다. 그림은 그룹 평가 완료 후 생성된다."),
+        ("code", """for figure in sorted(RUN.glob(MODEL + "_forecast_windows_*.png")):
+    display(Image(filename=str(figure), width=1100))"""),
+    ]
 
 
 if __name__ == "__main__":
     write_notebook("02_chronos_zeroshot.ipynb", ZERO)
     write_notebook("03_chronos_lora_lobo.ipynb", LORA)
-    write_notebook("battery_zeroshot.ipynb", BATTERY_ZERO)
+    write_notebook("t5-battery.ipynb", model_battery_preview("t5-battery"))
+    write_notebook("c2-battery.ipynb", model_battery_preview("c2-battery"))

@@ -9,7 +9,7 @@ def checkpoint_lora_cells(setup):
 
 각 후보의 best checkpoint를 저장하고 validation CRPS로 학습률을 선택합니다. Step 0도 후보입니다. 네 fold의 선택을 모두 고정한 후 저장된 adapter를 재로딩해 held-out 배터리를 평가합니다. 세 학습률은 Optuna 없이 모두 비교합니다.
 
-R²는 중앙값·평균 예측에 각각 계산합니다. 배터리·seed별 전체 window/horizon을 펼쳐 `1 - SSE/SST`를 구하고 배터리를 동일 가중치로 평균합니다. 1은 완벽한 예측, 0은 평가 target 평균을 항상 예측한 수준이며 음수도 가능합니다. 상수 target은 NaN입니다. 짧은 validation/window는 target 변동이 작아 R²가 크게 낮아질 수 있습니다. R²는 보고용이며 학습률·checkpoint 선택 기준은 CRPS로 유지합니다.
+R²는 중앙값·평균 예측에 각각 계산합니다. 각 예측창의 미래 실제 평균으로 `1 - SSE/SST`를 계산한 뒤 창별 점수를 단순평균하고 seed·배터리를 동일 가중 평균합니다. 상수 target 창은 NaN으로 제외하며 음수는 유지합니다. 원시 validation 예측이 없는 과거 이력은 R²를 복원할 수 없어 NaN입니다. Horizon 한 개의 R²도 정의되지 않습니다. 학습률·checkpoint 선택 기준은 CRPS로 유지합니다.
 
 학습 seed는 42, validation seed는 31415/31416/31417(각 32 samples), 최종 추론 seed는 42/43/44(각 100 samples)입니다. 추론 반복과 학습 반복은 다릅니다. 04 Full FT는 여기서 실행하지 않습니다.
 
@@ -85,8 +85,7 @@ display(pd.read_csv(CHECKPOINT_EVAL / "paired_macro.csv"))'''),
 plt.show()
 horizon_comparison(ZERO_RUN, CHECKPOINT_RUN)
 plt.show()
-horizon_comparison(ZERO_EVAL, CHECKPOINT_EVAL, metric="r2")
-plt.show()'''),
+'''),
         ("markdown", """## 저장·재현 확인과 해석 범위
 
 선택한 adapter를 재로딩했을 때 validation의 원시 sample 배열이 저장 시점과 완전히 일치하는지 검사합니다. 아래 파일에는 그 결과와 모든 test 예측 전 확정한 선택 기록이 있습니다.

@@ -1,0 +1,20 @@
+{
+  "step": 60,
+  "learning_rate": 1.2637248520499002e-06,
+  "validation_loss": 1.9218377828598023,
+  "validation_crossing_fraction": 0.0,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "seed": 42,
+  "requested_learning_rate": 1.2637248520499002e-06,
+  "max_steps": 200,
+  "training_validation_seconds": 7.501176599995233,
+  "weights_path": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\models\\c2-head-optuna20\\xjtu_3c\\trial_12.pt",
+  "weights_sha256": "77685e228bcab58d5364fe480d3e0f7f1cd5aecfa07c6da955e8ad204e508d8d",
+  "frozen_backbone_verified": true,
+  "optimizer_subset_verified": true,
+  "best_unconstrained_loss": 1.8555127739906312,
+  "eligible_trained_checkpoints": 3,
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664
+}

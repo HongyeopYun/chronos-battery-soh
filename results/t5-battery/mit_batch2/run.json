@@ -1,0 +1,51 @@
+{
+  "status": "complete",
+  "bundle": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\data\\processed\\clean\\mit_batch2",
+  "model": "amazon/chronos-t5-base",
+  "bundle_fingerprint": "9e3495e1881ad69cdd92a43fb90ceb1042ddd6b487c47f064b79aee54c88fa77",
+  "config": {
+    "model_id": "amazon/chronos-t5-base",
+    "revision": "ad294eaacead15db499b740ea4122266dd2a81a2",
+    "context_length": 64,
+    "prediction_length": 16,
+    "device": "auto",
+    "inference_batch_size": 32,
+    "num_samples": 100,
+    "inference_seeds": [
+      42
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "stride": 1,
+    "battery_ids": null,
+    "max_windows_per_battery": null
+  },
+  "device": "xpu",
+  "started_at": "2026-10-06T07:44:48.379805+00:00",
+  "scope": "full",
+  "retention": "Summary, battery metrics, forecast figures and settings only; no raw predictions",
+  "batteries_completed": 48,
+  "finished_at": "2026-10-06T08:33:05.068334+00:00",
+  "batteries_evaluated": 48,
+  "batteries_skipped": 0,
+  "evaluated_windows": 20968,
+  "figures": [
+    "forecast_windows_01.png",
+    "forecast_windows_02.png",
+    "forecast_windows_03.png",
+    "forecast_windows_04.png",
+    "forecast_windows_05.png",
+    "forecast_windows_06.png",
+    "forecast_windows_07.png",
+    "forecast_windows_08.png",
+    "forecast_windows_09.png",
+    "forecast_windows_10.png",
+    "forecast_windows_11.png",
+    "forecast_windows_12.png"
+  ],
+  "r2_definition": "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, centering on that window's actual future target mean; arithmetic mean of valid window scores within each battery/seed/phase, then equal seed and battery weights. Negative values are retained; constant windows or horizons shorter than 2 return NaN. No pooled/global or within-variance-weighted R2. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+  "r2_source": "Per-window predictions re-inferred with saved input/model/seed/batch settings; original RMSE cross-checked",
+  "metrics_updated_at": "2026-10-06T12:23:08.318020+00:00",
+  "r2_updated_at": "2026-10-07T10:03:04.000054+00:00"
+}

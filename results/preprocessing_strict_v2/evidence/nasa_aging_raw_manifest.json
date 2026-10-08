@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "feature_version": 1,
+  "group": "nasa_aging",
+  "raw_files_checked": 4,
+  "n_cycles": 636,
+  "source_sha256": {
+    "B0005.mat": "0eae4585baf3f200c09fe24c5ab884f1889679fc75206ca1aa19da704104f0b0",
+    "B0006.mat": "fa818ab4db5db8ab21e910b6dd6c3e20d3761bb9672089e1a4de8f96074616c5",
+    "B0007.mat": "d022afa086efaf54ab5b63f05220f5be178c8027e2fa8d68589db0e85a441a3b",
+    "B0018.mat": "d1e6c923a43ea1c9666b3a90bbb521757a067fd60b4d17dbfaa49c50b179da69"
+  },
+  "parent_manifest_sha256": "c9fb4652c490a0152f0d6387eb57bd7169a3411205cd389f2d8f8b14c70c7df6",
+  "implementation_sha256": "5ffc6d1bc89c4063783dcecebbc5d54e0ba3f18da11cbd520742aa1a7b897328",
+  "elapsed_seconds": 0.515999999945052,
+  "feature_sha256": "7ff92faf73ae069eb3b71ca4e7eaa2a8b76a4326ba5afc44e6c5b808aa3f8bd6"
+}

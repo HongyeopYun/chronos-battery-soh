@@ -1,0 +1,56 @@
+{
+  "step": 20,
+  "learning_rate": 1e-06,
+  "validation_loss": 1.1119662523269653,
+  "validation_crossing_fraction": 0.0,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "trainable_fraction": 0.03057709598339653,
+  "trainable_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "selected_weights": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\models\\c2-head-strict-v2\\nasa_aging\\test_B0005.pt",
+  "selected_weights_sha256": "9a36184c9ad6d7d98cdeefca9a4c802f14c5c8d63357284489a414991d716441",
+  "optimizer_subset_verified": true,
+  "frozen_parameters_verified": true,
+  "candidate_runtimes": [
+    {
+      "learning_rate": 1e-06,
+      "training_and_validation_seconds": 13.373631500056945
+    },
+    {
+      "learning_rate": 1e-05,
+      "training_and_validation_seconds": 7.843312699929811
+    }
+  ],
+  "baseline": {
+    "step": 0,
+    "learning_rate": 0.0,
+    "validation_loss": 1.2408753633499146,
+    "validation_crossing_fraction": 0.0,
+    "validation_invalid_interval_fraction": 0.0,
+    "eligible": true
+  },
+  "training_performed": true,
+  "trained_on": "strict_v2",
+  "head_mode": "retrain",
+  "fold_id": "test_B0005",
+  "source_ids": [
+    "B0007",
+    "B0018"
+  ],
+  "validation_ids": [
+    "B0006"
+  ],
+  "test_ids": [
+    "B0005"
+  ],
+  "locked_at": "2026-10-08T09:39:55.022305+00:00"
+}

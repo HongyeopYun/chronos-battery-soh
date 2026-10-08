@@ -14,7 +14,7 @@ SOH_COLUMNS = ["dataset", "battery_id", "cycle", "capacity_ah", "soh", "capacity
 BATTERY_REQUIRED = ["dataset", "battery_id", "batch", "reference_method", "reference_cycle",
                     "reference_capacity_ah", "source_file", "source_sha256", "cycle_number_source"]
 EXCLUDED_FLAGS = {"initial_capacity_test", "nonfinite_capacity", "nonpositive_capacity",
-                  "unexpected_protocol", "known_collection_issue", "capacity_outlier"}
+                  "unexpected_protocol", "known_collection_issue", "capacity_outlier", "strict_quality_excluded"}
 
 
 def sha256(path):
@@ -50,6 +50,8 @@ def validate_tables(soh, batteries):
             raise ValueError("Cycle order is not strictly increasing")
         if not rows.is_observed.isin([True, False]).all():
             raise ValueError("is_observed must contain booleans")
+        if "quality_eligible" in rows and not rows.quality_eligible.isin([True, False]).all():
+            raise ValueError("quality_eligible must contain booleans")
         metadata = batteries[(batteries.dataset == identity[0]) & (batteries.battery_id == identity[1])].iloc[0]
         reference = float(metadata.reference_capacity_ah)
         if not np.isfinite(reference) or reference <= 0:
@@ -80,12 +82,17 @@ def observed_windows(rows, context_length=64, prediction_length=16, excluded_fla
         raise ValueError("Duplicate or unordered cycle numbers")
     excluded = set(EXCLUDED_FLAGS if excluded_flags is None else excluded_flags)
     excluded.add("capacity_outlier")
+    excluded.add("strict_quality_excluded")
     cycles = rows.cycle.to_numpy(dtype=np.int64)
     values = rows.soh.to_numpy(dtype=np.float64)
     valid = (rows.is_observed.to_numpy(dtype=bool) & np.isfinite(values) &
              np.isfinite(rows.capacity_ah.to_numpy(dtype=float)) & (rows.capacity_ah.to_numpy(dtype=float) > 0) &
              rows.capacity_kind.isin(["full_discharge", "reference_test"]).to_numpy())
     valid &= np.array([not (set(str(f).split(";")) & excluded) for f in rows.quality_flags])
+    if "quality_eligible" in rows:
+        if not rows.quality_eligible.isin([True, False]).all():
+            raise ValueError("quality_eligible must contain booleans")
+        valid &= rows.quality_eligible.to_numpy(dtype=bool)
     total = context_length + prediction_length
     if len(rows) < total:
         return {"context": np.empty((0, context_length)), "target": np.empty((0, prediction_length)),

@@ -1,0 +1,13 @@
+{
+  "model_id": "amazon/chronos-2",
+  "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "context_length": 64,
+  "prediction_length": 16,
+  "calce_cross_file_windows": true,
+  "device": "auto",
+  "inference_batch_size": 32,
+  "inference_seeds": [42],
+  "stride": 1,
+  "battery_ids": null,
+  "max_windows_per_battery": null
+}

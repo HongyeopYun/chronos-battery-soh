@@ -37,7 +37,7 @@ def main():
              f"설정: context={config['context_length']}, horizon={config['prediction_length']}, samples={config['num_samples']}, "
              f"학습 seed={config['train_seeds']}, 추론 seed={config['inference_seeds']}.", "",
              "주 지표는 보간 중앙값의 RMSE/MAE입니다. 아래 표는 추론 및 학습 seed별 점수를 평균한 값입니다.", "",
-             "R²는 배터리·seed별 전체 window/horizon을 펼쳐 계산한 후 동일 가중 평균하며 높을수록 좋습니다. 음수도 유효하고 상수 target은 NaN입니다.", "",
+             "R²는 각 예측창의 실제 미래 평균으로 계산한 뒤 유효 창별 점수를 단순평균하고 seed·배터리를 동일 가중 평균합니다. 음수는 유지하고 상수 target 창은 NaN으로 제외합니다.", "",
              "| 배터리 | Zero-shot RMSE | LoRA RMSE | RMSE 개선율 | Zero-shot MAE | LoRA MAE | Zero-shot R² | LoRA R² |",
              "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for battery, row in grouped.iterrows():

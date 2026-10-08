@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "finished_at": "2026-10-08T05:06:35.311577+00:00",
+  "test_records": 5,
+  "windows_per_condition": 1612,
+  "slide_windows_per_condition": 90,
+  "cached_baselines_checked": true,
+  "window_r2_directly_verified": true,
+  "model_choice_before_test": true,
+  "representative_ids": [
+    "batch1_2C_battery-1",
+    "batch1_2C_battery-2",
+    "batch1_2C_battery-3",
+    "batch1_2C_battery-8"
+  ],
+  "full_predictions_retained": false
+}

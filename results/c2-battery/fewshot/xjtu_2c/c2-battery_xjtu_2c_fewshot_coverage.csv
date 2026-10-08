@@ -1,0 +1,4 @@
+battery_id,original_windows,paired_eligible_windows,unavailable_support_windows,sampled_windows
+batch1_2C_battery-1,310,310,0,30
+batch1_2C_battery-2,327,327,0,30
+batch1_2C_battery-3,313,313,0,30

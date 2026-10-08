@@ -1,0 +1,85 @@
+{
+  "groups": [
+    "xjtu_2c",
+    "xjtu_3c"
+  ],
+  "modes": [
+    "time",
+    "time_head"
+  ],
+  "rank": 8,
+  "alpha": 16,
+  "lora_dropout": 0.0,
+  "learning_rates": [
+    1e-05,
+    3e-05,
+    0.0001
+  ],
+  "max_steps": 400,
+  "validation_frequency": 20,
+  "train_windows": 20,
+  "validation_windows": 10,
+  "context": 64,
+  "horizon": 16,
+  "stride": 1,
+  "batch_size": 4,
+  "search_seed": 42,
+  "confirmation_seeds": [
+    42,
+    43,
+    44
+  ],
+  "cross_learning": false,
+  "optimizer": "AdamW weight_decay=0 eps=1e-8, linear decay, clip 1, frozen backbone eval",
+  "selection": "Minimum validation normalized quantile loss under unchanged crossing guard; step0 allowed",
+  "raw_validation_rmse": "Diagnostic only; never selects checkpoints",
+  "validation_refit": false,
+  "r2": "Mean window R2: compute standard 1-SSE/SST separately for each forecast window, centering on that window's actual future target mean; arithmetic mean of valid window scores within each battery/seed/phase, then equal seed and battery weights. Negative values are retained; constant windows or horizons shorter than 2 return NaN. No pooled/global or within-variance-weighted R2. R2 is a reporting metric only; checkpoint selection remains unchanged.",
+  "model_id": "amazon/chronos-2",
+  "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "splits": {
+    "xjtu_2c": {
+      "fold_id": "fixed",
+      "train_ids": [
+        "batch1_2C_battery-4",
+        "batch1_2C_battery-5"
+      ],
+      "validation_ids": [
+        "batch1_2C_battery-6"
+      ],
+      "test_ids": [
+        "batch1_2C_battery-1",
+        "batch1_2C_battery-2",
+        "batch1_2C_battery-3",
+        "batch1_2C_battery-7",
+        "batch1_2C_battery-8"
+      ],
+      "label_budget_sha256": "8481c3f27626cd03d0c5c938f5d09e4ef3a49e5d82d54ee3915136edca117897"
+    },
+    "xjtu_3c": {
+      "fold_id": "fixed",
+      "train_ids": [
+        "batch2_3C_battery-4",
+        "batch2_3C_battery-5"
+      ],
+      "validation_ids": [
+        "batch2_3C_battery-6"
+      ],
+      "test_ids": [
+        "batch2_3C_battery-1",
+        "batch2_3C_battery-2",
+        "batch2_3C_battery-3",
+        "batch2_3C_battery-7",
+        "batch2_3C_battery-8",
+        "batch2_3C_battery-9",
+        "batch2_3C_battery-10",
+        "batch2_3C_battery-11",
+        "batch2_3C_battery-12",
+        "batch2_3C_battery-13",
+        "batch2_3C_battery-14",
+        "batch2_3C_battery-15"
+      ],
+      "label_budget_sha256": "12ab699aff1e4ef3ffefd67027e7ba95601609cfba993baae0bba06aeee2c2ed"
+    }
+  }
+}

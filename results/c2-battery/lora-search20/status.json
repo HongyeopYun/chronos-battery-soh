@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "started_at": "2026-10-08T05:42:30.520063+00:00",
+  "device": "xpu:0",
+  "device_name": "Intel(R) Arc(TM) B390 GPU",
+  "group": "xjtu_3c",
+  "candidate": "confirmation_seed44",
+  "step": 400,
+  "best_validation_loss": 1.1632274270057679,
+  "all_selections_locked_at": "2026-10-08T05:53:32.784433+00:00",
+  "foundation_hash_verified": true,
+  "condition": "selected_lora",
+  "seed": 44,
+  "battery": "batch2_3C_battery-15",
+  "finished_at": "2026-10-08T05:53:51.664716+00:00",
+  "direct_window_r2_verified": true
+}

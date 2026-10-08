@@ -54,8 +54,11 @@ class ZeroShotConfig:
     stride: int = 1
     battery_ids: tuple[str, ...] | None = None
     max_windows_per_battery: int | None = None
+    calce_cross_file_windows: bool = False
 
     def __post_init__(self):
+        if not isinstance(self.calce_cross_file_windows, bool):
+            raise ValueError("calce_cross_file_windows must be boolean")
         for name in ("context_length", "prediction_length", "inference_batch_size", "num_samples", "stride", "top_k"):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, int) or value < 1:
@@ -80,13 +83,20 @@ class ZeroShotConfig:
             raise ValueError("max_windows_per_battery must be a positive integer or None")
 
 
-def load_zeroshot_config(path=ROOT / "configs/battery_zeroshot.json"):
+def load_zeroshot_config(path=ROOT / "configs/t5-battery.json"):
     return ZeroShotConfig(**json.loads(Path(path).read_text(encoding="utf-8")))
 
 
 def prepare_battery_windows(bundle, config):
     """Retain source cycles and masks; sampling depends only on window indices."""
     data, batteries, manifest = load_bundle(bundle)
+    if config.calce_cross_file_windows and data.dataset.eq("calce").any():
+        from src.calce_windows import observation_segments
+        data = data.copy()
+        if "source_segment_id" not in data:
+            data["source_segment_id"] = data.segment_id
+        for _, calce in data[data.dataset.eq("calce")].groupby("battery_id", sort=False):
+            data.loc[calce.index, "segment_id"] = observation_segments(calce)
     if config.battery_ids is not None:
         missing = set(config.battery_ids) - set(batteries.battery_id)
         if missing:
@@ -267,6 +277,14 @@ def verified_forecasts(directory, manifest, bundle, config, allow_metric_update=
 
 def verify_battery_zeroshot(directory, bundle=None, config=None):
     directory = Path(directory).resolve()
+    if (directory / "run.json").is_file():
+        from src.battery_zeroshot_minimal import verify_compact_result, saved_config
+        result = verify_compact_result(directory)
+        if config is not None and config != saved_config(result):
+            raise ValueError("Saved compact configuration differs")
+        if bundle is not None and Path(result["bundle"]).resolve() != Path(bundle).resolve():
+            raise ValueError("Saved compact bundle differs")
+        return {key: result[key] for key in ["status", "scope", "batteries_evaluated", "batteries_skipped", "evaluated_windows"]}
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
     config = config or ZeroShotConfig(**manifest["config"])
     bundle = Path(bundle).resolve() if bundle else (ROOT / manifest["bundle"]).resolve()
@@ -286,6 +304,17 @@ def verify_battery_zeroshot(directory, bundle=None, config=None):
 def refresh_battery_zeroshot(directory, bundle=None):
     """Upgrade metrics without inference; preserve original prediction provenance."""
     directory = Path(directory).resolve()
+    from src.battery_zeroshot_minimal import GROUPS
+    if any((directory / group / "run.json").is_file() for group in GROUPS):
+        if bundle is not None:
+            raise ValueError("Suite refresh uses each group's saved input bundle")
+        from src.battery_zeroshot_minimal import refresh_all_compact_r2
+        refresh_all_compact_r2(directory)
+        return {"groups_updated": len(GROUPS), "r2_metric": "mean_window_r2", "inference_repeated": False}
+    if (directory / "run.json").is_file():
+        from src.battery_zeroshot_minimal import refresh_compact_r2
+        refresh_compact_r2(directory, bundle)
+        return verify_battery_zeroshot(directory, bundle)
     manifest_path = directory / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     config = ZeroShotConfig(**manifest["config"])
@@ -319,8 +348,11 @@ def refresh_battery_zeroshot(directory, bundle=None):
         raise
 
 
-def battery_zeroshot(bundle, config=None, output_root=ROOT / "results/battery_zeroshot", force=False):
+def battery_zeroshot(bundle, config=None, output_root=ROOT / "results/t5-battery", force=False, minimal=True):
     """Swap only the common-format bundle path; reuse matching, verified runs."""
+    if minimal:
+        from src.battery_zeroshot_minimal import battery_zeroshot_minimal
+        return battery_zeroshot_minimal(bundle, config, output_root, force)
     bundle, output_root = Path(bundle).resolve(), Path(output_root).resolve()
     config = config or load_zeroshot_config()
     if output_root == bundle or bundle in output_root.parents or output_root in bundle.parents:

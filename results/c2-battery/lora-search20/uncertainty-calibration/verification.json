@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "test_batteries": 17,
+  "test_windows_per_seed": 3453,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "all_seeds_better_rmse_than_optuna_head": true,
+  "foundation_frozen": true,
+  "calibration_median_preserved_exactly_by_transform": true,
+  "rerun_max_aggregate_point_metric_differences": {
+    "rmse": 3.7800669972637424e-10,
+    "r2_mean": 2.9709141993738974e-08,
+    "r2_median": 1.0757900484881233e-06,
+    "r2_negative_fraction": 0.0
+  },
+  "rerun_comparison_tolerance": {
+    "rtol": 2e-05,
+    "atol": 1e-07
+  },
+  "numerical_note": "Separate float32 GPU inference has tiny roundoff differences; the calibration transform itself keeps the input median exactly.",
+  "candidate_count": 12,
+  "confirmation_count": 4,
+  "models_locked_before_test": true,
+  "calibration_locked_before_test": true,
+  "interpretation": "Exploratory repeated-test study; no independent final validation or guaranteed coverage claim"
+}

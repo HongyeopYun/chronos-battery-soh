@@ -1,0 +1,13 @@
+split,battery_id,context_start,context_end,label_start,label_end
+train,b1c5,2,65,66,81
+train,b1c5,322,385,386,401
+train,b1c5,658,721,722,737
+train,b1c5,994,1057,1058,1073
+train,b1c6,2,65,66,81
+train,b1c6,178,241,242,257
+train,b1c6,354,417,418,433
+train,b1c6,546,609,610,625
+validation,b1c7,2,65,66,81
+validation,b1c7,258,321,322,337
+validation,b1c7,514,577,578,593
+validation,b1c7,786,849,850,865

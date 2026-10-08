@@ -7,7 +7,7 @@ from unittest.mock import patch
 import numpy as np
 import pandas as pd
 
-from src.soh_evaluation import r2_score, point_scores, distribution_r2, _r2_from_rmse
+from src.soh_evaluation import r2_score, point_scores, distribution_r2, _r2_from_rmse, mean_window_r2, window_r2_values
 from src.soh_evaluation import export_run
 from src.soh_experiment import ExperimentConfig, make_windows, summarize_samples, metric_rows, save_forecast, _write_tables
 
@@ -16,15 +16,15 @@ class R2Tests(unittest.TestCase):
     def test_perfect_mean_and_negative_scores(self):
         y = np.array([[1., 2.], [3., 4.]])
         self.assertEqual(r2_score(y, y), 1.)
-        self.assertEqual(r2_score(y, np.full_like(y, y.mean())), 0.)
+        self.assertEqual(r2_score(y, np.broadcast_to(y.mean(axis=1,keepdims=True),y.shape)), 0.)
         self.assertLess(r2_score(y, y + 10), 0.)
 
-    def test_flattens_targets_instead_of_averaging_horizon_scores(self):
+    def test_r2_score_averages_windows_instead_of_flattening_targets(self):
         y = np.array([[0., 10.], [1., 20.]])
         p = y + 1
-        expected = 1 - 4 / np.square(y - y.mean()).sum()
+        expected = np.mean([r2_score(a,b) for a,b in zip(y,p)])
         self.assertAlmostEqual(r2_score(y, p), expected)
-        self.assertNotAlmostEqual(r2_score(y, p), np.mean([r2_score(y[:, h], p[:, h]) for h in range(2)]))
+        self.assertNotAlmostEqual(r2_score(y, p), 1 - 4 / np.square(y - y.mean()).sum())
 
     def test_undefined_constant_or_single_targets_and_invalid_inputs(self):
         self.assertTrue(np.isnan(r2_score([1., 1.], [1., 1.])))
@@ -37,7 +37,17 @@ class R2Tests(unittest.TestCase):
         y = np.array([[1, 2, 4], [3, 4, 8]], dtype=np.float32)
         p = y + np.array([[.1, .2, .3], [.4, .5, .6]])
         scores = point_scores(y, p)
-        self.assertAlmostEqual(scores["r2"], _r2_from_rmse(y, scores["rmse"]))
+        self.assertAlmostEqual(scores["r2"], np.mean([r2_score(a,b) for a,b in zip(y,p)]))
+        self.assertTrue(np.isnan(_r2_from_rmse(y, scores["rmse"])))
+        self.assertNotAlmostEqual(scores["r2"], 1-np.square(y-p).sum()/np.square(y-y.mean()).sum())
+
+    def test_mean_window_r2_equal_weights_levels_and_undefined_windows(self):
+        y = np.array([[0.,1.,2.],[10.,12.,14.],[2.,2.,2.]])
+        p = y + .5
+        self.assertAlmostEqual(mean_window_r2(y,p), (.625+.90625)/2)
+        self.assertTrue(np.isnan(window_r2_values(y,p)[2]))
+        self.assertAlmostEqual(mean_window_r2(y+np.array([[100.],[500.],[0.]]),p+np.array([[100.],[500.],[0.]])), (.625+.90625)/2)
+        self.assertTrue(np.isnan(mean_window_r2(y[:,:1],p[:,:1])))
 
     def test_mean_and_median_are_scored_separately(self):
         y = np.array([[1., 2.]])
@@ -63,7 +73,7 @@ class R2Tests(unittest.TestCase):
                 summary = summarize_samples(samples)
                 r, h, v = metric_rows(w, summary, "ZeroShot", battery, inference_seed=42)
                 rows.extend(r); horizons.extend(h); windows.extend(v)
-                expected.append(r2_score(w["target"], summary["median"]))
+                expected.append(mean_window_r2(w["target"], summary["median"]))
                 targets.extend(w["target"].ravel()); predictions.extend(summary["median"].ravel())
             _write_tables(run, rows, horizons, windows)
             originals = {str(p): p.read_bytes() for p in run.rglob("*") if p.is_file()}

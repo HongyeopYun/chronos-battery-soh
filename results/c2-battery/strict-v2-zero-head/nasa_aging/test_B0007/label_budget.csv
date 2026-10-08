@@ -1,0 +1,4 @@
+split,battery_id,index,context_start,context_end,label_start,label_end
+train,B0005,0,1,64,65,80
+train,B0006,0,1,64,65,80
+validation,B0018,0,1,64,65,80
