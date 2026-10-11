@@ -1,0 +1,5 @@
+battery_id,observations,eligible_before,eligible_after,targets_before,targets_after,restored_targets,restored_start,restored_end
+B0005,168,167,168,39,104,65,90.0,154.0
+B0006,168,167,168,39,104,65,90.0,154.0
+B0007,168,167,168,39,104,65,90.0,154.0
+B0018,132,132,132,68,68,0,,

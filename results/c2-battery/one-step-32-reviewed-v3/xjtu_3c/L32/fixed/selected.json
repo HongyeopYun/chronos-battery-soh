@@ -1,0 +1,34 @@
+{
+  "step": 20,
+  "learning_rate": 1e-06,
+  "validation_loss": 1.171107292175293,
+  "validation_crossing_fraction": 0.0,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "baseline": {
+    "step": 0,
+    "learning_rate": 0.0,
+    "validation_loss": 1.206834077835083,
+    "validation_crossing_fraction": 0.0,
+    "validation_invalid_interval_fraction": 0.0,
+    "eligible": true
+  },
+  "context_length": 32,
+  "prediction_length": 1,
+  "train_windows": 8,
+  "validation_windows": 4,
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "trainable_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "frozen_backbone_verified": true,
+  "selected_weights": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\models\\c2-head-one-step-32-reviewed-v3\\xjtu_3c\\L32\\fixed.pt",
+  "selected_weights_sha256": "973b37d08bbc6aa71a8fde9b5338b42824e3754e9df545e524290fb5fb636b6d",
+  "elapsed_seconds": 9.08810959999937
+}

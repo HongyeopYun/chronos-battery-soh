@@ -112,6 +112,44 @@ class StrictPreprocessingTests(unittest.TestCase):
         self.assertFalse(cleaned.quality_eligible.iloc[0])
         self.assertEqual(cleaned.capacity_ah.iloc[0], 1.)
 
+    def test_nasa_missing_charge_log_is_review_only_when_discharge_checks_pass(self):
+        f = dict(complete_feature(), charge_samples=0, charge_end_voltage_v=np.nan,
+                 charge_end_current_a=np.nan, initial_discharge_voltage_v=4.22,
+                 capacity_cutoff_reached=True, discharge_cc_current_a=-2.)
+        bad, review = classify_trace("nasa", f, 90)
+        self.assertEqual(bad, [])
+        self.assertIn("preceding_charge_unrecorded_native_capacity_retained", review)
+        for update in ({"discharge_integral_ah": 1.2}, {"initial_discharge_voltage_v": 3.8},
+                       {"initial_discharge_voltage_v": np.nan}, {"capacity_cutoff_reached": False},
+                       {"discharge_time_backsteps": 1}, {"raw_capacity_ah": np.nan}):
+            bad, _ = classify_trace("nasa", {**f, **update}, 90)
+            self.assertIn("preceding_charge_unverified", bad)
+        bad, _ = classify_trace("calce", {**f, "discharge_cc_current_a": -1.1}, 90)
+        self.assertIn("preceding_charge_unverified", bad)
+
+    def test_nasa_known_incomplete_charge_still_excluded(self):
+        f = dict(complete_feature(), discharge_cc_current_a=-2., charge_end_current_a=.7,
+                 initial_discharge_voltage_v=4.22, capacity_cutoff_reached=True)
+        bad, _ = classify_trace("nasa", f, 90)
+        self.assertIn("charge_termination_not_met", bad)
+
+    def test_nasa_retained_review_does_not_remove_65_valid_one_step_targets(self):
+        data = soh_rows(np.linspace(1., .8, 168))
+        data['dataset'] = 'nasa'
+        features = []
+        for k, q in enumerate(data.soh, 1):
+            f = dict(complete_feature(), battery_id='test', cycle=k, discharge_cc_current_a=-2.,
+                     raw_capacity_ah=q, discharge_integral_ah=q, discharge_counter_ah=q,
+                     initial_discharge_voltage_v=4.22, capacity_cutoff_reached=True)
+            if k == 90:
+                f.update(charge_samples=0, charge_end_voltage_v=np.nan, charge_end_current_a=np.nan)
+            features.append(f)
+        revised = apply_quality(data, pd.DataFrame(features))
+        self.assertTrue(revised.quality_eligible.all())
+        self.assertEqual(revised.iloc[89].quality_status, 'accepted_with_note')
+        np.testing.assert_array_equal(observed_windows(revised, 64, 1)['forecast_start'], np.arange(65,169))
+        np.testing.assert_array_equal(revised.soh, data.soh)
+
 
 if __name__ == "__main__":
     unittest.main()

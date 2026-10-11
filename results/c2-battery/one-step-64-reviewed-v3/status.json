@@ -1,0 +1,22 @@
+{
+  "started_at": "2026-10-08T11:14:25.127956+00:00",
+  "status": "complete",
+  "device": "xpu:0",
+  "protocol_sha256": "e9552f3bf02ff7c988282bbba89f3251d8857e697da30ec916a868d8ca10caca",
+  "updated_at": "2026-10-08T11:21:31.579734+00:00",
+  "dataset": "xjtu_3c",
+  "context_length": 64,
+  "fold": "fixed",
+  "completed_heads": 13,
+  "total_heads": 13,
+  "all_heads_locked_at": "2026-10-08T11:16:23.735389+00:00",
+  "frozen_backbone_verified": true,
+  "battery": "batch2_3C_battery-15",
+  "finished_at": "2026-10-08T11:21:31.579734+00:00",
+  "matched_targets_per_condition": 97868,
+  "independent_metric_recalculation": true,
+  "reviewed_data_and_context_masks_verified": true,
+  "identical_targets_all_contexts": true,
+  "conditions": 4,
+  "verified_at": "2026-10-08T11:21:31.563981+00:00"
+}

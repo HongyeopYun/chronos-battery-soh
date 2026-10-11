@@ -1,0 +1,34 @@
+{
+  "step": 100,
+  "learning_rate": 1e-06,
+  "validation_loss": 4.870808124542236,
+  "validation_crossing_fraction": 0.0,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "baseline": {
+    "step": 0,
+    "learning_rate": 0.0,
+    "validation_loss": 4.954371929168701,
+    "validation_crossing_fraction": 0.0,
+    "validation_invalid_interval_fraction": 0.0,
+    "eligible": true
+  },
+  "context_length": 64,
+  "prediction_length": 1,
+  "train_windows": 8,
+  "validation_windows": 4,
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "trainable_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "frozen_backbone_verified": true,
+  "selected_weights": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\models\\c2-head-one-step-64-reviewed-v3\\calce_cs2_1c\\L64\\test_CS2_38.pt",
+  "selected_weights_sha256": "bde1ce822ab372a51559d2428e3136daf839223f67a9a823df77cdb6bf36c85a",
+  "elapsed_seconds": 7.096891700000015
+}

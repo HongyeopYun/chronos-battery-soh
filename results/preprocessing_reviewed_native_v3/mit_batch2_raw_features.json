@@ -1,0 +1,11 @@
+{
+  "raw_sha256": {
+    "MIT_Batch_2.mat": "63ab200d09ecb237fee5ef3a5c5db76e3212e3206a0bd92f769e1427fed338b8"
+  },
+  "implementation_sha256": {
+    "src/reviewed_soh.py": "25ef7e78a5f757614c21dd1121039ecc3d55cec903c3cd9edd7f790b4f53b30d",
+    "src/strict_preprocessing.py": "54d6956645d2af56783b8ef7cb960224ef8d8bf6bd2314aa0d0c17095023ed23",
+    "scripts/build_reviewed_soh.py": "6be6a1e70271efea566074616893571a76f06a472cdad938d39cdc2a46233111"
+  },
+  "evidence_sha256": "ca0a6e6eb84b52da47c6402625bea16892f6e6e0e323c94899bd43addd0300d3"
+}

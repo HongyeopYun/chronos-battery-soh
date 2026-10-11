@@ -1,0 +1,126 @@
+PREDICT t5-battery/input/NA windows=96
+DONE t5-battery/input/NA elapsed=0.1s
+PREDICT c2-battery/input/NA windows=96
+DONE c2-battery/input/NA elapsed=0.1s
+PREDICT c2-battery/input/NA windows=21
+DONE c2-battery/input/NA elapsed=0.0s
+PREDICT t5-battery/input/NA windows=96
+DONE t5-battery/input/NA elapsed=0.0s
+PREDICT t5-battery/input/cell1 windows=156
+PREDICT t5-battery/input/cell1 windows=156
+DONE t5-battery/input/cell1 elapsed=0.0s
+REUSE t5-battery/input
+READ CS2_35 CS2_35_8_17_10.xlsx
+READ CS2_35 CS2_35_8_18_10.xlsx
+READ CS2_36 CS2_36_8_17_10.xlsx
+READ CS2_36 CS2_36_8_18_10.xlsx
+READ CS2_37 CS2_37_8_17_10.xlsx
+READ CS2_37 CS2_37_8_18_10.xlsx
+READ CS2_38 CS2_38_8_17_10.xlsx
+READ CS2_38 CS2_38_8_18_10.xlsx
+READ MIT_Batch_1.mat
+READ MIT_Batch_2.mat
+READ MIT_Batch_3.mat
+READ B0005.mat
+READ B0006.mat
+READ B0007.mat
+READ B0018.mat
+RUN=C:\Users\dbsgh\AppData\Local\Temp\tmpksy7x89_\output\20261008T105620Z_batteryzeroshot_69dc41
+PREDICT synthetic/NA seed=42 windows=8
+RUN=C:\Users\dbsgh\AppData\Local\Temp\tmp_ccvy6v2\output\20261008T105621Z_batteryzeroshot_0caff2
+PREDICT synthetic/NA seed=42 windows=6
+RUN=C:\Users\dbsgh\AppData\Local\Temp\tmp2ejqbxpn\output\20261008T105624Z_batteryzeroshot_68a6ed
+PREDICT synthetic/NA seed=42 windows=6
+PREDICT synthetic/NA seed=43 windows=6
+PREDICT synthetic/cell1 seed=42 windows=12
+PREDICT synthetic/cell1 seed=43 windows=12
+RUN=C:\Users\dbsgh\AppData\Local\Temp\tmp2ejqbxpn\output\20261008T105625Z_batteryzeroshot_050ff2
+PREDICT synthetic/NA seed=42 windows=6
+PREDICT synthetic/NA seed=43 windows=6
+RUN=C:\Users\dbsgh\AppData\Local\Temp\tmp7ojd2krc\output\20261008T105626Z_batteryzeroshot_9aa303
+PREDICT synthetic/NA seed=42 windows=6
+PREDICT input/NA seed=42 windows=6
+PREDICT input/NA seed=43 windows=6
+DONE input battery=1/2 rmse=0.035136
+PREDICT input/cell1 seed=42 windows=12
+PREDICT input/cell1 seed=43 windows=12
+DONE input battery=2/2 rmse=0.021082
+PREDICT input/NA seed=42 windows=6
+DONE input battery=1/2 rmse=0.035136
+PREDICT input/cell1 seed=42 windows=12
+DONE input battery=2/2 rmse=0.021082
+PREDICT input/NA seed=42 windows=6
+DONE input battery=1/2 rmse=0.035136
+PREDICT input/cell1 seed=42 windows=12
+RESUME input batteries=1/2
+PREDICT input/cell1 seed=42 windows=12
+DONE input battery=2/2 rmse=0.021082
+{'train_runtime': '0.1402', 'train_samples_per_second': '28.52', 'train_steps_per_second': '14.26', 'train_loss': '6.493', 'epoch': '1'}
+...........................................
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]
+Writing model shards: 100%|##########| 1/1 [00:00<00:00, 122.14it/s]
+TRAIN B0005_train42_candidate0 lr=1e-05
+TRAIN B0005_train42_candidate1 lr=3e-05
+TRAIN B0005_train42_candidate2 lr=0.0001
+SELECTED B0005 lr=1e-05 step=10
+TRAIN B0006_train42_candidate0 lr=1e-05
+TRAIN B0006_train42_candidate1 lr=3e-05
+TRAIN B0006_train42_candidate2 lr=0.0001
+SELECTED B0006 lr=1e-05 step=10
+TRAIN B0007_train42_candidate0 lr=1e-05
+TRAIN B0007_train42_candidate1 lr=3e-05
+TRAIN B0007_train42_candidate2 lr=0.0001
+SELECTED B0007 lr=1e-05 step=10
+TRAIN B0018_train42_candidate0 lr=1e-05
+TRAIN B0018_train42_candidate1 lr=3e-05
+TRAIN B0018_train42_candidate2 lr=0.0001
+SELECTED B0018 lr=1e-05 step=10
+  B0005 lr=0.0001 step=0/5 val_CRPS=0.3000000 best_step=0
+  B0005 lr=0.0001 step=2/5 val_CRPS=0.1000000 best_step=2
+  B0005 lr=0.0001 step=4/5 val_CRPS=0.2000000 best_step=2
+  B0005 lr=0.0001 step=5/5 val_CRPS=0.2500000 best_step=2
+EXTRACT 3C_battery-1.mat
+EXTRACT 3C_battery-2.mat
+EXTRACT 3C_battery-3.mat
+EXTRACT 3C_battery-4.mat
+EXTRACT 3C_battery-5.mat
+EXTRACT 3C_battery-6.mat
+EXTRACT 3C_battery-7.mat
+EXTRACT 3C_battery-8.mat
+EXTRACT 3C_battery-9.mat
+EXTRACT 3C_battery-10.mat
+EXTRACT 3C_battery-11.mat
+EXTRACT 3C_battery-12.mat
+EXTRACT 3C_battery-13.mat
+EXTRACT 3C_battery-14.mat
+EXTRACT 3C_battery-15.mat
+EXTRACT 2C_battery-1.mat
+EXTRACT 2C_battery-2.mat
+EXTRACT 2C_battery-3.mat
+EXTRACT 2C_battery-4.mat
+EXTRACT 2C_battery-5.mat
+EXTRACT 2C_battery-6.mat
+EXTRACT 2C_battery-7.mat
+EXTRACT 2C_battery-8.mat
+EXTRACT 2C_battery-1.mat
+EXTRACT 2C_battery-2.mat
+EXTRACT 2C_battery-3.mat
+EXTRACT 2C_battery-4.mat
+EXTRACT 2C_battery-5.mat
+EXTRACT 2C_battery-6.mat
+EXTRACT 2C_battery-7.mat
+EXTRACT 2C_battery-8.mat
+PREDICT c2-battery/input/NA windows=96
+DONE c2-battery/input/NA elapsed=0.0s
+PREDICT c2-battery/input/cell1 windows=136
+DONE c2-battery/input/cell1 elapsed=0.0s
+R2 c2-battery/input/NA windows=96
+DONE NA elapsed=0.0s
+R2 c2-battery/input/cell1 windows=136
+DONE cell1 elapsed=0.0s
+R2 c2-battery/input/NA windows=96
+...........................................................................
+----------------------------------------------------------------------
+Ran 118 tests in 27.410s
+
+OK

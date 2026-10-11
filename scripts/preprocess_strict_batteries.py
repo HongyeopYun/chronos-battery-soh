@@ -105,6 +105,8 @@ def finalize(group):
     # cycle IDs; invalid cycles remain in the table and always break windows.
     if data.dataset.iloc[0] == "calce":
         cleaned["source_segment_id"] = data.segment_id
+        batteries = batteries.copy()
+        batteries["recording_boundaries"] = "chronological_observation_windows_may_cross_source_files; physical_missing_cycles_unknown"
         for _, rows in data.groupby("battery_id", sort=False):
             cleaned.loc[rows.index, "segment_id"] = observation_segments(rows)
             data.loc[rows.index, "segment_id"] = observation_segments(rows)

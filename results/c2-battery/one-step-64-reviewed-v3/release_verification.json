@@ -1,0 +1,36 @@
+{
+  "status": "complete",
+  "unit_tests_passed": 124,
+  "leading_internal_trailing_missingness_test_passed": true,
+  "independent_metric_recalculation": true,
+  "locked_code_and_data_checksums_verified": true,
+  "visual_review_completed": true,
+  "matched_targets": 97868,
+  "test_records": 150,
+  "context_length": 64,
+  "prediction_length": 1,
+  "protocol_sha256": "e9552f3bf02ff7c988282bbba89f3251d8857e697da30ec916a868d8ca10caca",
+  "predictions_sha256": {
+    "calce_cs2_1c": "00d16d3b1532a0fbf33a5f25807c4c990dfa6d1ee116c9f95342d552f7fb8551",
+    "mit_batch1": "03c62babeca0fd608280b9f7237e5194122fe54716d9ea512c9ca2a134feadda",
+    "mit_batch2": "8bd9c1fc5af8bf354d786b6adc82268338076984026847c59aeec2ba3325395b",
+    "mit_batch3": "d6522d09c128ea94fea584d228a6235c453fd4b07e3461a2c85f8a7e39cb9fe8",
+    "nasa_aging": "f5f6725b8f457d067bc37c9e95a1fb1c6a2327031cc685d9f4f52e2c872d0c47",
+    "xjtu_2c": "ab49f87cc5f370b2f4c765ce61ce55eb1cf4c583c138d9911951380eabcbce34",
+    "xjtu_3c": "7c39cdbad9b156b9d88b90ddbf7fa235a048e4801723f4a91d928c763627085a"
+  },
+  "reports_sha256": {
+    "battery_metrics.csv": "487f8231a012b8e49b55fe9f0a5843c42e92033e5f1a93485c53628ae8b1c54c",
+    "comparison.png": "4d6ab8feab9583271f2919e4831db7c7042d454c4276b89cbe3d1f8b36da85d4",
+    "context_subset_battery_metrics.csv": "08d0d97ad1ce0dd64f1743cfe81eb7e7efb49975e772f02a8efa8e29d84e2231",
+    "context_subset_summary.csv": "34a33bc10a62435132b96acdcb03b4471c1e7e58847f054662b12ad6383e6c0d",
+    "coverage.csv": "24f6a96b2f9bcb73a386fd1b030cff60cf9620cfe58acd9380a5376ddc2f8e42",
+    "coverage_comparison.csv": "3349f9efffe44cae8189c78dd46f491b9c6f13262eb2f772f443994563974008",
+    "label_budget.csv": "ad15a54c19e14340a5584c3c9aca87dec4bbc67972e5af2f52c449475c1d19ed",
+    "report.md": "8f929681bef72e52e5e4875be9653fc87df0bb7807c48bd672c58d2eae5df5c4",
+    "restored_cases.png": "09b457c2211f321bcf897dfdec894033f17f30715b4b670f83cd5bb21a2a436e",
+    "selected_checkpoints.csv": "4b434d0f22ee49d69845042961842ecb9944ba2d1e372ec23f44a8ba8fa2745f",
+    "summary.csv": "5717247b8b7c4d63f7b68b50fdfb8108b5aa6e4d9fa64db79ebe7b16804cfa23"
+  },
+  "preprocessing_report_sha256": "a280e33a2c33039d749ef8b3b1f98c9223533d22d8d5640441cd46914184419a"
+}

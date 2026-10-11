@@ -1,0 +1,34 @@
+{
+  "step": 100,
+  "learning_rate": 1e-06,
+  "validation_loss": 1.4131795167922974,
+  "validation_crossing_fraction": 0.0,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "baseline": {
+    "step": 0,
+    "learning_rate": 0.0,
+    "validation_loss": 1.7417834997177124,
+    "validation_crossing_fraction": 0.0,
+    "validation_invalid_interval_fraction": 0.0,
+    "eligible": true
+  },
+  "context_length": 32,
+  "prediction_length": 1,
+  "train_windows": 8,
+  "validation_windows": 4,
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "trainable_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "frozen_backbone_verified": true,
+  "selected_weights": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\models\\c2-head-one-step-32-reviewed-v3\\nasa_aging\\L32\\test_B0005.pt",
+  "selected_weights_sha256": "135a8585562fc746212669c231671bbe76059e2e38a5e955bab441866183c738",
+  "elapsed_seconds": 10.488665700000638
+}

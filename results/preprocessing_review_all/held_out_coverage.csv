@@ -1,0 +1,8 @@
+group,test_records,original_test_targets,strict_test_targets
+nasa_aging,4,380,185
+xjtu_2c,5,1687,1685
+xjtu_3c,12,2021,2021
+calce_cs2_1c,4,2259,191
+mit_batch1,43,33439,32773
+mit_batch2,45,21080,19857
+mit_batch3,37,35688,23147

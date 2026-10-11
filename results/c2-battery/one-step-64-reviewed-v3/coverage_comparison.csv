@@ -1,0 +1,8 @@
+group,records,targets,missing_context,min_observed,previous_targets
+calce_cs2_1c,4,3549,3358,57,191
+mit_batch1,43,33478,302,50,32773
+mit_batch2,45,21057,1265,61,19857
+mit_batch3,37,35681,448,63,23147
+nasa_aging,4,380,0,64,185
+xjtu_2c,5,1690,5,63,1685
+xjtu_3c,12,2033,12,63,2021

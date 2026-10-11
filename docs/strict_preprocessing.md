@@ -1,5 +1,9 @@
 # 원시 기록 기반 SOH 전처리 v2
 
+현재 64→1 재실험은 [reviewed_native_v3](../results/preprocessing_reviewed_native_v3/report.md)를 사용한다. MIT의 native 용량 우선 정책과 원래 위치를 보존한 결측 입력을 적용한 별도 버전이며, 아래 strict_v2 bundle을 덮어쓰지 않았다.
+
+> 2026-10-08 재검토: 이 문서는 기존 strict_v2의 규칙을 설명하며, 전체 수명 평가용 최종 확정본이 아니다. [전체 감사](../results/preprocessing_review_all/report.md)에서 NASA의 로그 부재 판정, MIT의 CV 적분 불일치·긴 기록 공백·복수 방전 처리, CALCE의 매우 낮은 창 커버리지를 확인했다. NASA 수정본은 별도 `nasa_review_v3`에 있으며 MIT/CALCE 마스크는 아직 변경하지 않았다. 아래 실행 명령으로 과거 strict_v2를 덮어쓰기 전에 새 출력 버전을 지정해야 한다.
+
 목적은 정상적인 완전 충·방전 조건에서 측정한 용량으로 SOH 예측 데이터를 만드는 것이다. 곡선을 매끈하게 만들거나 R²를 높이는 것을 제외 기준으로 삼지 않는다. 원시 데이터와 기존 실험 결과는 변경하지 않는다.
 
 ## 산출물과 실행
@@ -52,7 +56,7 @@ CALCE 엄격본은 원 파일 식별자(`source_segment_id`)와 관측 순서 �
 
 CALCE는 CC 시작 후 첫 기록까지의 `Step_Time(s)`도 적분에 포함한다. XJTU의 `relative_time_min`은 단계마다 초기화되므로 전체 cycle에서 시간이 감소한다는 이유로 제외하지 않고 방전 단계 내부에서 확인한다. NASA는 부하 제거 후 반등한 마지막 전압 대신 실제 부하가 걸린 구간을 확인한다.
 
-MIT 공개 MAT의 I 값은 4C 방전 plateau가 약 -4로 기록된다. 이 파일에 대해서 1.1Ah 정격용량을 곱해 A로 환산하고, 원시 Qd 카운터와 적분량의 일치를 함께 확인한다. 환산계수는 evidence의 `current_scale_to_a`에 기록한다. 기존 SOH나 native QDischarge를 환산하거나 수정하는 것이 아니다. 이 관례를 다른 배포본에 검증 없이 적용하면 안 된다.
+MIT 공개 MAT의 I 값은 방전 plateau가 약 -4로 기록된다. 기존 구현은 1.1 배율을 적용했고 CC 구간에서는 원시 Qd 증가량과 일치하는 경향을 보였다. 그러나 독립 재검토에서 Batch 3의 CV 구간에는 같은 배율이 맞지 않았다. 따라서 이를 모든 구간에 검증된 A 단위 변환으로 단정할 수 없다. 배율은 evidence의 `current_scale_to_a`에 남아 있으며 native QDischarge나 SOH는 변환하지 않았다. 이 불일치를 해결하기 전 전류 적분 오차만으로 원본 용량이 잘못됐다고 확정하지 않는다.
 
 온도 범위를 벗어나거나 방전 샘플 간격이 크게 벌어진 경우 검토 메모를 남긴다. 온도 센서 문제만으로 용량을 삭제하지 않는다. MIT의 원제작자 지정 noisy channel 6개, 미측정 placeholder, XJTU 초기 별도 프로토콜 등 기존 제외 조건도 유지한다. CALCE 중복 export는 용량뿐 아니라 충전과 trace 검증 수치까지 대조한다.
 

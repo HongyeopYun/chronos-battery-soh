@@ -1,0 +1,53 @@
+{
+  "status": "complete",
+  "targeted_tests_passed": 14,
+  "matched_targets_per_condition": 97868,
+  "conditions": 3,
+  "context_length": 32,
+  "prediction_length": 1,
+  "identical_targets_to_context64": true,
+  "identical_lastvalue_to_context64": true,
+  "identical_source_labels_to_context64": true,
+  "reviewed_data_and_context_masks_verified": true,
+  "independent_metric_recalculation": true,
+  "linear_excluded": true,
+  "verified_at": "2026-10-08T12:26:22.217522+00:00",
+  "all_three_skill_measures_independently_recomputed_both_contexts": true,
+  "fixed_lastvalue_context_change_verified": true,
+  "frozen_code_and_data_checksums_verified": true,
+  "prior64_reports_and_predictions_unchanged": true,
+  "visual_review_completed": [
+    "comparison.png",
+    "nasa_aging/representative.png",
+    "calce_cs2_1c/representative.png"
+  ],
+  "protocol_sha256": "fd3a43ead7d618febe58c60f599d7acbb37d8c2fe461a8d5895ac2fd24773c1a",
+  "predictions_sha256": {
+    "nasa_aging": "384cd970ab32ee076eb8b270b7150719bbcc2e71d5a8c7d8902411e374070c4b",
+    "calce_cs2_1c": "021d6a973f644a75053900a4313d075cc709b5e97ec7379e52e200a659744b42",
+    "mit_batch1": "6b51e7900365fffdc309afa054fa7adbd6096dbf5eeb96e05a9e45b5f2d7d63f",
+    "mit_batch2": "70b06557d3f84e6ef55861fb7e70eb97d012dce8aefe71ef8ce58cf3498a7a2c",
+    "mit_batch3": "78ec64c9bdfca07e60649f564927075f97af7b0eda8c1dcdee11dfafcf60fb17",
+    "xjtu_2c": "e04fb94ffb9d4abbf387952d659cbf4a771a3f5a80ef5b4dcc415b5dab26b802",
+    "xjtu_3c": "5410364a1ef3f2c83fe25f85a9d7992f17fad28c87902e2e8b5cb7251c3f3e54"
+  },
+  "reports_sha256": {
+    "battery_metrics.csv": "0307986cc530f6b4525168ff4f0f3873420cc05b96ea1d0c24fc045918bee621",
+    "comparison.png": "bec5696303129cd97655cc3b88539282a46f74238d02982cbe8feab1e3812e27",
+    "context32_vs64_battery.csv": "149e5fd61507996c2f53fe3d234c9f7603b67e0c69e8314d753fe7dd47563e48",
+    "context32_vs64_lastvalue_change.csv": "a01c16d72a9ef5ff0f7f2e51473dc3ec3b593142f272a3b8c7b8e8ff70df23d2",
+    "context32_vs64_summary.csv": "403e712c3b218a1dcc70826bf4471b81ae05b1f685f9b9dcae67c13b0778d1c1",
+    "coverage.csv": "70a1cfd6d1c9c7f15574fe67685ab42b8069ead7e0a4a3dc45bd6d9569678776",
+    "label_budget.csv": "42344501b329ddf1e9823b5c80e2563ad90fbed2dc092fb0b44d68786b86dce0",
+    "lastvalue_battery_metrics.csv": "a06852da4c76dc53fed586d0c2a8374c4ba15af08662e8486f44473dbc0a49c9",
+    "lastvalue_comparison.csv": "934ff3ec7558a68b99cc6e5f9dbb6e3a3fb6d0a879fd3dbfdecc5a19feb1490d",
+    "protocol.json": "fd3a43ead7d618febe58c60f599d7acbb37d8c2fe461a8d5895ac2fd24773c1a",
+    "rendering.json": "c16291ef33801d86382b508d6b24ee23963c74ecd6b91ce56b5795ed011a4180",
+    "report.md": "8adbba9b078f49ce413631bbe1c449a0dffa1b0338e9fc9bf2bb4780f0d7c190",
+    "selected_checkpoints.csv": "950612a884e3efad8cee394a95d7cb9a8663ce34eb5807120656684355187e52",
+    "status.json": "8db814d839f2e12a2174eb6a668c9be9b3e0cdda13b22313c2f3e0a3572f33f2",
+    "summary.csv": "d5a24ef91104513cd6b17c78d1e539cf7a98b437ae78cfa83bf5294c88df8733",
+    "verification.json": "abf7f728c597792a714845c4ab3f02315b43b514705fe446c31b9d6fd8cad0e5"
+  },
+  "renderer_sha256": "db06428e60cd0b1862b236067c95d7179c129d85aa1b5c8664c84ed9842b202b"
+}

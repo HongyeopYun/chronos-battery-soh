@@ -1,0 +1,8 @@
+{
+  "name": "reviewed_native_v3",
+  "mit_capacity": "Native QDischarge is primary. Integral disagreement alone is a review note, not label rejection. Summary/counter agreement is not an independent physical calibration.",
+  "mit_trace": "Aggregate discharge fragments; detect intervening charge and counter reset across gaps. Integrate only observed within-run intervals; never integrate long sampling gaps.",
+  "other_datasets": "NASA absent-charge-log review policy; CALCE and XJTU raw-QC exclusions retained.",
+  "context": "64 original consecutive record positions. Rejected measurements are NaN inputs; target must be eligible. At least two finite inputs for the linear baseline. No filling or row compression.",
+  "uncertainty": "MIT CV export/current-counter mismatch unresolved; native capacity retained under an explicit measurement-source policy. CALCE unknown physical cycles between files remain unknown."
+}

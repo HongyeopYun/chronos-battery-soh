@@ -1,0 +1,22 @@
+{
+  "rendered_at": "2026-10-08T12:29:04.931624+00:00",
+  "renderer_sha256": "db06428e60cd0b1862b236067c95d7179c129d85aa1b5c8664c84ed9842b202b",
+  "unchanged_prediction_sha256": {
+    "results\\c2-battery\\one-step-64-reviewed-v3/nasa_aging": "f5f6725b8f457d067bc37c9e95a1fb1c6a2327031cc685d9f4f52e2c872d0c47",
+    "results\\c2-battery\\one-step-64-reviewed-v3/calce_cs2_1c": "00d16d3b1532a0fbf33a5f25807c4c990dfa6d1ee116c9f95342d552f7fb8551",
+    "results\\c2-battery\\one-step-64-reviewed-v3/mit_batch1": "03c62babeca0fd608280b9f7237e5194122fe54716d9ea512c9ca2a134feadda",
+    "results\\c2-battery\\one-step-64-reviewed-v3/mit_batch2": "8bd9c1fc5af8bf354d786b6adc82268338076984026847c59aeec2ba3325395b",
+    "results\\c2-battery\\one-step-64-reviewed-v3/mit_batch3": "d6522d09c128ea94fea584d228a6235c453fd4b07e3461a2c85f8a7e39cb9fe8",
+    "results\\c2-battery\\one-step-64-reviewed-v3/xjtu_2c": "ab49f87cc5f370b2f4c765ce61ce55eb1cf4c583c138d9911951380eabcbce34",
+    "results\\c2-battery\\one-step-64-reviewed-v3/xjtu_3c": "7c39cdbad9b156b9d88b90ddbf7fa235a048e4801723f4a91d928c763627085a",
+    "results\\c2-battery\\one-step-32-reviewed-v3/nasa_aging": "384cd970ab32ee076eb8b270b7150719bbcc2e71d5a8c7d8902411e374070c4b",
+    "results\\c2-battery\\one-step-32-reviewed-v3/calce_cs2_1c": "021d6a973f644a75053900a4313d075cc709b5e97ec7379e52e200a659744b42",
+    "results\\c2-battery\\one-step-32-reviewed-v3/mit_batch1": "6b51e7900365fffdc309afa054fa7adbd6096dbf5eeb96e05a9e45b5f2d7d63f",
+    "results\\c2-battery\\one-step-32-reviewed-v3/mit_batch2": "70b06557d3f84e6ef55861fb7e70eb97d012dce8aefe71ef8ce58cf3498a7a2c",
+    "results\\c2-battery\\one-step-32-reviewed-v3/mit_batch3": "78ec64c9bdfca07e60649f564927075f97af7b0eda8c1dcdee11dfafcf60fb17",
+    "results\\c2-battery\\one-step-32-reviewed-v3/xjtu_2c": "e04fb94ffb9d4abbf387952d659cbf4a771a3f5a80ef5b4dcc415b5dab26b802",
+    "results\\c2-battery\\one-step-32-reviewed-v3/xjtu_3c": "5410364a1ef3f2c83fe25f85a9d7992f17fad28c87902e2e8b5cb7251c3f3e54"
+  },
+  "original_protocol_sha256": "fd3a43ead7d618febe58c60f599d7acbb37d8c2fe461a8d5895ac2fd24773c1a",
+  "note": "Only plot layout, interpretation, and a fixed-LastValue comparison table changed. Training, selection and predictions were unchanged."
+}

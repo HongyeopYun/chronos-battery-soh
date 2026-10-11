@@ -1,0 +1,30 @@
+{
+  "status": "complete",
+  "policy": {
+    "name": "reviewed_native_v3",
+    "mit_capacity": "Native QDischarge is primary. Integral disagreement alone is a review note, not label rejection. Summary/counter agreement is not an independent physical calibration.",
+    "mit_trace": "Aggregate discharge fragments; detect intervening charge and counter reset across gaps. Integrate only observed within-run intervals; never integrate long sampling gaps.",
+    "other_datasets": "NASA absent-charge-log review policy; CALCE and XJTU raw-QC exclusions retained.",
+    "context": "64 original consecutive record positions. Rejected measurements are NaN inputs; target must be eligible. At least two finite inputs for the linear baseline. No filling or row compression.",
+    "uncertainty": "MIT CV export/current-counter mismatch unresolved; native capacity retained under an explicit measurement-source policy. CALCE unknown physical cycles between files remain unknown."
+  },
+  "raw_files_unchanged": true,
+  "native_q_soh_cycles_unchanged": true,
+  "implementation_sha256": {
+    "src/reviewed_soh.py": "6e6f66889063e45a3d8cf80ec6359bd1ef03ce26dac8ef141c47eaac0aca5b6b",
+    "src/strict_preprocessing.py": "54d6956645d2af56783b8ef7cb960224ef8d8bf6bd2314aa0d0c17095023ed23",
+    "scripts/build_reviewed_soh.py": "5bc9b5e89bd87fc71b80b192bd0c895f70e27ba92474261ff373808a0daf5b1a"
+  },
+  "artifacts": {
+    "battery_coverage.csv": "47f78c6b57f360ef508cdb362cce6ce94841f0cb1162934813c2467d66dd515f",
+    "dataset_coverage.csv": "7d3b2912c6088dd98bedaf988ce19d246d7aa603a9835c822d8317190fd148e1",
+    "mit_batch1_raw_features.csv.gz": "20f6db7a19ea6bcccdc6c48ccb4cbe27aa0829cf8051af7543d6341184c37e00",
+    "mit_batch1_raw_features.json": "bb60f4ee478551f67330249e4ef2f2b1eec20d517864110d9d3df9343cdd797b",
+    "mit_batch2_raw_features.csv.gz": "ca0a6e6eb84b52da47c6402625bea16892f6e6e0e323c94899bd43addd0300d3",
+    "mit_batch2_raw_features.json": "0b6234e2987e03fc63a7cd11fa3260cf9bf29f979f4f105082cf6b03724348a1",
+    "mit_batch3_raw_features.csv.gz": "d4c172e3ddd3c339b58a07b0f2cba8e9b96c7d12ba49c8e5d20bc71e5fd6c0cc",
+    "mit_batch3_raw_features.json": "b0a974c17a992224be1be42b95f9d9568a2a799c18950183f03e353b12397a04",
+    "policy.json": "6d0fd01db9bb65b90964a97d3a4655abb443d77ce64f181ed45e23dd4fb86a56",
+    "reclassified_observations.csv": "917b92375b4dd3544fd7a2e8631923175099cb55114cc823e6154d99c72fe7b6"
+  }
+}

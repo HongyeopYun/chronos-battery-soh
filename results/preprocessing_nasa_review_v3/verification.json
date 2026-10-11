@@ -1,0 +1,9 @@
+{
+  "raw_hashes_unchanged": true,
+  "capacity_soh_cycle_unchanged": true,
+  "reclassified_observations": 3,
+  "targets_before": 185,
+  "targets_after": 380,
+  "restored_targets": 195,
+  "bundle_manifest_sha256": "180a63e57f6dd919f5e2c9a39557330b7e8bfe211b11e1eeceec572bee0e67ed"
+}

@@ -1,0 +1,10 @@
+               rows  original_usable  strict_usable  added_rejections  quarantined  only_integral_unverified  windows_64_1_original  windows_64_1_strict  windows_64_1_lost  windows_64_16_original  windows_64_16_strict  windows_64_16_lost
+group                                                                                                                                                                                                                                        
+nasa_aging      636              636            633                 3            3                         0                    380                  185                195                     320                    83                 237
+xjtu_2c        3219             3211           3209                 2            0                         0                   2699                 2697                  2                    2579                  2577                   2
+xjtu_3c        3742             3727           3727                 0            0                         0                   2767                 2767                  0                    2542                  2542                   0
+calce_cs2_1c   3937             3911           3801               110            0                         0                   2259                  191               2068                    1914                    69                1845
+mit_batch1    38811            38765          38728                37           18                        18                  35821                35090                731                   35131                 34325                 806
+mit_batch2    24920            24920          24898                22            1                         1                  21848                20625               1223                   21128                 19635                1493
+mit_batch3    51007            41240          31371              9869         9867                      9867                  38680                26139              12541                   38080                 25398               12682
+AUDIT REPORT COMPLETE

@@ -1,0 +1,13 @@
+{
+  "matched_targets_per_condition": 97868,
+  "conditions": 3,
+  "context_length": 32,
+  "prediction_length": 1,
+  "identical_targets_to_context64": true,
+  "identical_lastvalue_to_context64": true,
+  "identical_source_labels_to_context64": true,
+  "reviewed_data_and_context_masks_verified": true,
+  "independent_metric_recalculation": true,
+  "linear_excluded": true,
+  "verified_at": "2026-10-08T12:26:22.217522+00:00"
+}

@@ -22,7 +22,7 @@ BUNDLES = {
     "mit_batch3": "MIT/mit_batch3",
 }
 RAW_FOLDERS = {"nasa": "Nasa", "xjtu": "XJTU", "calce": "Calce", "mit": "MIT"}
-FEATURE_VERSION = 1
+FEATURE_VERSION = 2
 # These are verification failures, not proof that the capacity itself is wrong.
 UNVERIFIED_REASONS = {"capacity_integral_unverified", "preceding_charge_unverified",
                       "charge_trace_invalid", "trace_missing", "trace_nonfinite", "trace_length_mismatch"}
@@ -133,6 +133,7 @@ def extract_nasa(raw, data, batteries):
                                      hour=int(stamp[3]), minute=int(stamp[4])) + pd.Timedelta(seconds=float(stamp[5]))
                 f.update(battery_id=row.battery_id, cycle=int(row.cycle),
                          raw_capacity_ah=float(d["Capacity"]), source_record_index=ordinal,
+                         initial_discharge_voltage_v=float(np.asarray(d["Voltage_measured"])[0]),
                          source_file=meta.source_file, discharge_start_time=start.isoformat(),
                          inter_discharge_rest_h=(start - previous_end).total_seconds() / 3600 if previous_end is not None else np.nan)
                 previous_end = start + pd.Timedelta(seconds=float(np.asarray(d["Time"])[-1]))
@@ -298,6 +299,18 @@ def classify_trace(dataset, row, cycle):
         # Export sampling can make an integral approximate. Quarantine rather
         # than silently replacing reported capacity with a reconstructed value.
         bad.append("capacity_integral_unverified")
+    # A missing charge log does not demonstrate a faulty discharge Capacity.
+    # NASA native-capacity forecasting retains such an observation when the
+    # recorded discharge independently passes every check, starts near 4.2 V,
+    # reaches the native capacity cutoff, and its integral matches native Q.
+    # This is not proof that the unrecorded charge followed the full CC-CV test.
+    if (dataset == "nasa" and set(bad) == {"preceding_charge_unverified"}
+            and get("charge_samples") == 0
+            and 4.15 <= get("initial_discharge_voltage_v") <= 4.5
+            and truth(row, "capacity_cutoff_reached")
+            and np.isfinite(q) and q > 0 and np.isfinite(integrated) and integrated > 0):
+        bad.remove("preceding_charge_unverified")
+        review.append("preceding_charge_unrecorded_native_capacity_retained")
     return sorted(set(bad)), sorted(set(review))
 
 

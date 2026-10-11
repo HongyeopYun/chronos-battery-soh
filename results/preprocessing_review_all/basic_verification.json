@@ -1,0 +1,77 @@
+{
+  "raw_file_entries": 136,
+  "unique_raw_files": 136,
+  "records": 171,
+  "observations": 126272,
+  "original_values_unchanged": true,
+  "raw_summary_matches_processed": true,
+  "normalization_references_checked": true,
+  "split_checks": [
+    {
+      "group": "nasa_aging",
+      "fold": "test_B0005",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "nasa_aging",
+      "fold": "test_B0006",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "nasa_aging",
+      "fold": "test_B0007",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "nasa_aging",
+      "fold": "test_B0018",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "calce_cs2_1c",
+      "fold": "test_CS2_35",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "calce_cs2_1c",
+      "fold": "test_CS2_36",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "calce_cs2_1c",
+      "fold": "test_CS2_37",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "calce_cs2_1c",
+      "fold": "test_CS2_38",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "mit_batch1",
+      "fold": "fixed",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "mit_batch2",
+      "fold": "fixed",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "mit_batch3",
+      "fold": "fixed",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "xjtu_2c",
+      "fold": "fixed",
+      "physical_cells_disjoint": true
+    },
+    {
+      "group": "xjtu_3c",
+      "fold": "fixed",
+      "physical_cells_disjoint": true
+    }
+  ],
+  "scope": "All selected 7 groups; folds evaluated separately, not a pooled cross-group training experiment."
+}

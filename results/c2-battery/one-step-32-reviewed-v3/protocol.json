@@ -1,0 +1,1754 @@
+{
+  "schema_version": 2,
+  "config": {
+    "model_id": "amazon/chronos-2",
+    "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+    "context_length": 32,
+    "prediction_length": 1,
+    "device": "auto",
+    "inference_batch_size": 32,
+    "num_samples": 100,
+    "inference_seeds": [
+      42
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "stride": 1,
+    "battery_ids": null,
+    "max_windows_per_battery": null,
+    "calce_cross_file_windows": true
+  },
+  "contexts": [
+    32
+  ],
+  "prior_protocol_sha256": "183ae88e9011832b1158c4cd756122f971c0aae48a6b36fe0661720e256a1ddf",
+  "seed": 42,
+  "steps": 100,
+  "learning_rates": [
+    1e-06,
+    1e-05
+  ],
+  "max_windows_per_source_cell": 4,
+  "head_trainable": "output_patch_embedding only",
+  "matching": "Exact 64-run target times, folds, label indices and label values. Input is the final 32 positions of each 64-position window; preserve NaN masks and original positions.",
+  "training": "Independent initialization from original C2 per L/fold/LR, 4 tasks/step, AdamW, no refit; one actual label per task; 16-wide padding masked; loss multiplied by 16 to restore per-target scale.",
+  "selection": "Same validation-only loss and crossing guard as 64->1; step zero allowed. Fresh original C2 initialization for each fold/LR. Lock all 13 heads before test inference.",
+  "aggregation": "Equal record weight for MAE/RMSE in SOH ratio units. Compute 1-MSE_model/MSE_LastValue separately per record, then average; negative skills retained. Zero reference error is undefined and counted. R2 is auxiliary only.",
+  "groups": {
+    "nasa_aging": {
+      "folds": [
+        {
+          "fold_id": "test_B0005",
+          "train_ids": [
+            "B0007",
+            "B0018"
+          ],
+          "validation_ids": [
+            "B0006"
+          ],
+          "test_ids": [
+            "B0005"
+          ],
+          "label_budget": [
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "train",
+              "battery_id": "B0007",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "train",
+              "battery_id": "B0007",
+              "index": 34,
+              "target_cycle": 99
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "train",
+              "battery_id": "B0007",
+              "index": 68,
+              "target_cycle": 133
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "train",
+              "battery_id": "B0007",
+              "index": 103,
+              "target_cycle": 168
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "train",
+              "battery_id": "B0018",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "train",
+              "battery_id": "B0018",
+              "index": 22,
+              "target_cycle": 87
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "train",
+              "battery_id": "B0018",
+              "index": 44,
+              "target_cycle": 109
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "train",
+              "battery_id": "B0018",
+              "index": 67,
+              "target_cycle": 132
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "validation",
+              "battery_id": "B0006",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "validation",
+              "battery_id": "B0006",
+              "index": 34,
+              "target_cycle": 99
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "validation",
+              "battery_id": "B0006",
+              "index": 68,
+              "target_cycle": 133
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0005",
+              "split": "validation",
+              "battery_id": "B0006",
+              "index": 103,
+              "target_cycle": 168
+            }
+          ]
+        },
+        {
+          "fold_id": "test_B0006",
+          "train_ids": [
+            "B0005",
+            "B0018"
+          ],
+          "validation_ids": [
+            "B0007"
+          ],
+          "test_ids": [
+            "B0006"
+          ],
+          "label_budget": [
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "train",
+              "battery_id": "B0005",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "train",
+              "battery_id": "B0005",
+              "index": 34,
+              "target_cycle": 99
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "train",
+              "battery_id": "B0005",
+              "index": 68,
+              "target_cycle": 133
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "train",
+              "battery_id": "B0005",
+              "index": 103,
+              "target_cycle": 168
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "train",
+              "battery_id": "B0018",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "train",
+              "battery_id": "B0018",
+              "index": 22,
+              "target_cycle": 87
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "train",
+              "battery_id": "B0018",
+              "index": 44,
+              "target_cycle": 109
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "train",
+              "battery_id": "B0018",
+              "index": 67,
+              "target_cycle": 132
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "validation",
+              "battery_id": "B0007",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "validation",
+              "battery_id": "B0007",
+              "index": 34,
+              "target_cycle": 99
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "validation",
+              "battery_id": "B0007",
+              "index": 68,
+              "target_cycle": 133
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0006",
+              "split": "validation",
+              "battery_id": "B0007",
+              "index": 103,
+              "target_cycle": 168
+            }
+          ]
+        },
+        {
+          "fold_id": "test_B0007",
+          "train_ids": [
+            "B0005",
+            "B0006"
+          ],
+          "validation_ids": [
+            "B0018"
+          ],
+          "test_ids": [
+            "B0007"
+          ],
+          "label_budget": [
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "train",
+              "battery_id": "B0005",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "train",
+              "battery_id": "B0005",
+              "index": 34,
+              "target_cycle": 99
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "train",
+              "battery_id": "B0005",
+              "index": 68,
+              "target_cycle": 133
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "train",
+              "battery_id": "B0005",
+              "index": 103,
+              "target_cycle": 168
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "train",
+              "battery_id": "B0006",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "train",
+              "battery_id": "B0006",
+              "index": 34,
+              "target_cycle": 99
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "train",
+              "battery_id": "B0006",
+              "index": 68,
+              "target_cycle": 133
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "train",
+              "battery_id": "B0006",
+              "index": 103,
+              "target_cycle": 168
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "validation",
+              "battery_id": "B0018",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "validation",
+              "battery_id": "B0018",
+              "index": 22,
+              "target_cycle": 87
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "validation",
+              "battery_id": "B0018",
+              "index": 44,
+              "target_cycle": 109
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0007",
+              "split": "validation",
+              "battery_id": "B0018",
+              "index": 67,
+              "target_cycle": 132
+            }
+          ]
+        },
+        {
+          "fold_id": "test_B0018",
+          "train_ids": [
+            "B0006",
+            "B0007"
+          ],
+          "validation_ids": [
+            "B0005"
+          ],
+          "test_ids": [
+            "B0018"
+          ],
+          "label_budget": [
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "train",
+              "battery_id": "B0006",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "train",
+              "battery_id": "B0006",
+              "index": 34,
+              "target_cycle": 99
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "train",
+              "battery_id": "B0006",
+              "index": 68,
+              "target_cycle": 133
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "train",
+              "battery_id": "B0006",
+              "index": 103,
+              "target_cycle": 168
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "train",
+              "battery_id": "B0007",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "train",
+              "battery_id": "B0007",
+              "index": 34,
+              "target_cycle": 99
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "train",
+              "battery_id": "B0007",
+              "index": 68,
+              "target_cycle": 133
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "train",
+              "battery_id": "B0007",
+              "index": 103,
+              "target_cycle": 168
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "validation",
+              "battery_id": "B0005",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "validation",
+              "battery_id": "B0005",
+              "index": 34,
+              "target_cycle": 99
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "validation",
+              "battery_id": "B0005",
+              "index": 68,
+              "target_cycle": 133
+            },
+            {
+              "dataset": "nasa_aging",
+              "fold_id": "test_B0018",
+              "split": "validation",
+              "battery_id": "B0005",
+              "index": 103,
+              "target_cycle": 168
+            }
+          ]
+        }
+      ],
+      "windows_per_source_cell": 4,
+      "train_windows": 8,
+      "validation_windows": 4,
+      "test_cells": 4,
+      "test_windows": 380,
+      "bundle_sha256": "484524d075c2807010c7424b816ee2fb6c370e3b90e1fc6a4fb78f4a29105f57",
+      "data_sha256": "f329c056563417dffb406918c1a0bf6d40f64db86c759f89c67db8cf8d8e33af"
+    },
+    "calce_cs2_1c": {
+      "folds": [
+        {
+          "fold_id": "test_CS2_35",
+          "train_ids": [
+            "CS2_37",
+            "CS2_38"
+          ],
+          "validation_ids": [
+            "CS2_36"
+          ],
+          "test_ids": [
+            "CS2_35"
+          ],
+          "label_budget": [
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "train",
+              "battery_id": "CS2_37",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "train",
+              "battery_id": "CS2_37",
+              "index": 315,
+              "target_cycle": 395
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "train",
+              "battery_id": "CS2_37",
+              "index": 630,
+              "target_cycle": 718
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "train",
+              "battery_id": "CS2_37",
+              "index": 946,
+              "target_cycle": 1043
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "train",
+              "battery_id": "CS2_38",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "train",
+              "battery_id": "CS2_38",
+              "index": 309,
+              "target_cycle": 387
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "train",
+              "battery_id": "CS2_38",
+              "index": 619,
+              "target_cycle": 710
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "train",
+              "battery_id": "CS2_38",
+              "index": 929,
+              "target_cycle": 1032
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "validation",
+              "battery_id": "CS2_36",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "validation",
+              "battery_id": "CS2_36",
+              "index": 293,
+              "target_cycle": 372
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "validation",
+              "battery_id": "CS2_36",
+              "index": 586,
+              "target_cycle": 672
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_35",
+              "split": "validation",
+              "battery_id": "CS2_36",
+              "index": 880,
+              "target_cycle": 976
+            }
+          ]
+        },
+        {
+          "fold_id": "test_CS2_36",
+          "train_ids": [
+            "CS2_35",
+            "CS2_38"
+          ],
+          "validation_ids": [
+            "CS2_37"
+          ],
+          "test_ids": [
+            "CS2_36"
+          ],
+          "label_budget": [
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "train",
+              "battery_id": "CS2_35",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "train",
+              "battery_id": "CS2_35",
+              "index": 263,
+              "target_cycle": 338
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "train",
+              "battery_id": "CS2_35",
+              "index": 526,
+              "target_cycle": 608
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "train",
+              "battery_id": "CS2_35",
+              "index": 790,
+              "target_cycle": 886
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "train",
+              "battery_id": "CS2_38",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "train",
+              "battery_id": "CS2_38",
+              "index": 309,
+              "target_cycle": 387
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "train",
+              "battery_id": "CS2_38",
+              "index": 619,
+              "target_cycle": 710
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "train",
+              "battery_id": "CS2_38",
+              "index": 929,
+              "target_cycle": 1032
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "validation",
+              "battery_id": "CS2_37",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "validation",
+              "battery_id": "CS2_37",
+              "index": 315,
+              "target_cycle": 395
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "validation",
+              "battery_id": "CS2_37",
+              "index": 630,
+              "target_cycle": 718
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_36",
+              "split": "validation",
+              "battery_id": "CS2_37",
+              "index": 946,
+              "target_cycle": 1043
+            }
+          ]
+        },
+        {
+          "fold_id": "test_CS2_37",
+          "train_ids": [
+            "CS2_35",
+            "CS2_36"
+          ],
+          "validation_ids": [
+            "CS2_38"
+          ],
+          "test_ids": [
+            "CS2_37"
+          ],
+          "label_budget": [
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "train",
+              "battery_id": "CS2_35",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "train",
+              "battery_id": "CS2_35",
+              "index": 263,
+              "target_cycle": 338
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "train",
+              "battery_id": "CS2_35",
+              "index": 526,
+              "target_cycle": 608
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "train",
+              "battery_id": "CS2_35",
+              "index": 790,
+              "target_cycle": 886
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "train",
+              "battery_id": "CS2_36",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "train",
+              "battery_id": "CS2_36",
+              "index": 293,
+              "target_cycle": 372
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "train",
+              "battery_id": "CS2_36",
+              "index": 586,
+              "target_cycle": 672
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "train",
+              "battery_id": "CS2_36",
+              "index": 880,
+              "target_cycle": 976
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "validation",
+              "battery_id": "CS2_38",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "validation",
+              "battery_id": "CS2_38",
+              "index": 309,
+              "target_cycle": 387
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "validation",
+              "battery_id": "CS2_38",
+              "index": 619,
+              "target_cycle": 710
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_37",
+              "split": "validation",
+              "battery_id": "CS2_38",
+              "index": 929,
+              "target_cycle": 1032
+            }
+          ]
+        },
+        {
+          "fold_id": "test_CS2_38",
+          "train_ids": [
+            "CS2_36",
+            "CS2_37"
+          ],
+          "validation_ids": [
+            "CS2_35"
+          ],
+          "test_ids": [
+            "CS2_38"
+          ],
+          "label_budget": [
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "train",
+              "battery_id": "CS2_36",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "train",
+              "battery_id": "CS2_36",
+              "index": 293,
+              "target_cycle": 372
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "train",
+              "battery_id": "CS2_36",
+              "index": 586,
+              "target_cycle": 672
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "train",
+              "battery_id": "CS2_36",
+              "index": 880,
+              "target_cycle": 976
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "train",
+              "battery_id": "CS2_37",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "train",
+              "battery_id": "CS2_37",
+              "index": 315,
+              "target_cycle": 395
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "train",
+              "battery_id": "CS2_37",
+              "index": 630,
+              "target_cycle": 718
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "train",
+              "battery_id": "CS2_37",
+              "index": 946,
+              "target_cycle": 1043
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "validation",
+              "battery_id": "CS2_35",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "validation",
+              "battery_id": "CS2_35",
+              "index": 263,
+              "target_cycle": 338
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "validation",
+              "battery_id": "CS2_35",
+              "index": 526,
+              "target_cycle": 608
+            },
+            {
+              "dataset": "calce_cs2_1c",
+              "fold_id": "test_CS2_38",
+              "split": "validation",
+              "battery_id": "CS2_35",
+              "index": 790,
+              "target_cycle": 886
+            }
+          ]
+        }
+      ],
+      "windows_per_source_cell": 4,
+      "train_windows": 8,
+      "validation_windows": 4,
+      "test_cells": 4,
+      "test_windows": 3549,
+      "bundle_sha256": "4117f92dc4bc5302b07552e99b67ec80ca95a5fe8074435a32fa04b3d118b9a5",
+      "data_sha256": "415aa3048f2d1859f3aa218f408bec82a33abdb30d8308d24c89ea45c41bd6a8"
+    },
+    "mit_batch1": {
+      "folds": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "b1c5",
+            "b1c6"
+          ],
+          "validation_ids": [
+            "b1c7"
+          ],
+          "test_ids": [
+            "b1c0",
+            "b1c1",
+            "b1c2",
+            "b1c3",
+            "b1c4",
+            "b1c8",
+            "b1c9",
+            "b1c10",
+            "b1c11",
+            "b1c12",
+            "b1c13",
+            "b1c14",
+            "b1c15",
+            "b1c16",
+            "b1c17",
+            "b1c18",
+            "b1c19",
+            "b1c20",
+            "b1c21",
+            "b1c22",
+            "b1c23",
+            "b1c24",
+            "b1c25",
+            "b1c26",
+            "b1c27",
+            "b1c28",
+            "b1c29",
+            "b1c30",
+            "b1c31",
+            "b1c32",
+            "b1c33",
+            "b1c34",
+            "b1c35",
+            "b1c36",
+            "b1c37",
+            "b1c38",
+            "b1c39",
+            "b1c40",
+            "b1c41",
+            "b1c42",
+            "b1c43",
+            "b1c44",
+            "b1c45"
+          ],
+          "label_budget": [
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b1c5",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b1c5",
+              "index": 335,
+              "target_cycle": 400
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b1c5",
+              "index": 671,
+              "target_cycle": 736
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b1c5",
+              "index": 1007,
+              "target_cycle": 1073
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b1c6",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b1c6",
+              "index": 190,
+              "target_cycle": 255
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b1c6",
+              "index": 380,
+              "target_cycle": 445
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b1c6",
+              "index": 570,
+              "target_cycle": 635
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b1c7",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b1c7",
+              "index": 268,
+              "target_cycle": 333
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b1c7",
+              "index": 536,
+              "target_cycle": 601
+            },
+            {
+              "dataset": "mit_batch1",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b1c7",
+              "index": 804,
+              "target_cycle": 869
+            }
+          ]
+        }
+      ],
+      "windows_per_source_cell": 4,
+      "train_windows": 8,
+      "validation_windows": 4,
+      "test_cells": 43,
+      "test_windows": 33478,
+      "bundle_sha256": "bac1c9c883d189f1501dcaa935208b6ed28c7102f27af6c622ba43997ec2c9c8",
+      "data_sha256": "1c455f7fea93e759904c19119cd4444d65619010b55b69a5cb44373e9859c7b0"
+    },
+    "mit_batch2": {
+      "folds": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "b2c0",
+            "b2c1"
+          ],
+          "validation_ids": [
+            "b2c2"
+          ],
+          "test_ids": [
+            "b2c3",
+            "b2c4",
+            "b2c5",
+            "b2c6",
+            "b2c7",
+            "b2c8",
+            "b2c9",
+            "b2c10",
+            "b2c11",
+            "b2c12",
+            "b2c13",
+            "b2c14",
+            "b2c15",
+            "b2c16",
+            "b2c17",
+            "b2c18",
+            "b2c19",
+            "b2c20",
+            "b2c21",
+            "b2c22",
+            "b2c23",
+            "b2c24",
+            "b2c25",
+            "b2c26",
+            "b2c27",
+            "b2c28",
+            "b2c29",
+            "b2c30",
+            "b2c31",
+            "b2c32",
+            "b2c33",
+            "b2c34",
+            "b2c35",
+            "b2c36",
+            "b2c37",
+            "b2c38",
+            "b2c39",
+            "b2c40",
+            "b2c41",
+            "b2c42",
+            "b2c43",
+            "b2c44",
+            "b2c45",
+            "b2c46",
+            "b2c47"
+          ],
+          "label_budget": [
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b2c0",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b2c0",
+              "index": 87,
+              "target_cycle": 152
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b2c0",
+              "index": 174,
+              "target_cycle": 239
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b2c0",
+              "index": 261,
+              "target_cycle": 326
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b2c1",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b2c1",
+              "index": 35,
+              "target_cycle": 100
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b2c1",
+              "index": 70,
+              "target_cycle": 135
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b2c1",
+              "index": 105,
+              "target_cycle": 170
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b2c2",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b2c2",
+              "index": 133,
+              "target_cycle": 198
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b2c2",
+              "index": 266,
+              "target_cycle": 331
+            },
+            {
+              "dataset": "mit_batch2",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b2c2",
+              "index": 399,
+              "target_cycle": 464
+            }
+          ]
+        }
+      ],
+      "windows_per_source_cell": 4,
+      "train_windows": 8,
+      "validation_windows": 4,
+      "test_cells": 45,
+      "test_windows": 21057,
+      "bundle_sha256": "17735a1769a700e6799dea3ddf14f1123b51af06228c1cf187037daae3376e52",
+      "data_sha256": "3b050f77d4e53fb2d07dc6187bb4ceb933832deb91897e6df726d10da32725df"
+    },
+    "mit_batch3": {
+      "folds": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "b3c0",
+            "b3c1"
+          ],
+          "validation_ids": [
+            "b3c3"
+          ],
+          "test_ids": [
+            "b3c4",
+            "b3c5",
+            "b3c6",
+            "b3c7",
+            "b3c8",
+            "b3c9",
+            "b3c10",
+            "b3c11",
+            "b3c12",
+            "b3c13",
+            "b3c14",
+            "b3c15",
+            "b3c16",
+            "b3c17",
+            "b3c18",
+            "b3c19",
+            "b3c20",
+            "b3c21",
+            "b3c22",
+            "b3c24",
+            "b3c25",
+            "b3c26",
+            "b3c27",
+            "b3c28",
+            "b3c29",
+            "b3c30",
+            "b3c31",
+            "b3c33",
+            "b3c34",
+            "b3c35",
+            "b3c36",
+            "b3c38",
+            "b3c39",
+            "b3c40",
+            "b3c41",
+            "b3c44",
+            "b3c45"
+          ],
+          "label_budget": [
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b3c0",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b3c0",
+              "index": 314,
+              "target_cycle": 379
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b3c0",
+              "index": 628,
+              "target_cycle": 693
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b3c0",
+              "index": 943,
+              "target_cycle": 1008
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b3c1",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b3c1",
+              "index": 332,
+              "target_cycle": 397
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b3c1",
+              "index": 664,
+              "target_cycle": 729
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "b3c1",
+              "index": 997,
+              "target_cycle": 1062
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b3c3",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b3c3",
+              "index": 349,
+              "target_cycle": 414
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b3c3",
+              "index": 699,
+              "target_cycle": 764
+            },
+            {
+              "dataset": "mit_batch3",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "b3c3",
+              "index": 1049,
+              "target_cycle": 1114
+            }
+          ]
+        }
+      ],
+      "windows_per_source_cell": 4,
+      "train_windows": 8,
+      "validation_windows": 4,
+      "test_cells": 37,
+      "test_windows": 35681,
+      "bundle_sha256": "f16e274696680998bb56a7c92808e2a10c6f0f4836af6dd2c4f00e48d95d7ae3",
+      "data_sha256": "24a3ad2cca1c3c24ec0162a880a689099cf81d27e67f3ece8c09146edf17ff47"
+    },
+    "xjtu_2c": {
+      "folds": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "batch1_2C_battery-4",
+            "batch1_2C_battery-5"
+          ],
+          "validation_ids": [
+            "batch1_2C_battery-6"
+          ],
+          "test_ids": [
+            "batch1_2C_battery-1",
+            "batch1_2C_battery-2",
+            "batch1_2C_battery-3",
+            "batch1_2C_battery-7",
+            "batch1_2C_battery-8"
+          ],
+          "label_budget": [
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch1_2C_battery-4",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch1_2C_battery-4",
+              "index": 110,
+              "target_cycle": 175
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch1_2C_battery-4",
+              "index": 220,
+              "target_cycle": 285
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch1_2C_battery-4",
+              "index": 331,
+              "target_cycle": 396
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch1_2C_battery-5",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch1_2C_battery-5",
+              "index": 112,
+              "target_cycle": 177
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch1_2C_battery-5",
+              "index": 225,
+              "target_cycle": 290
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch1_2C_battery-5",
+              "index": 338,
+              "target_cycle": 403
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "batch1_2C_battery-6",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "batch1_2C_battery-6",
+              "index": 114,
+              "target_cycle": 179
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "batch1_2C_battery-6",
+              "index": 228,
+              "target_cycle": 293
+            },
+            {
+              "dataset": "xjtu_2c",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "batch1_2C_battery-6",
+              "index": 343,
+              "target_cycle": 408
+            }
+          ]
+        }
+      ],
+      "windows_per_source_cell": 4,
+      "train_windows": 8,
+      "validation_windows": 4,
+      "test_cells": 5,
+      "test_windows": 1690,
+      "bundle_sha256": "750f22a732170395c07c213605c6dafac581afb9e3fa1dd031e4430afd54a9a7",
+      "data_sha256": "8ae1d5c8a321e12941ad0aa8b68223e44fb4b33972c6fb7a36e413bea9f67fdc"
+    },
+    "xjtu_3c": {
+      "folds": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "batch2_3C_battery-4",
+            "batch2_3C_battery-5"
+          ],
+          "validation_ids": [
+            "batch2_3C_battery-6"
+          ],
+          "test_ids": [
+            "batch2_3C_battery-1",
+            "batch2_3C_battery-2",
+            "batch2_3C_battery-3",
+            "batch2_3C_battery-7",
+            "batch2_3C_battery-8",
+            "batch2_3C_battery-9",
+            "batch2_3C_battery-10",
+            "batch2_3C_battery-11",
+            "batch2_3C_battery-12",
+            "batch2_3C_battery-13",
+            "batch2_3C_battery-14",
+            "batch2_3C_battery-15"
+          ],
+          "label_budget": [
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch2_3C_battery-4",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch2_3C_battery-4",
+              "index": 85,
+              "target_cycle": 150
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch2_3C_battery-4",
+              "index": 171,
+              "target_cycle": 236
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch2_3C_battery-4",
+              "index": 257,
+              "target_cycle": 322
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch2_3C_battery-5",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch2_3C_battery-5",
+              "index": 77,
+              "target_cycle": 142
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch2_3C_battery-5",
+              "index": 154,
+              "target_cycle": 219
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "train",
+              "battery_id": "batch2_3C_battery-5",
+              "index": 232,
+              "target_cycle": 297
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "batch2_3C_battery-6",
+              "index": 0,
+              "target_cycle": 65
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "batch2_3C_battery-6",
+              "index": 85,
+              "target_cycle": 150
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "batch2_3C_battery-6",
+              "index": 171,
+              "target_cycle": 236
+            },
+            {
+              "dataset": "xjtu_3c",
+              "fold_id": "fixed",
+              "split": "validation",
+              "battery_id": "batch2_3C_battery-6",
+              "index": 257,
+              "target_cycle": 322
+            }
+          ]
+        }
+      ],
+      "windows_per_source_cell": 4,
+      "train_windows": 8,
+      "validation_windows": 4,
+      "test_cells": 12,
+      "test_windows": 2033,
+      "bundle_sha256": "dab9e66747a4f66ce771793afb14071d7b1fa3a29c43ee9347909ba2a190f581",
+      "data_sha256": "bcd43ff4681acee0d19c47f0d1c18cb7d52f7153ff8b309bf3524921fb539074"
+    }
+  },
+  "source_sha256": {
+    "scripts/run_c2_context32.py": "164d65a928ca57e17c2e3927c2f2640438b41bb36f8419d6ac675d0d486dffd8",
+    "scripts/run_c2_one_step_context.py": "0af52408e60df45e12dca58af162b8e74bfc372359f0a327d919553fd183f10f",
+    "src/battery_fewshot_tuning.py": "2bf3829edc00a4ef9d2bc1e95d374d1e8151c2e2c1222a612e943398b1db5797",
+    "src/battery_model_zeroshot.py": "ba2f3c4e8cf01fbc9dc51e3514d3f1bdce8329f72ec78702e9019874c9043942",
+    "src/c2_context_comparison.py": "987e3d0a2ebb3837d99961b44b9db9b9c91c4e8acafca842b126c8bca6628ce3",
+    "src/c2_head_protocol.py": "2c1d5d6afadf238993e0c6bdf85d50f261a6d8719642cfbc937601cd566ee9fa",
+    "src/c2_one_step.py": "edfcac97fde8d6e5be05df2d4ff54dd3a2227cb4001be200a33f748012ae7f95",
+    "src/c2_partial_tuning.py": "ccbb24d75d82271d0445f9f868fd66df1ea7ae9a2716b536318c6b3e04bdcdcc",
+    "src/calce_windows.py": "e441f61150606955059cafec28a861a8a5818f86131fefac9051cd6704a0f23d",
+    "src/reviewed_soh.py": "6e6f66889063e45a3d8cf80ec6359bd1ef03ce26dac8ef141c47eaac0aca5b6b",
+    "src/soh_data.py": "21bda8d110de2614f376eb6c68db5152398b53530fd2779d266523d2c0ed7b3c"
+  },
+  "review_policy": {
+    "name": "reviewed_native_v3",
+    "mit_capacity": "Native QDischarge is primary. Integral disagreement alone is a review note, not label rejection. Summary/counter agreement is not an independent physical calibration.",
+    "mit_trace": "Aggregate discharge fragments; detect intervening charge and counter reset across gaps. Integrate only observed within-run intervals; never integrate long sampling gaps.",
+    "other_datasets": "NASA absent-charge-log review policy; CALCE and XJTU raw-QC exclusions retained.",
+    "context": "64 original consecutive record positions. Rejected measurements are NaN inputs; target must be eligible. At least two finite inputs for the linear baseline. No filling or row compression.",
+    "uncertainty": "MIT CV export/current-counter mismatch unresolved; native capacity retained under an explicit measurement-source policy. CALCE unknown physical cycles between files remain unknown."
+  },
+  "bundle_root": "C:\\Users\\dbsgh\\Desktop\\Lab\\chronos-battery-soh\\data\\processed\\reviewed_native_v3",
+  "master_window_config": {
+    "model_id": "amazon/chronos-2",
+    "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+    "context_length": 64,
+    "prediction_length": 1,
+    "device": "auto",
+    "inference_batch_size": 32,
+    "num_samples": 100,
+    "inference_seeds": [
+      42
+    ],
+    "temperature": 1.0,
+    "top_k": 50,
+    "top_p": 1.0,
+    "stride": 1,
+    "battery_ids": null,
+    "max_windows_per_battery": null,
+    "calce_cross_file_windows": true
+  },
+  "methods": [
+    "LastValue",
+    "zero-shot",
+    "head-only"
+  ],
+  "reference_context_length": 64,
+  "reference_protocol_sha256": "e9552f3bf02ff7c988282bbba89f3251d8857e697da30ec916a868d8ca10caca",
+  "reference_predictions_sha256": {
+    "calce_cs2_1c": "00d16d3b1532a0fbf33a5f25807c4c990dfa6d1ee116c9f95342d552f7fb8551",
+    "mit_batch1": "03c62babeca0fd608280b9f7237e5194122fe54716d9ea512c9ca2a134feadda",
+    "mit_batch2": "8bd9c1fc5af8bf354d786b6adc82268338076984026847c59aeec2ba3325395b",
+    "mit_batch3": "d6522d09c128ea94fea584d228a6235c453fd4b07e3461a2c85f8a7e39cb9fe8",
+    "nasa_aging": "f5f6725b8f457d067bc37c9e95a1fb1c6a2327031cc685d9f4f52e2c872d0c47",
+    "xjtu_2c": "ab49f87cc5f370b2f4c765ce61ce55eb1cf4c583c138d9911951380eabcbce34",
+    "xjtu_3c": "7c39cdbad9b156b9d88b90ddbf7fa235a048e4801723f4a91d928c763627085a"
+  }
+}
