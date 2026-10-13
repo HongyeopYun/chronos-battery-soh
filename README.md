@@ -1,165 +1,83 @@
-# Battery SOH forecasting with Chronos
+# Battery SOH / RUL — Chronos-2
 
-전체 원시 기록을 다시 확인한 [전처리 v2 결과·전후 곡선](results/preprocessing_strict_v2/report.md)과 [처리 기준](docs/strict_preprocessing.md)을 추가했습니다. 새 데이터는 `data/processed/strict_v2/<group>/`이며 원본과 기존 실험 결과는 보존합니다. 충·방전 조건 위반과 확인 보류를 구분하고 `quality_eligible` 마스크를 강제합니다. 특히 MIT 적분 대조 보류 및 CALCE 연속 창 감소를 확인해야 합니다. 기존 실험 스크립트의 `clean` 기본 경로는 이전 결과용이며, 새 데이터로 평가할 때는 `strict_v2` bundle을 명시해야 합니다.
+최신 실험은 **현재 SOH 한 점 예측**과 **미래 SOH 경로 기반 RUL**이다.
+기준 데이터는 `data/processed/reviewed_native_v3/`이며 NASA·CALCE·MIT 3개 batch·XJTU 2C/3C의 7개 그룹을 사용한다.
+예전 T5·LoRA·strict-v2 모델 실험은 프로젝트 밖에 별도 보관했다.
 
-Chronos T5와 Chronos-2 비교는 [t5/c2 battery zero-shot](docs/t5-c2-battery.md)을 사용합니다. 설정·노트북·결과를 `t5-battery`, `c2-battery`로 구분하며, 전체·초·중·후반 모두 Mean window R²를 저장합니다. 전체 T5는 `results/t5-battery/<group>/`, 일부 배터리 비교는 모델별 `pilot/<group>/`, 기존 C2 전체는 `results/c2-battery/full/<group>/`입니다. 새 CALCE 64→16은 모델별 `calce64-16/calce_cs2_1c/`에 저장하며 [C2 노트북](notebooks/c2-battery.ipynb)의 기본 선택도 이 결과입니다. 기존 CALCE 32→8과 구분합니다.
+## 결과 바로 보기
 
-공통 포맷으로 가공한 XJTU·NASA·MIT·CALCE는 [공통 zero-shot 함수와 노트북](docs/battery_zeroshot.md)으로 평가합니다. 모든 R²는 한 예측창의 표준 R²를 계산한 뒤 창별 점수를 단순평균하고 seed·배터리를 동일 가중 평균하는 **Mean window R²**입니다. 전체·초·중·후반·NASA·LoRA도 같은 기준입니다. 기본 결과는 RMSE·R²·WQL·PICP@80·구간 폭의 요약표, 배터리별 점수와 그래프를 남깁니다. 새 CALCE는 64→16이며 이전 32→8과 구분합니다.
+| 실험 | 결과 | 상태 |
+|---|---|---|
+| 현재 SOH 입력 2·4·8·16·32·64 → 1 | [통합 비교](results/c2-battery/one-step-2-reviewed-v3/report.md) · [입력별 평균 MSE 감소율](results/c2-battery/one-step-2-reviewed-v3/input_mean_mse_reduction.png) | 완료 |
+| RUL zero-shot, 입력 64 → 미래 256 | [첫 파일럿](results/c2-battery/rul-nasa-l64-h256-zero-v1/report.md) | 완료 |
+| RUL head-only | [Zero-shot 대비](results/c2-battery/rul-nasa-l64-h256-head-v1/report.md) | 완료 |
+| RUL 입력 16·32·64 비교 | [동일 CUDA 비교](results/c2-battery/rul-nasa-context-sweep-cuda-v1/report.md) | 완료 |
+| RUL 학습 시작 시점 확대 | [t64 vs t64·80·96](results/c2-battery/rul-nasa-multi-origin-xpu-v1/report.md) · [예측 경로](results/c2-battery/rul-nasa-multi-origin-xpu-v1/trajectories.png) | 완료 |
 
-```powershell
-.\.venv\Scripts\python.exe scripts\run_battery_zeroshot.py --all
-```
+현재 SOH의 개별 결과는 `results/c2-battery/one-step-{L}-reviewed-v3/`에 있다.
+RUL 내부 가중치/LoRA 미세조정은 다음 후보이며 **아직 실행하지 않았다**.
 
-새 결과는 `results/t5-battery/<group>/`에 보관합니다. `--max-windows 3`은 별도 smoke 폴더의 실행 검증입니다. 기존 NASA 실험 기록은 아래의 `results/runs/`에 있습니다.
+## 실험을 해석하는 기준
 
-02는 Chronos T5 zero-shot, 03은 배터리 단위 leave-one-battery-out(LOBO) LoRA 실험입니다.
-데이터 처리·추론은 `src/soh_experiment.py`를 공유하고, 현재 03의 학습·선택은 `src/soh_checkpoint.py`를 사용합니다.
+- **현재 SOH:** 최근 실측 L개로 바로 다음 한 점을 예측한다. 평가 시점마다 실제 관측으로 입력을 갱신한다.
+- **현재 SOH R²:** 각 배터리의 여러 한 점 예측을 모아 temporal R²를 계산한다. 한 점짜리 창 각각의 R²가 아니다.
+- **MSE 감소율:** 배터리별 `1 − MSE_model / MSE_LastValue`를 계산한 뒤 평균한다. 통합 그림은 7개 데이터셋 평균에 같은 가중치를 준다.
+- **입력 길이 비교:** 2개 입력이 모두 결측인 CALCE 3점을 제외한 97,865개 공통 평가 시점을 사용한다. 64·32는 XPU, 16·8·4·2는 데스크톱 CUDA 결과이므로 장치 차이가 있다.
+- **RUL:** t=64에서 미래 SOH 256개를 예측한 뒤, 용량 1.4Ah 이하에 최초 도달하는 시점으로 계산한다. 예측 도중 미래 실측을 넣지 않는다.
+- **RUL 평가:** NASA 4셀 중 실제 EOL 관측은 3셀이다. B0007은 우측 검열이고, 예측 미도달은 `>256`으로 남긴다. 미도달 수와 조건부 MAE를 함께 읽는다.
+- **학습 분리:** 학습·검증·평가 배터리는 분리한다. 평가 셀의 미래로 모델이나 체크포인트를 선택하지 않는다.
+- **그림:** 제외된 관측점은 표시하지 않고 원래 cycle 위치와 결측 구간을 유지한다. 평활화·보간·단조화는 하지 않는다.
 
-## 현재 LoRA: EOS loss 제외 + best checkpoint
+## 작업 폴더
 
-03은 출력 EOS loss를 제외하고 validation을 학습에 합치지 않습니다. 학습률 `1e-5`, `3e-5`, `1e-4`를
-각각 최대 100 optimizer steps까지 학습하고, 10 steps마다 세 validation seed의 평균 CRPS를 계산합니다.
-네 fold에서 학습률과 best checkpoint를 모두 선택한 뒤 그 가중치를 재로딩해 평가합니다. Full-data refit은 하지 않습니다.
-
-설정은 `configs/lora_checkpoint.json`, 세부 기준은 [현재 프로토콜](docs/lora_checkpoint_protocol.md),
-결과는 [학습률 비교 보고서](results/checkpoint_lora/report.md)에 있습니다. Step 0도 후보이고, 학습 seed는 42 하나입니다.
-세 고정 후보를 모두 실행하므로 Optuna는 사용하지 않습니다.
-
-이번 실행에서는 네 fold 모두 `1e-4`가 선택됐고, B0005/B0006/B0007/B0018의 선택 step은 각각 100/90/90/80입니다.
-Zero-shot 대비 중앙값 RMSE는 `0.016307 → 0.014355`(11.97% 감소), CRPS는 `0.008769 → 0.007461`(14.92% 감소)였습니다.
-네 배터리 모두 중앙값 RMSE가 개선됐지만, 80% 예측구간 포함률은 `80.32% → 76.53%`로 낮아졌습니다.
-재로딩 중 발생한 sample 한 개의 불일치와 평가 재현성 검사 보완은 결과 보고서에 기록했습니다. 최종 실행에서는 validation 배열 36개가 모두 일치했습니다.
-
-```powershell
-.\.venv\Scripts\python.exe scripts\run_experiment.py zeroshot
-.\.venv\Scripts\python.exe scripts\run_checkpoint_lora.py
-```
-
-## 이전 기록: 2026-09-29 EOS 분리 진단
-
-02의 zero-shot 기준선과 03의 기존 LoRA·EOS 분리 진단을 보관합니다.
-노트북 마지막 절에서 당시 저장된 결과를 읽을 수 있습니다. [당시 정리 문서와 04 비교 조건](docs/02_03_closeout.md),
-[상세 진단 보고서](results/diagnostics/20260929/diagnosis.md)에 결론과 한계를 모았습니다.
-
-| 모델 | 중앙값 RMSE | 평균 예측 RMSE | CRPS | 중앙값 R² ↑ | 평균 예측 R² ↑ |
-|---|---:|---:|---:|---:|---:|
-| Zero-shot | 0.016307 | 0.018540 | 0.008769 | -0.748346 | -1.523772 |
-| 기존 LoRA | 0.016176 | 0.294040 | 0.017684 | -0.604101 | -882.239834 |
-| EOS loss 제외 LoRA | 0.014894 | 0.015011 | 0.007552 | -0.387276 | -0.521632 |
-
-고정 XPU 실행에서 네 배터리·세 추론 seed를 동일 가중치로 평균했습니다. 학습 seed는 42 하나입니다.
-EOS 제외는 사후 원인 진단이며, 모든 배터리·지표가 개선된 것은 아닙니다. 80% 구간 포함률은 약 74.46%로 낮아졌습니다.
-**04 Full fine-tuning은 아직 실행하지 않았습니다.** 위 EOS 제외 수치는 과거 full-data 학습 결과이며 현재 best-checkpoint 점수와 구분합니다.
-
-`configs/experiment.json`의 학습률·epoch·patience 기본값은 **기존 EOS 포함 + 전체 데이터 refit 실험**의 기록입니다.
-현재 학습에서는 `configs/lora_checkpoint.json`의 학습률 후보와 step 예산을 적용합니다.
-EOS 제외 진단은 `scripts/diagnose_training.py`로 별도 실행했으며, 명령과 산출물은 상세 진단 보고서에 있습니다.
-
-## R² 성능평가
-
-현재 best-checkpoint LoRA의 macro Mean window R²는 중앙값 예측 **−0.286455**, 평균 예측 **−0.709306**이다. Zero-shot은 각각 **−0.748346**, **−1.523772**다.
-각 창의 미래 실제 평균으로 `R² = 1 - SSE/SST`를 계산한 뒤 유효 창별 점수를 단순평균하고 seed·배터리에 같은 가중치를 준다. 음수는 유지하고 상수 창은 NaN으로 제외한다. Horizon 한 개는 창당 값이 한 개라 R²가 정의되지 않는다. 전체 점수는 초·중·후반 점수의 단순평균이 아니다.
-
-[R² 포함 평가표](results/evaluation_r2/README.md)에 baseline, 중앙값·평균 예측, 배터리·horizon·window, 현재 validation 후보·이력을 저장했다. 기존 실행의 해시와 원시 예측은 보존한다. R²는 보고용이며 checkpoint 선택 기준은 CRPS다.
-`python scripts/add_r2_metrics.py`로 NASA·LoRA를 재학습 없이 재계산한다. 선택된 validation checkpoint는 저장 예측에서 계산하고 원시 예측이 없는 step과 20-sample LoRA는 NaN이다. 배터리 최소 패키지는 `python scripts/unify_window_r2.py`로 재추론하며 `results/window-r2/status.json`에서 진행 상황을 확인한다.
-
-## 환경과 실행
-
-XJTU 2C 배터리 8개의 [Audit 및 공통 SOH 포맷](docs/common_soh_format.md)을 추가했습니다. `python scripts/preprocess_xjtu.py --group 2c`로 추출하며, 검토 결과는 [XJTU 2C 보고서](results/data_audit/xjtu_2c/xjtu_2c_report.md)에 있습니다. Q1 기준으로 모든 cycle을 보존하고 초기 시험은 예측용 window 생성 단계에서 제외합니다.
-
-XJTU 3C 배터리 15개는 `python scripts/preprocess_xjtu.py --group 3c`로 추출합니다. 필수 오류 확인만 수행하고 [3C SOH 곡선과 요약](results/data_audit/xjtu_3c/xjtu_3c_report.md)을 저장합니다. 이후 cycle은 3C 충전·1C 방전이며, 전체 데이터는 `data/processed/XJTU/3C/`에 있습니다. `--group all`로 두 그룹을 추출하고, `--reports-only`로 기존 가공본의 보고서·곡선만 갱신할 수 있습니다. 두 그룹 모두 검토 폴더에는 audit·배터리 메타데이터·보고서·곡선만 보관합니다.
-
-NASA 4개, MIT 3개 batch의 140개 기록, CALCE CS2 배터리 4개도 `python scripts/preprocess_remaining_batteries.py`로 공통 SOH 포맷에 추출합니다. [전체 가공 현황과 곡선](results/data_audit/battery_datasets_overview.md)에서 그룹별 결과를 확인할 수 있습니다. MIT의 연속 측정 배터리와 초기 0 용량, CALCE의 누적 용량·중복 내보내기·파일 경계를 구분합니다. CALCE는 현재 파일당 최대 50 cycle이므로 64→16 예측은 입력 길이 또는 파일 연결 규칙을 먼저 정해야 합니다.
-
-예측용 급등 이상치 제거본은 `python scripts/clean_soh_outliers.py`로 생성하며 `data/processed/clean/<group>/`에 저장합니다. 현재 MIT 관측 4개를 보수적 고정 규칙으로 제외했습니다. [제거 목록과 전후 그림](results/data_audit/outlier_cleaning/soh_outlier_cleaning_report.md)에서 확인할 수 있습니다. 기존 가공본·원본·정규화 기준은 보존하고, 제거된 cycle을 포함한 window는 제외합니다.
-
-기존 `.venv`는 그대로 사용할 수 있습니다. 현재 확인한 환경은 Python 3.12.10과 Intel Arc B390 XPU입니다.
-새 환경에서는 장치에 맞는 PyTorch를 먼저 설치한 뒤 나머지 패키지를 설치하세요.
-Intel GPU용 설치 인덱스는 [PyTorch 공식 안내](https://github.com/pytorch/pytorch/blob/main/docs/source/notes/get_start_xpu.md)를 따릅니다.
-
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install torch==2.14.0 --index-url https://download.pytorch.org/whl/xpu
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-다른 GPU 또는 CPU 환경은 해당 장치용 PyTorch를 사용하세요. `device: auto`는 XPU, CUDA, CPU 순서로 선택합니다.
-requirements는 이번에 확인한 직접 의존성 버전이며 완전한 transitive lockfile은 아닙니다.
-
-`data/raw/`에 `B0005.mat`, `B0006.mat`, `B0007.mat`, `B0018.mat`이 필요합니다.
-폴더명·데이터 위치 변경 뒤 저장된 실험을 다시 사용할 때는 [로컬 경로 정리](docs/local_workspace.md)를 참고하세요.
-VS Code에서 `.venv` 커널로 02와 03을 순서대로 전체 실행하거나, 프로젝트 루트에서 다음을 실행합니다.
-
-```powershell
-.\.venv\Scripts\python.exe scripts\run_experiment.py zeroshot
-.\.venv\Scripts\python.exe scripts\run_checkpoint_lora.py
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
-
-현재 03 / `run_checkpoint_lora.py`는 호환되는 zero-shot 실행이 없으면 먼저 생성합니다.
-`run_experiment.py lora` 또는 `all`은 과거 epoch/refit 실험을 재현하는 명령입니다.
-완료된 호환 실행이 있으면 검증 후 재사용합니다. 새 반복 실행은 CLI에 `--force`를 붙이거나 노트북에서 `FORCE_RERUN = True`로 설정하세요.
-모델이 이미 캐시에 있고 네트워크 접속 없이 실행하려면 `$env:HF_HUB_OFFLINE='1'`을 설정할 수 있습니다.
-
-## 기존 epoch/refit 실험의 설정과 평가 방법
-
-다음은 `configs/experiment.json`으로 재현하는 기존 실험의 기록입니다. 현재 03의 선택 방식은 위 프로토콜 문서를 따릅니다.
-
-- SOH는 첫 관측 용량 기준 `Qk / Q1`입니다. context 64개, horizon 16개, stride 1입니다.
-- 각 예측 시점마다 **실제 관측 context**를 제공합니다. 초기 64개만 알고 전체 수명을 예측하는 실험은 아닙니다.
-- 모델 revision을 고정하며 zero-shot과 LoRA 모두 100 samples 및 추론 seed 42/43/44를 사용합니다.
-- 보간 중앙값과 sample mean을 같은 원시 samples에서 계산합니다. 주 비교는 median RMSE/MAE입니다.
-- 학습 seed 기본값은 `[42]`입니다. 학습 초기화까지 반복하려면 `[42, 43, 44]` 등으로 변경하세요. 추론 seed 반복과 학습 seed 반복은 구분합니다.
-- 평가 배터리는 학습과 epoch 선택에서 제외합니다. 나머지 3개 배터리 각각의 마지막 20%를 validation target으로 사용합니다.
-- Train target의 끝이 경계 이전, validation target의 시작이 경계 이후인 window만 사용합니다. 경계에 걸친 target window는 제외합니다. Validation context에는 그 시점까지 실제 관측된 과거를 사용할 수 있습니다.
-- Validation의 배터리별 RMSE를 동일 가중치로 평균해 epoch를 선택합니다. validation samples=32, 고정 seed=31415이며 epoch 0도 후보입니다.
-- 최대 10 epoch, patience 3, min_delta 1e-5입니다. 선택 후 base model과 adapter를 새로 생성하여 학습 배터리 3개 전체로 선택된 epoch만큼 재학습합니다.
-- 최종 비교는 같은 test target과 같은 추론 설정을 사용합니다. Test 성능으로 epoch나 estimator를 선택하지 않습니다.
-
-이 validation은 학습 배터리 내 시간순 검증입니다. 배터리 간 nested CV는 아닙니다. 새로운 배터리로의 일반화는 outer LOBO로 평가합니다.
-중첩 window와 fold별로 중복되는 학습 배터리 때문에 결과를 수백 개 독립 표본처럼 해석할 수 없습니다.
-Seed 고정만으로 다른 장치·드라이버·라이브러리 버전 간 bitwise 재현성을 보장하지 않습니다.
-
-## 기존 epoch/refit 실행의 결과 보관 및 재검산
-
-실행마다 `results/runs/<timestamp>_<kind>_<id>/`에 새 디렉터리를 만듭니다.
-현재 best-checkpoint 실행의 후보별 기록·선택 동결·분포 점수·재로딩 검사는 [현재 프로토콜](docs/lora_checkpoint_protocol.md)의 파일 목록과 audit 명령을 사용하세요. 아래 표와 명령은 기존 실행 형식에 해당합니다.
-
-| 파일 | 내용 |
+| 경로 | 역할 |
 |---|---|
-| `manifest.json` | 완료 상태, 설정, 모델 revision, 데이터·소스·산출물 해시, 환경 |
-| `predictions/*.npz` | context, target, cycle 번호, 원시 samples, median/mean, q10/q90 |
-| `metrics.csv` | 배터리 및 seed별 RMSE, MAE, 80% coverage/구간 폭 |
-| `horizon_metrics.csv` | horizon별 오차 |
-| `window_metrics.csv` | 예측 시작점별 오차 |
-| `macro_by_run.csv`, `summary.csv` | 배터리를 동일 가중치로 평균한 점수와 실행 간 변동 |
-| `selection/*.json` | LoRA 검증 분할, loss, validation RMSE, 선택 epoch |
-| `folds/*.json` | 최종 학습 배터리, loss, adapter 위치 및 해시 |
-| `paired_comparison.csv`, `paired_macro.csv`, `paired_windows.csv` | 동일 조건 zero-shot/LoRA 비교 |
+| `scripts/` | 최신 C2 실행·보고서·필요한 데이터 전처리 |
+| `src/` | 모델 학습·평가·정제 공통 함수 |
+| `tests/` | 현재 코드와 데이터 처리 테스트 |
+| `configs/` | C2 및 공통 함수가 사용하는 설정 |
+| `data/raw/` | 원본 데이터. 정리 대상에서 제외 |
+| `data/processed/` | 현재 v3와 이를 만드는 중간 데이터. 정리 대상에서 제외 |
+| `results/c2-battery/` | 최신 SOH·RUL 결과 |
+| `results/preprocessing_*/`, `results/data_audit/` | NASA 복구·다른 데이터셋 정제 근거 |
+| `models/` | 공통 Chronos-2 캐시와 최신 실험 가중치 |
 
-LoRA adapter는 `models/<run_id>/<battery>_train<seed>/`에 저장합니다. gitignore로 모델 가중치는 Git에서 제외됩니다.
-데이터 또는 설정이 다르거나 산출물이 변조된 baseline은 재사용하지 않습니다. 중단된 실행은 완료된 결과로 취급하지 않습니다.
+일부 공통 모듈에는 예전 T5 이름이 남아 있지만 최신 C2 코드가 직접 사용하므로 보존했다.
+`results/c2-battery/strict-v2-zero-head/protocol.json`은 고정 배터리 분할,
+`results/c2-battery/one-step-64/coverage.csv`는 전처리 전후 비교를 위해 남긴 최소 참조 파일이다.
+이 두 폴더의 과거 모델 결과는 별도 보관했다.
+
+## 실행 환경과 진입점
+
+기존 `.venv`를 사용한다. 환경과 설치 패키지는 이번 정리에서 변경하지 않았다.
+새 환경에서는 장치에 맞는 PyTorch를 설치한 후 `requirements.txt`를 설치한다.
+
+| 작업 | 진입점 |
+|---|---|
+| SOH 64 → 1 | `scripts/run_c2_one_step_context.py --reviewed` |
+| SOH 나머지 입력 길이 | `scripts/run_c2_context32.py`, `run_c2_context16.py`, `run_c2_context8.py`, `run_c2_context4.py`, `run_c2_context2.py` |
+| SOH 그림만 갱신 | `scripts/render_c2_one_step_predictions.py --out results/c2-battery/one-step-2-reviewed-v3` |
+| RUL zero-shot / head | `scripts/run_c2_rul_pilot.py`, `scripts/run_c2_rul_head.py` |
+| RUL 입력 길이 비교 | `scripts/run_c2_rul_context_sweep.py` — 데스크톱 CUDA 조건 |
+| RUL 학습 시점 비교 | `scripts/run_c2_rul_multi_origin.py` — XPU 조건 |
+| v3 데이터 구축 | `scripts/build_reviewed_soh.py` |
+
+완료된 결과의 입력·가중치·실행 조건은 고정되어 있다. 새로운 실험은 별도 결과 경로를 사용한다.
+CUDA에서 실행한 16·8·4·2 및 RUL 입력 길이 실험은 기존 데스크톱 실행 경로와 조건을 유지한다.
+코드를 복사한 실험 패키지와 본 프로젝트는 구분한다.
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\run_experiment.py audit --run results\runs\실행디렉터리
+.\.venv\Scripts\python.exe -X utf8 -m unittest discover -s tests
 ```
 
-이 명령은 데이터와 파일 해시를 확인하고 원시 예측 samples에서 지표를 다시 계산합니다.
-`src.soh_experiment.reload_adapter(config, adapter_path)`로 저장 모델을 불러올 수 있습니다.
+결과 폴더에는 점수·원시 예측·학습 조건·최소 검증 기록을 함께 남겼다.
+과거 결과의 소스 해시가 가리키는 실행 파일은 이번 정리에서 수정하지 않았다.
 
-추가로 다음 명령은 같은 seed로 adapter 초기화가 일치하는지, 각 fold의 저장 adapter를 다시 불러왔을 때
-첫 추론 batch의 samples가 원본과 정확히 일치하는지 확인합니다. 전체 데이터 재학습 없이 수행하는 현재 환경의 재현성 검사입니다.
+## 이전 실험 보관
 
-```powershell
-.\.venv\Scripts\python.exe scripts\check_reproducibility.py results\runs\LoRA실행디렉터리
-.\.venv\Scripts\python.exe scripts\summarize_run.py results\runs\LoRA실행디렉터리
-```
+2026-10-13 정리 전 코드·문서·결과·가공 데이터는 프로젝트 밖에 복사해 검증했다.
+과거 실행 스크립트·노트북·결과·모델은 영구 삭제하지 않고 별도 폴더로 옮겼다.
 
-두 번째 명령은 `results/improvement_summary.md`와 PNG 비교 그래프를 만듭니다.
-실험 파일에는 mean estimator도 남기지만 드문 극단 samples가 평균을 크게 움직일 수 있으므로 median과 구분해 해석합니다.
+[별도 보관 및 복구 안내](C:/Users/dbsgh/Documents/CodexBackups/chronos-battery-soh-20261013-114645/README.md)
 
-## 이전 실험
-
-개선 전 노트북은 Git 이력에 보관합니다. 별도 archive와 로컬 복구 백업은 정리했으며, 이전 archive는 커밋 `f5bf4cc`에서 복원할 수 있습니다.
-`results/metrics/`의 기존 결과도 보존합니다. 과거 실험은 20 samples 및 lower median을 사용했으므로 새 실험과 점수만 직접 비교하지 마세요.
-검토 내용은 `results/notebook_review_2026-09-23.md`에 있습니다.
+이 보관 경로는 이 PC의 로컬 경로이며 Git에는 포함되지 않는다.

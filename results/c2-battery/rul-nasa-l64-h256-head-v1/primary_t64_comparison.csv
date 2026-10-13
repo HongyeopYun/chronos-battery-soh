@@ -1,0 +1,5 @@
+battery_id,true_rul,event_observed,true_rul_lower_bound,zero_rul,head_rul,zero_error,head_error
+B0005,61.0,True,,,,,
+B0006,45.0,True,,36.0,35.0,-9.0,-10.0
+B0007,,False,104.0,,,,
+B0018,33.0,True,,24.0,22.0,-9.0,-11.0

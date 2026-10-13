@@ -1,0 +1,80 @@
+{
+  "zero-shot": {
+    "primary_t64": {
+      "n_origins": 4,
+      "n_event_origins": 3,
+      "n_event_batteries": 3,
+      "n_finite_event_predictions": 2,
+      "n_no_crossing_event_predictions": 1,
+      "conditional_mae_cycles": 9.0,
+      "conditional_rmse_cycles": 9.0,
+      "conditional_bias_cycles": -9.0,
+      "mae_lower_bound_all_event_origins": 71.33333333333333,
+      "censored_origins": 1,
+      "censored_contradictions": 0,
+      "all_event_predictions_finite": false,
+      "descriptive_cross_cell_r2": null
+    },
+    "secondary_pooled_origins": {
+      "n_origins": 17,
+      "n_event_origins": 10,
+      "n_event_batteries": 3,
+      "n_finite_event_predictions": 8,
+      "n_no_crossing_event_predictions": 2,
+      "conditional_mae_cycles": 7.375,
+      "conditional_rmse_cycles": 8.253787009609589,
+      "conditional_bias_cycles": -6.625,
+      "mae_lower_bound_all_event_origins": 46.7,
+      "censored_origins": 7,
+      "censored_contradictions": 4,
+      "all_event_predictions_finite": false
+    },
+    "quantile_crossing_fraction": 0.0,
+    "q10_q90_inversion_fraction": 0.0,
+    "secondary_equal_cell": {
+      "conditional_mae_cycles": 7.5555555555555545,
+      "conditional_rmse_cycles": 8.315493446258634,
+      "conditional_bias_cycles": -6.888888888888889,
+      "mae_lower_bound_all_event_origins": 40.05555555555555
+    }
+  },
+  "head-only": {
+    "primary_t64": {
+      "n_origins": 4,
+      "n_event_origins": 3,
+      "n_event_batteries": 3,
+      "n_finite_event_predictions": 2,
+      "n_no_crossing_event_predictions": 1,
+      "conditional_mae_cycles": 10.5,
+      "conditional_rmse_cycles": 10.51189802081432,
+      "conditional_bias_cycles": -10.5,
+      "mae_lower_bound_all_event_origins": 72.33333333333333,
+      "censored_origins": 1,
+      "censored_contradictions": 0,
+      "all_event_predictions_finite": false,
+      "descriptive_cross_cell_r2": null
+    },
+    "secondary_pooled_origins": {
+      "n_origins": 17,
+      "n_event_origins": 10,
+      "n_event_batteries": 3,
+      "n_finite_event_predictions": 8,
+      "n_no_crossing_event_predictions": 2,
+      "conditional_mae_cycles": 8.0,
+      "conditional_rmse_cycles": 9.096702699330127,
+      "conditional_bias_cycles": -7.5,
+      "mae_lower_bound_all_event_origins": 47.2,
+      "censored_origins": 7,
+      "censored_contradictions": 4,
+      "all_event_predictions_finite": false
+    },
+    "quantile_crossing_fraction": 0.0006893382352941177,
+    "q10_q90_inversion_fraction": 0.0,
+    "secondary_equal_cell": {
+      "conditional_mae_cycles": 8.11111111111111,
+      "conditional_rmse_cycles": 9.10290090161355,
+      "conditional_bias_cycles": -7.666666666666667,
+      "mae_lower_bound_all_event_origins": 40.61111111111111
+    }
+  }
+}

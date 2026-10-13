@@ -1,0 +1,17 @@
+{
+  "matched_targets_per_condition": 97865,
+  "conditions": 3,
+  "context_length": 2,
+  "prediction_length": 1,
+  "identical_targets_to_context64_eligible_subset": true,
+  "identical_lastvalue_to_context64": true,
+  "identical_source_labels_to_context64": true,
+  "reviewed_data_and_context_masks_verified": true,
+  "independent_metric_recalculation": true,
+  "linear_excluded": true,
+  "verified_at": "2026-10-12T10:40:47.056542+00:00",
+  "strict_mse_skill_rtol": 1e-08,
+  "strict_mse_skill_atol": 1e-12,
+  "strict_mse_skill_rows": 1776,
+  "note": "Independent strict audit supplements the frozen runner metric tolerance."
+}

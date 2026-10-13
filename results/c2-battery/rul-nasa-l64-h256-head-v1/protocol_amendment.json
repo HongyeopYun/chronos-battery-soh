@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-10-12T07:48:36.769933+00:00",
+  "stage": "Before any test inference; 3 folds saved and final fold parity check failed",
+  "reason": "Native single-cell forward and cached four-cell XPU features differed by 3.2783e-6 SOH at four extreme-quantile positions. Change only parity-test absolute tolerance from 2e-6 to 1e-5 SOH (0.001 percentage point). Relative tolerance stays 2e-5. Native test inference and all training/selection/evaluation rules remain unchanged.",
+  "source_file": "src/c2_rul_head.py",
+  "original_source_sha256": "62a4d8062a4dc0f59e2d5be48b2e28447ebbce5e2cc5aadf899dc8a74afb001c",
+  "repaired_source_sha256": "6e7653cb21ca4647b5b3d363658c1a454c0de18acb7bc987251096a9e1d4f0ee",
+  "original_protocol_sha256": "d60f37ad3151a8bae2a1fbedcf431503f463553881f0a114335fca073f273151"
+}

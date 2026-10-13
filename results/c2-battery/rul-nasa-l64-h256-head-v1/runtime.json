@@ -1,0 +1,22 @@
+{
+  "started_at": "2026-10-12T07:49:07.575195+00:00",
+  "host": "Hongyeop",
+  "python": "3.12.10",
+  "device": "xpu",
+  "device_name": "Intel(R) Arc(TM) B390 GPU",
+  "packages": {
+    "torch": "2.14.0+xpu",
+    "chronos-forecasting": "2.3.2",
+    "transformers": "5.17.0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6"
+  },
+  "native_prediction_length": 1024,
+  "cache_parity": {
+    "cached_vs_native_max_abs": 1.4781951904296875e-05,
+    "masked_loss_native_parity": true
+  },
+  "finished_at": "2026-10-12T07:49:23.325550+00:00",
+  "heads_locked_at": "2026-10-12T07:49:17.897955+00:00",
+  "reference_reproduction_max_abs": 1.9073486328125e-06
+}

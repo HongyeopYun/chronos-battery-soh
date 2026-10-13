@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "verified_at": "2026-10-12T03:29:20.251958+00:00",
+  "n_tasks": 17,
+  "finite_quantiles": true,
+  "persisted_threshold_hits_recomputed": true,
+  "source_and_data_hashes_unchanged": true,
+  "artifacts_sha256": {
+    "battery_metrics.csv": "d64c19c21f658f3f883c1be4644e4cb289db431a37a425179f702b240d246690",
+    "eol_audit.csv": "609ef4fae71d30c9ee48c1fed9e682416db50016e38924bdadc02f65bd9598e2",
+    "forecast_quantiles.npz": "cd7a38594b90d2ad5b4ff47cb22489f3b8dc85a254d4614b569e62a0c02853c8",
+    "inputs.npz": "c6aec98c56962e67a9c92698bc36397a25c86ba673928e3bdb3721479d35f00c",
+    "protocol.json": "6b94b60b4246a4b7b5efcc7b97fb0b2cc1c301018c4654d1bbe5e0d26bd8f698",
+    "report.md": "f57a62bc3e731a06ab456b8809c83fadcf1a7ab5d14dcaa8fd852238a9cc3dc3",
+    "rul_by_origin.png": "aadcda6007c18759a7c8269d54fcc389a2a1e83a88c27c4fc90e325757a29823",
+    "rul_predictions.csv": "d89fbb7ce5ed4d6204dd0d6759be10d72ece12950b4aca94767dbffc28d1eaa4",
+    "runtime.json": "6d5e960d183a43d7a129213b1512e5ef04b61355bce5695dc240474278a8a0f8",
+    "soh_predictions.csv.gz": "0ab1fb820437b3d8f70c0302df35dde2493d65e1c598848e1dc651aafc4c89f2",
+    "soh_prefix_metrics.csv": "a5e687b651b2d9b69239e0f3af3ef2a68b468918ae8ecd365bbd73bd0463e830",
+    "summary.json": "5826f06bf1ce849ebef3018dff5bb1d155d3ae7ec003a79ee5b8d5dec54f9c1c",
+    "trajectories_t64.png": "2775753f9b8c91f38f9b3acec9cf3c63d57635ebaff1b06f998575763d169c68"
+  }
+}

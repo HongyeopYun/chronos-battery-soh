@@ -1,0 +1,17 @@
+condition,fold_id,split,n_windows,unique_soh_labels,label_exposures_per_full_batch,repeated_label_exposures_per_full_batch
+single,test_B0005,train,2,172,172,0
+single,test_B0005,validation,1,104,104,0
+single,test_B0006,train,2,172,172,0
+single,test_B0006,validation,1,104,104,0
+single,test_B0007,train,2,208,208,0
+single,test_B0007,validation,1,68,68,0
+single,test_B0018,train,2,208,208,0
+single,test_B0018,validation,1,104,104,0
+multi,test_B0005,train,6,172,420,248
+multi,test_B0005,validation,1,104,104,0
+multi,test_B0006,train,6,172,420,248
+multi,test_B0006,validation,1,104,104,0
+multi,test_B0007,train,6,208,528,320
+multi,test_B0007,validation,1,68,68,0
+multi,test_B0018,train,6,208,528,320
+multi,test_B0018,validation,1,104,104,0

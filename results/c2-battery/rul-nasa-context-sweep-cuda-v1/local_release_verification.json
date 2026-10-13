@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "verified_at": "2026-10-12T11:47:41.914574+00:00",
+  "lengths": [
+    16,
+    32,
+    64
+  ],
+  "test_origins_per_condition": 4,
+  "conditions": 6,
+  "heads": 12,
+  "identical_source_labels": true,
+  "all_origins_t64": true,
+  "raw_rul_metrics_recomputed": true,
+  "checkpoint_selection_recomputed": true,
+  "selected_head_reload_verified": true,
+  "checkpoint_files_checked": false,
+  "source_data_hashes_verified": true,
+  "independent_horizon_metric_rows": 240,
+  "independent_summary_recalculation": true,
+  "checkpoint_note": "12 file hashes and reload parity checked on desktop; weights retained there"
+}

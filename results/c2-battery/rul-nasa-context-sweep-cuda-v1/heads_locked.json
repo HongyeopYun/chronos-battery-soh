@@ -1,0 +1,557 @@
+{
+  "locked_at": "2026-10-12T11:44:10.184888+00:00",
+  "selected": [
+    {
+      "context_length": 16,
+      "step": 100,
+      "learning_rate": 1e-06,
+      "validation_loss": 9.406341552734375,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 9.728737831115723,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0005",
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "test_ids": [
+        "B0005"
+      ],
+      "selected_at": "2026-10-12T11:44:04.344724+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 5.7220458984375e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L16/test_B0005.pt",
+      "weights_sha256": "38fed6f4d557d1b148ade694c8a8e41bb691f51c00018637cbe9ff6af0519c19",
+      "elapsed_seconds": 0.6507750999990094
+    },
+    {
+      "context_length": 16,
+      "step": 100,
+      "learning_rate": 1e-06,
+      "validation_loss": 10.039358139038086,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 10.495908737182617,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0006",
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "test_ids": [
+        "B0006"
+      ],
+      "selected_at": "2026-10-12T11:44:04.897332+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 4.291534423828125e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L16/test_B0006.pt",
+      "weights_sha256": "ef6e4eb41b5dca68bf0895dc43a4ae65e6c2555e00a9c670719711b22ad23f26",
+      "elapsed_seconds": 0.5344967999990331
+    },
+    {
+      "context_length": 16,
+      "step": 100,
+      "learning_rate": 1e-06,
+      "validation_loss": 13.29096794128418,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 13.544471740722656,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0007",
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "test_ids": [
+        "B0007"
+      ],
+      "selected_at": "2026-10-12T11:44:05.425332+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 2.1457672119140625e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L16/test_B0007.pt",
+      "weights_sha256": "7aa60dd9d51767a0bd6a8df9c604bd9e6c6aaaaf6ee0826b53a06487453178b1",
+      "elapsed_seconds": 0.5125689000014972
+    },
+    {
+      "context_length": 16,
+      "step": 20,
+      "learning_rate": 1e-06,
+      "validation_loss": 10.565682411193848,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 10.778867721557617,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0018",
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "test_ids": [
+        "B0018"
+      ],
+      "selected_at": "2026-10-12T11:44:05.925333+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 5.245208740234375e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L16/test_B0018.pt",
+      "weights_sha256": "52ff1d9eb015c5b9967941eee0781953a4e4da598b39790bca66d691f2de6399",
+      "elapsed_seconds": 0.48293890000059037
+    },
+    {
+      "context_length": 32,
+      "step": 20,
+      "learning_rate": 1e-06,
+      "validation_loss": 4.9537272453308105,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 4.9885759353637695,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0005",
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "test_ids": [
+        "B0005"
+      ],
+      "selected_at": "2026-10-12T11:44:06.529333+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 4.291534423828125e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L32/test_B0005.pt",
+      "weights_sha256": "a58d1b69c68a4289843e2825a04bfb3f212b3303bb42ed16c267711d2c4d171a",
+      "elapsed_seconds": 0.4928872999989835
+    },
+    {
+      "context_length": 32,
+      "step": 60,
+      "learning_rate": 1e-06,
+      "validation_loss": 4.70282506942749,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 5.0571208000183105,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0006",
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "test_ids": [
+        "B0006"
+      ],
+      "selected_at": "2026-10-12T11:44:07.042333+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 2.1457672119140625e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L32/test_B0006.pt",
+      "weights_sha256": "b15f04adc7ba261dd0136315983e7a6e9794265d111bccff846741ad07af4bcb",
+      "elapsed_seconds": 0.4979913999995915
+    },
+    {
+      "context_length": 32,
+      "step": 100,
+      "learning_rate": 1e-06,
+      "validation_loss": 9.904291152954102,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 10.394604682922363,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0007",
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "test_ids": [
+        "B0007"
+      ],
+      "selected_at": "2026-10-12T11:44:07.595333+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 1.1920928955078125e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L32/test_B0007.pt",
+      "weights_sha256": "058d8341b24369a124fd34bc306401bfcaae0511571ffbc7c1ef4e186ede873b",
+      "elapsed_seconds": 0.5378096999993431
+    },
+    {
+      "context_length": 32,
+      "step": 20,
+      "learning_rate": 1e-06,
+      "validation_loss": 5.582275390625,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 5.830352783203125,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0018",
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "test_ids": [
+        "B0018"
+      ],
+      "selected_at": "2026-10-12T11:44:08.089334+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 2.6226043701171875e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L32/test_B0018.pt",
+      "weights_sha256": "0c53f947c84d98925a2c03a997c9ece2bc22b91bbb7da70ba357342a4c075993",
+      "elapsed_seconds": 0.47741360000145505
+    },
+    {
+      "context_length": 64,
+      "step": 0,
+      "learning_rate": 0.0,
+      "eligible": true,
+      "validation_loss": 2.656489372253418,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 2.656489372253418,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0005",
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "test_ids": [
+        "B0005"
+      ],
+      "selected_at": "2026-10-12T11:44:08.666334+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 2.384185791015625e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L64/test_B0005.pt",
+      "weights_sha256": "c8bf1a4772a9a054a50a50d63d4a3f368aef0d8fcc0fa6907789c2c49a99afdd",
+      "elapsed_seconds": 0.4664249000015843
+    },
+    {
+      "context_length": 64,
+      "step": 40,
+      "learning_rate": 1e-06,
+      "validation_loss": 5.9066877365112305,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 6.363092422485352,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0006",
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "test_ids": [
+        "B0006"
+      ],
+      "selected_at": "2026-10-12T11:44:09.166334+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 8.344650268554688e-07,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L64/test_B0006.pt",
+      "weights_sha256": "9d04cb11ca72670b1cfa166b40a4c9d1dc03b2a01de50882ca7a50a7e88538ae",
+      "elapsed_seconds": 0.4853432999989309
+    },
+    {
+      "context_length": 64,
+      "step": 0,
+      "learning_rate": 0.0,
+      "eligible": true,
+      "validation_loss": 3.0849769115448,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 3.0849769115448,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0007",
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "test_ids": [
+        "B0007"
+      ],
+      "selected_at": "2026-10-12T11:44:09.652335+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 7.152557373046875e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L64/test_B0007.pt",
+      "weights_sha256": "7179aeeb8330326cc41d657eb41709d267f8f006192c304410fd155fe835cd88",
+      "elapsed_seconds": 0.47183169999698293
+    },
+    {
+      "context_length": 64,
+      "step": 100,
+      "learning_rate": 1e-06,
+      "validation_loss": 7.4865217208862305,
+      "validation_crossing_fraction": 0.0,
+      "validation_invalid_interval_fraction": 0.0,
+      "eligible": true,
+      "baseline": {
+        "step": 0,
+        "learning_rate": 0.0,
+        "eligible": true,
+        "validation_loss": 8.474526405334473,
+        "validation_crossing_fraction": 0.0,
+        "validation_invalid_interval_fraction": 0.0
+      },
+      "fold_id": "test_B0018",
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "test_ids": [
+        "B0018"
+      ],
+      "selected_at": "2026-10-12T11:44:10.166888+00:00",
+      "trainable_parameters": 3653280,
+      "total_parameters": 119477664,
+      "trainable_names": [
+        "output_patch_embedding.hidden_layer.weight",
+        "output_patch_embedding.hidden_layer.bias",
+        "output_patch_embedding.output_layer.weight",
+        "output_patch_embedding.output_layer.bias",
+        "output_patch_embedding.residual_layer.weight",
+        "output_patch_embedding.residual_layer.bias"
+      ],
+      "frozen_backbone_verified": true,
+      "selected_head_reload_verified": true,
+      "cached_vs_native_max_abs": 1.430511474609375e-06,
+      "masked_loss_native_parity": true,
+      "weights_file": "models/c2-rul-context-sweep-cuda-v1/L64/test_B0018.pt",
+      "weights_sha256": "f355c17954a38e8e89ef944bb85e304309d3a2d9e9f5bdb6b014c3f0fdc21260",
+      "elapsed_seconds": 0.4991862000024412
+    }
+  ]
+}

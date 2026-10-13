@@ -1,0 +1,9 @@
+battery_id,method,predicted_rul_old_xpu,error_cycles_old_xpu,predicted_rul_new_cuda,error_cycles_new_cuda
+B0005,zero-shot,,,,
+B0006,zero-shot,36.0,-9.0,36.0,-9.0
+B0007,zero-shot,,,,
+B0018,zero-shot,24.0,-9.0,24.0,-9.0
+B0005,head-only,,,,
+B0006,head-only,35.0,-10.0,35.0,-10.0
+B0007,head-only,,,,
+B0018,head-only,22.0,-11.0,22.0,-11.0

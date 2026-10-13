@@ -1,0 +1,13 @@
+fold_id,split,battery_id,origin_cycle,context_start,context_end,trajectory_count,unique_soh_labels,first_label_cycle,last_label_cycle,masked_future_positions
+test_B0005,train,B0007,64,1,64,1,104,65,168,152
+test_B0005,train,B0018,64,1,64,1,68,65,132,188
+test_B0005,validation,B0006,64,1,64,1,104,65,168,152
+test_B0006,train,B0005,64,1,64,1,104,65,168,152
+test_B0006,train,B0018,64,1,64,1,68,65,132,188
+test_B0006,validation,B0007,64,1,64,1,104,65,168,152
+test_B0007,train,B0005,64,1,64,1,104,65,168,152
+test_B0007,train,B0006,64,1,64,1,104,65,168,152
+test_B0007,validation,B0018,64,1,64,1,68,65,132,188
+test_B0018,train,B0006,64,1,64,1,104,65,168,152
+test_B0018,train,B0007,64,1,64,1,104,65,168,152
+test_B0018,validation,B0005,64,1,64,1,104,65,168,152

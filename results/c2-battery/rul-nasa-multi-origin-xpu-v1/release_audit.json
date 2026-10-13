@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "artifact_hashes": 31,
+  "label_budgets_recomputed": 16,
+  "source_battery_isolation": true,
+  "baseline_rul_matches_prior_xpu": true,
+  "independent_first_crossings": 12
+}

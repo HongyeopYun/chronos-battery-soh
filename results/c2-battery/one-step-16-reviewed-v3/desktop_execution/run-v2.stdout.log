@@ -1,0 +1,42 @@
+PLAN nasa_aging: 16->1, 8/4 train/val, 380 matched test targets
+PLAN calce_cs2_1c: 16->1, 8/4 train/val, 3549 matched test targets
+PLAN mit_batch1: 16->1, 8/4 train/val, 33478 matched test targets
+PLAN mit_batch2: 16->1, 8/4 train/val, 21057 matched test targets
+PLAN mit_batch3: 16->1, 8/4 train/val, 35681 matched test targets
+PLAN xjtu_2c: 16->1, 8/4 train/val, 1690 matched test targets
+PLAN xjtu_3c: 16->1, 8/4 train/val, 2033 matched test targets
+CUDA: NVIDIA GeForce RTX 3080 | torch: 2.14.0+cu130
+CUDA smoke inference passed: (2, 1)
+FIT nasa_aging L16 test_B0005
+SELECT nasa_aging L16 test_B0005: step=20 lr=1e-06
+FIT nasa_aging L16 test_B0006
+SELECT nasa_aging L16 test_B0006: step=100 lr=1e-06
+FIT nasa_aging L16 test_B0007
+SELECT nasa_aging L16 test_B0007: step=0 lr=0
+FIT nasa_aging L16 test_B0018
+SELECT nasa_aging L16 test_B0018: step=20 lr=1e-05
+FIT calce_cs2_1c L16 test_CS2_35
+SELECT calce_cs2_1c L16 test_CS2_35: step=60 lr=1e-05
+FIT calce_cs2_1c L16 test_CS2_36
+SELECT calce_cs2_1c L16 test_CS2_36: step=100 lr=1e-05
+FIT calce_cs2_1c L16 test_CS2_37
+SELECT calce_cs2_1c L16 test_CS2_37: step=60 lr=1e-05
+FIT calce_cs2_1c L16 test_CS2_38
+SELECT calce_cs2_1c L16 test_CS2_38: step=80 lr=1e-05
+FIT mit_batch1 L16 fixed
+SELECT mit_batch1 L16 fixed: step=0 lr=0
+FIT mit_batch2 L16 fixed
+SELECT mit_batch2 L16 fixed: step=80 lr=1e-05
+FIT mit_batch3 L16 fixed
+SELECT mit_batch3 L16 fixed: step=100 lr=1e-06
+FIT xjtu_2c L16 fixed
+SELECT xjtu_2c L16 fixed: step=20 lr=1e-06
+FIT xjtu_3c L16 fixed
+SELECT xjtu_3c L16 fixed: step=20 lr=1e-06
+TEST DONE nasa_aging L16
+TEST DONE calce_cs2_1c L16
+TEST DONE mit_batch1 L16
+TEST DONE mit_batch2 L16
+TEST DONE mit_batch3 L16
+TEST DONE xjtu_2c L16
+TEST DONE xjtu_3c L16

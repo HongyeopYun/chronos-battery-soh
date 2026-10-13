@@ -1,0 +1,7 @@
+context_length,method,n_origins,n_event_origins,n_event_batteries,n_finite_event_predictions,n_no_crossing_event_predictions,conditional_mae_cycles,conditional_rmse_cycles,conditional_bias_cycles,mae_lower_bound_all_event_origins,censored_origins,censored_contradictions,all_event_predictions_finite
+16,zero-shot,4,3,3,1,2,21.0,21.0,-21.0,147.0,1,0,False
+16,head-only,4,3,3,1,2,25.0,25.0,-25.0,148.33333333333334,1,0,False
+32,zero-shot,4,3,3,1,2,10.0,10.0,-10.0,143.33333333333334,1,0,False
+32,head-only,4,3,3,1,2,17.0,17.0,-17.0,145.66666666666666,1,0,False
+64,zero-shot,4,3,3,2,1,9.0,9.0,-9.0,71.33333333333333,1,0,False
+64,head-only,4,3,3,2,1,10.5,10.51189802081432,-10.5,72.33333333333333,1,0,False

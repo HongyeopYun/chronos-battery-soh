@@ -1,0 +1,4 @@
+dataset,battery_id,master_window_index,target_cycle,reason
+calce_cs2_1c,CS2_35,768,863,Both of the last two input positions are missing
+calce_cs2_1c,CS2_36,17,84,Both of the last two input positions are missing
+calce_cs2_1c,CS2_36,593,681,Both of the last two input positions are missing

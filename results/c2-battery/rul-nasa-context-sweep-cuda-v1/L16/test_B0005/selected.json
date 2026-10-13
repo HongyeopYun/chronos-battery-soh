@@ -1,0 +1,45 @@
+{
+  "step": 100,
+  "learning_rate": 1e-06,
+  "validation_loss": 9.406341552734375,
+  "validation_crossing_fraction": 0.0,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "baseline": {
+    "step": 0,
+    "learning_rate": 0.0,
+    "eligible": true,
+    "validation_loss": 9.728737831115723,
+    "validation_crossing_fraction": 0.0,
+    "validation_invalid_interval_fraction": 0.0
+  },
+  "fold_id": "test_B0005",
+  "train_ids": [
+    "B0007",
+    "B0018"
+  ],
+  "validation_ids": [
+    "B0006"
+  ],
+  "test_ids": [
+    "B0005"
+  ],
+  "selected_at": "2026-10-12T11:44:04.344724+00:00",
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "trainable_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "frozen_backbone_verified": true,
+  "selected_head_reload_verified": true,
+  "cached_vs_native_max_abs": 5.7220458984375e-06,
+  "masked_loss_native_parity": true,
+  "weights_file": "models/c2-rul-context-sweep-cuda-v1/L16/test_B0005.pt",
+  "weights_sha256": "38fed6f4d557d1b148ade694c8a8e41bb691f51c00018637cbe9ff6af0519c19",
+  "elapsed_seconds": 0.6507750999990094
+}

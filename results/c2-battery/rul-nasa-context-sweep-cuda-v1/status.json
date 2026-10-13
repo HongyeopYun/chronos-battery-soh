@@ -1,0 +1,10 @@
+{
+  "status": "complete",
+  "started_at": "2026-10-12T11:44:02.594760+00:00",
+  "protocol_sha256": "f1f43e7ae5bccaddc4bc5c536511e39cd1b434950dcf21411eaff53193c2287d",
+  "context_length": 64,
+  "fold": "test_B0018",
+  "heads_locked_at": "2026-10-12T11:44:10.184888+00:00",
+  "completed_heads": 12,
+  "finished_at": "2026-10-12T11:44:12.174889+00:00"
+}

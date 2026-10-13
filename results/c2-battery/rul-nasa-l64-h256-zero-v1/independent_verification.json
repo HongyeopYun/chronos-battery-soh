@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "checks": [
+    "All artifact hashes",
+    "17 exact past-only input windows",
+    "True EOL labels independently recomputed from measured Ah",
+    "Censoring bounds",
+    "4352 saved forecast positions and threshold hits",
+    "All-event error lower bound",
+    "Equal-cell secondary MAE"
+  ],
+  "tests_passed": 6
+}

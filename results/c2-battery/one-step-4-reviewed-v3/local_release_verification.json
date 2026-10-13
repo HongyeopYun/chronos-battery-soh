@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "checked_records": 1776,
+  "skill_rtol": 1e-08,
+  "skill_atol": 1e-12,
+  "remote_archive_sha256": "4b499a228034f1a4fc5b09d0fa0995172df056b62add7ef527582d7b5c7ac80c",
+  "remote_artifacts_preserved": true
+}

@@ -1,0 +1,9 @@
+method,battery_id,n_origins,n_event_origins,n_event_batteries,n_finite_event_predictions,n_no_crossing_event_predictions,conditional_mae_cycles,conditional_rmse_cycles,conditional_bias_cycles,mae_lower_bound_all_event_origins,censored_origins,censored_contradictions,all_event_predictions_finite
+zero-shot,B0005,4,4,1,2,2,9.0,9.219544457292887,-9.0,106.5,0,0,False
+zero-shot,B0006,3,3,1,3,0,7.333333333333333,8.679477710861024,-6.666666666666667,7.333333333333333,0,0,True
+zero-shot,B0007,7,0,0,0,0,,,,,7,4,True
+zero-shot,B0018,3,3,1,3,0,6.333333333333333,7.047458170621991,-5.0,6.333333333333333,0,0,True
+head-only,B0005,4,4,1,2,2,9.0,9.219544457292887,-9.0,106.5,0,0,False
+head-only,B0006,3,3,1,3,0,8.0,9.486832980505138,-7.333333333333333,8.0,0,0,True
+head-only,B0007,7,0,0,0,0,,,,,7,4,True
+head-only,B0018,3,3,1,3,0,7.333333333333333,8.602325267042627,-6.666666666666667,7.333333333333333,0,0,True

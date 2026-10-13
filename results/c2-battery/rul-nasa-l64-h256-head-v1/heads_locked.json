@@ -1,0 +1,29 @@
+{
+  "locked_at": "2026-10-12T07:49:17.897955+00:00",
+  "selected": [
+    {
+      "fold_id": "test_B0005",
+      "weights_sha256": "c8bf1a4772a9a054a50a50d63d4a3f368aef0d8fcc0fa6907789c2c49a99afdd",
+      "step": 0,
+      "learning_rate": 0.0
+    },
+    {
+      "fold_id": "test_B0006",
+      "weights_sha256": "ad9f8f659505a53022308246d3783087f7d18427f0ceec90ec1740ea113da3a0",
+      "step": 40,
+      "learning_rate": 1e-06
+    },
+    {
+      "fold_id": "test_B0007",
+      "weights_sha256": "7179aeeb8330326cc41d657eb41709d267f8f006192c304410fd155fe835cd88",
+      "step": 0,
+      "learning_rate": 0.0
+    },
+    {
+      "fold_id": "test_B0018",
+      "weights_sha256": "eeb1df5e5ba7cb17e5a70605b9180738d3a722e8a2c3275dbba649233775fbf6",
+      "step": 100,
+      "learning_rate": 1e-06
+    }
+  ]
+}

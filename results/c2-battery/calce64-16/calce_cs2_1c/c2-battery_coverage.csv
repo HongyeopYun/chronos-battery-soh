@@ -1,5 +1,0 @@
-record_id,dataset,battery_id,physical_battery_id,n_rows,eligible_windows,evaluated_windows,status,early_windows,middle_windows,late_windows
-0001,calce,CS2_35,CS2_35,886,429,429,ready,145,135,149
-0002,calce,CS2_36,CS2_36,976,488,488,ready,95,163,230
-0003,calce,CS2_37,CS2_37,1043,504,504,ready,115,188,201
-0004,calce,CS2_38,CS2_38,1032,493,493,ready,111,184,198

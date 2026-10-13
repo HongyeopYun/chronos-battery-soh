@@ -1,0 +1,45 @@
+{
+  "step": 100,
+  "learning_rate": 1e-06,
+  "validation_loss": 7.4865217208862305,
+  "validation_crossing_fraction": 0.0,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "baseline": {
+    "step": 0,
+    "learning_rate": 0.0,
+    "eligible": true,
+    "validation_loss": 8.474526405334473,
+    "validation_crossing_fraction": 0.0,
+    "validation_invalid_interval_fraction": 0.0
+  },
+  "fold_id": "test_B0018",
+  "train_ids": [
+    "B0006",
+    "B0007"
+  ],
+  "validation_ids": [
+    "B0005"
+  ],
+  "test_ids": [
+    "B0018"
+  ],
+  "selected_at": "2026-10-12T07:49:17.863594+00:00",
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "trainable_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "frozen_backbone_verified": true,
+  "selected_head_reload_verified": true,
+  "cached_vs_native_max_abs": 2.8014183044433594e-06,
+  "masked_loss_native_parity": true,
+  "weights_file": "models/c2-rul-nasa-l64-h256-head-v1/test_B0018.pt",
+  "weights_sha256": "eeb1df5e5ba7cb17e5a70605b9180738d3a722e8a2c3275dbba649233775fbf6",
+  "elapsed_seconds": 3.0438177000000906
+}

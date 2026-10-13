@@ -1,0 +1,3 @@
+# Saved experiment protocols hash exact source and artifact bytes.
+# Preserve existing LF/CRLF on every host instead of applying core.autocrlf.
+* -text

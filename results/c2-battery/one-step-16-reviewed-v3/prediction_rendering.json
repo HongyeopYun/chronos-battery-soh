@@ -1,0 +1,57 @@
+{
+  "rendered_at": "2026-10-11T14:39:03.213306+00:00",
+  "renderer_sha256": "0f345c02f32c0563d9feccb3558bb75dbe5c34c7b8fce80671bc58962be6ce37",
+  "policy": "Eligible observations only; NaN gaps; original cycle positions; no excluded markers.",
+  "numerical_artifacts_unchanged": true,
+  "figures": {
+    "nasa_aging": {
+      "battery_id": "B0005",
+      "plotted_observations": 168,
+      "hidden_observations": 0,
+      "figure_sha256": "142ae9d4d07bc33f341028729e622e8a38b9cd20f0bcc84a39ffe37eef6bb5fa",
+      "predictions_sha256": "5c62b1d127fb82e11f6fed900eaa0a90418d65fba668199118604616e42f6ccd"
+    },
+    "calce_cs2_1c": {
+      "battery_id": "CS2_35",
+      "plotted_observations": 854,
+      "hidden_observations": 28,
+      "figure_sha256": "360c44ef41def59da118cd098481258f4586b51632d4446e4bf118473a98681b",
+      "predictions_sha256": "5d6233f75c1cb28d8ac3b7c91ef1ff61b75a49387cebfaa6b1dac78a21fd3435"
+    },
+    "mit_batch1": {
+      "battery_id": "b1c0",
+      "plotted_observations": 1187,
+      "hidden_observations": 1,
+      "figure_sha256": "8a8db5fe9eb123395dd75415f673644072b0f69c172cc4a66c53b96e3d22e1d2",
+      "predictions_sha256": "9775d94977c9ee6c9685324e5e2af534e621e03b163e829a5807713f7b38c5dd"
+    },
+    "mit_batch2": {
+      "battery_id": "b2c3",
+      "plotted_observations": 360,
+      "hidden_observations": 1,
+      "figure_sha256": "4fda968b7ec43a5844c7dd03376cd313651f5d2d5a912958627bf85ebba8f89d",
+      "predictions_sha256": "6abd444c2b8788011d88a7b30fded35563ff4f557b1a032537a93e6e99a872a5"
+    },
+    "mit_batch3": {
+      "battery_id": "b3c4",
+      "plotted_observations": 1047,
+      "hidden_observations": 0,
+      "figure_sha256": "194705a22a705f3a5c756f0903c6c8c2f887445886f167675f15dc9822f189d3",
+      "predictions_sha256": "ab327d7af9b489bbbd54bb8054a471c75251166fd10b69b76455f4c146088528"
+    },
+    "xjtu_2c": {
+      "battery_id": "batch1_2C_battery-1",
+      "plotted_observations": 388,
+      "hidden_observations": 2,
+      "figure_sha256": "52fbba35b271ed6ab2c20df3ac8a7391463842749893caf10a71d43a3108ca5d",
+      "predictions_sha256": "907ec809f904a084a2bcca80c838044af6e03f58230b3b2d8d86b002ac419ae3"
+    },
+    "xjtu_3c": {
+      "battery_id": "batch2_3C_battery-1",
+      "plotted_observations": 298,
+      "hidden_observations": 1,
+      "figure_sha256": "df7a2801d2074a074773f00f92dfa1428a7d103d16826cec21f5e77bcfb5c37d",
+      "predictions_sha256": "45613471a00f54bdd2a7835dc6a473a91ca5fe8b8becf94004bca91f9872d796"
+    }
+  }
+}

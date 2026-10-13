@@ -1,9 +1,0 @@
-record_id,dataset,battery_id,physical_battery_id,n_rows,eligible_windows,evaluated_windows,status,role
-0001,xjtu,batch1_2C_battery-1,batch1_2C_battery-1,390,309,309,ready,held_out_test
-0002,xjtu,batch1_2C_battery-2,batch1_2C_battery-2,407,327,327,ready,held_out_test
-0003,xjtu,batch1_2C_battery-3,batch1_2C_battery-3,393,312,312,ready,held_out_test
-0004,xjtu,batch1_2C_battery-4,batch1_2C_battery-4,396,316,316,ready,source_or_validation
-0005,xjtu,batch1_2C_battery-5,batch1_2C_battery-5,403,323,323,ready,source_or_validation
-0006,xjtu,batch1_2C_battery-6,batch1_2C_battery-6,408,328,328,ready,source_or_validation
-0007,xjtu,batch1_2C_battery-7,batch1_2C_battery-7,402,322,322,ready,held_out_test
-0008,xjtu,batch1_2C_battery-8,batch1_2C_battery-8,420,340,340,ready,held_out_test

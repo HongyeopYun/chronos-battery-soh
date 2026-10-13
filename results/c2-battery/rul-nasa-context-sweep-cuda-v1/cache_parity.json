@@ -1,0 +1,14 @@
+{
+  "16": {
+    "cached_vs_native_max_abs": 7.62939453125e-06,
+    "masked_loss_native_parity": true
+  },
+  "32": {
+    "cached_vs_native_max_abs": 3.814697265625e-06,
+    "masked_loss_native_parity": true
+  },
+  "64": {
+    "cached_vs_native_max_abs": 4.76837158203125e-06,
+    "masked_loss_native_parity": true
+  }
+}

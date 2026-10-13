@@ -1,7 +1,0 @@
-step,learning_rate,eligible,validation_loss,validation_crossing_fraction,validation_invalid_interval_fraction
-0,0.0,True,2.4776062607765197,0.00625,0.0
-20,1e-06,True,2.415737569332123,0.00625,0.0
-40,1e-06,True,2.3778545379638674,0.00625,0.0
-60,1e-06,True,2.352652943134308,0.0,0.0
-80,1e-06,True,2.338420009613037,0.0,0.0
-100,1e-06,True,2.333731269836426,0.0,0.0

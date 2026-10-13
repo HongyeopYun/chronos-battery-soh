@@ -1,0 +1,13 @@
+{
+  "status": "completed_and_downloaded",
+  "reason": "Desktop Remote Tunnel Network Error after reconnect attempt",
+  "prepared_at": "2026-10-12T08:41:59.408841+00:00",
+  "tests_passed": 5,
+  "matched_targets": 97865,
+  "excluded_targets": 3,
+  "training_started": true,
+  "inference_started": true,
+  "previous_status": "prepared_not_run",
+  "completion_evidence": "status.json",
+  "strict_audit": "local_release_verification.json"
+}

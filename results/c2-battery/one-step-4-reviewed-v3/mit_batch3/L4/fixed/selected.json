@@ -1,0 +1,34 @@
+{
+  "step": 100,
+  "learning_rate": 1e-06,
+  "validation_loss": 9.892502784729004,
+  "validation_crossing_fraction": 0.0,
+  "validation_invalid_interval_fraction": 0.0,
+  "eligible": true,
+  "baseline": {
+    "step": 0,
+    "learning_rate": 0.0,
+    "validation_loss": 9.961997985839844,
+    "validation_crossing_fraction": 0.0,
+    "validation_invalid_interval_fraction": 0.0,
+    "eligible": true
+  },
+  "context_length": 4,
+  "prediction_length": 1,
+  "train_windows": 8,
+  "validation_windows": 4,
+  "trainable_parameters": 3653280,
+  "total_parameters": 119477664,
+  "trainable_names": [
+    "output_patch_embedding.hidden_layer.weight",
+    "output_patch_embedding.hidden_layer.bias",
+    "output_patch_embedding.output_layer.weight",
+    "output_patch_embedding.output_layer.bias",
+    "output_patch_embedding.residual_layer.weight",
+    "output_patch_embedding.residual_layer.bias"
+  ],
+  "frozen_backbone_verified": true,
+  "selected_weights": "C:\\Users\\master\\Lab\\chronos-battery-soh\\c2-context16-desktop\\models\\c2-head-one-step-4-reviewed-v3\\mit_batch3\\L4\\fixed.pt",
+  "selected_weights_sha256": "642e2ee16721d1ee3b895e4b8600f2ae6068e469fa955b43a5b78a97091d52e7",
+  "elapsed_seconds": 3.910055899999861
+}

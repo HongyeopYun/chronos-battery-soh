@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "started_at": "2026-10-13T02:31:10.298366+00:00",
+  "protocol_sha256": "08524395246c5548084158dd770cfcba3502ed0067843c4654a8c95b28f878de",
+  "condition": "multi",
+  "fold": "test_B0018",
+  "test_started_at": "2026-10-13T02:31:40.360555+00:00",
+  "compute_elapsed_seconds": 30.84525859999121,
+  "finished_at": "2026-10-13T02:31:44.915134+00:00",
+  "total_elapsed_seconds": 34.61432429999695
+}
