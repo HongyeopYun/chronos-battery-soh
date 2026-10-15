@@ -1,0 +1,16 @@
+{
+  "verified_at": "2026-10-13T11:46:19.039099+00:00",
+  "all_remote_artifact_hashes_match": true,
+  "artifact_files": 451,
+  "weight_files": 144,
+  "unit_tests": {
+    "command": "python -X utf8 -m unittest tests.test_c2_rul_learning_curve tests.test_c2_v4_experiments",
+    "tests": 12,
+    "result": "passed"
+  },
+  "figures_visually_checked": [
+    "label_learning_curves.png",
+    "mit_cell_learning_curves.png",
+    "representative_rul.png"
+  ]
+}

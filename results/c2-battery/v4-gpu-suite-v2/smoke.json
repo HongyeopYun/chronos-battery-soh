@@ -1,0 +1,21 @@
+{
+  "device": "NVIDIA GeForce RTX 3080",
+  "methods": {
+    "head": {
+      "parameters": 51015,
+      "reload": true,
+      "gradient_scope": true
+    },
+    "full": {
+      "parameters": 115875399,
+      "reload": true,
+      "gradient_scope": true
+    },
+    "lora": {
+      "parameters": 1230663,
+      "reload": true,
+      "gradient_scope": true
+    }
+  },
+  "status": "passed"
+}

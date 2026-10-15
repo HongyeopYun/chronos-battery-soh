@@ -1,0 +1,259 @@
+{
+  "task": "NASA fixed-L32 scaling x loss factorial, all 12 disjoint partitions",
+  "cases": [
+    {
+      "fold": "test_B0005__val_B0006",
+      "length": 32,
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "test_ids": [
+        "B0005"
+      ]
+    },
+    {
+      "fold": "test_B0005__val_B0007",
+      "length": 32,
+      "train_ids": [
+        "B0006",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "test_ids": [
+        "B0005"
+      ]
+    },
+    {
+      "fold": "test_B0005__val_B0018",
+      "length": 32,
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "test_ids": [
+        "B0005"
+      ]
+    },
+    {
+      "fold": "test_B0006__val_B0005",
+      "length": 32,
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "test_ids": [
+        "B0006"
+      ]
+    },
+    {
+      "fold": "test_B0006__val_B0007",
+      "length": 32,
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "test_ids": [
+        "B0006"
+      ]
+    },
+    {
+      "fold": "test_B0006__val_B0018",
+      "length": 32,
+      "train_ids": [
+        "B0005",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "test_ids": [
+        "B0006"
+      ]
+    },
+    {
+      "fold": "test_B0007__val_B0005",
+      "length": 32,
+      "train_ids": [
+        "B0006",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "test_ids": [
+        "B0007"
+      ]
+    },
+    {
+      "fold": "test_B0007__val_B0006",
+      "length": 32,
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "test_ids": [
+        "B0007"
+      ]
+    },
+    {
+      "fold": "test_B0007__val_B0018",
+      "length": 32,
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "test_ids": [
+        "B0007"
+      ]
+    },
+    {
+      "fold": "test_B0018__val_B0005",
+      "length": 32,
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "test_ids": [
+        "B0018"
+      ]
+    },
+    {
+      "fold": "test_B0018__val_B0006",
+      "length": 32,
+      "train_ids": [
+        "B0005",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "test_ids": [
+        "B0018"
+      ]
+    },
+    {
+      "fold": "test_B0018__val_B0007",
+      "length": 32,
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "test_ids": [
+        "B0018"
+      ]
+    }
+  ],
+  "grid": [
+    {
+      "name": "none_huber1",
+      "normalization": "none",
+      "loss": "huber1",
+      "weight_decay": 0.0
+    },
+    {
+      "name": "none_mae",
+      "normalization": "none",
+      "loss": "mae",
+      "weight_decay": 0.0
+    },
+    {
+      "name": "metadata_huber1",
+      "normalization": "metadata",
+      "loss": "huber1",
+      "weight_decay": 0.0
+    },
+    {
+      "name": "metadata_mae",
+      "normalization": "metadata",
+      "loss": "mae",
+      "weight_decay": 0.0
+    }
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "lrs": [
+    0.001,
+    0.003
+  ],
+  "steps": 1000,
+  "batch_size": 16,
+  "eval_every": 50,
+  "source_labels": 32,
+  "source_sha256": {
+    "scripts/run_c2_nasa_fewshot_robustness.py": "24a261a20c3ea7e39873fc023c27fe1e139688d4fbacfb763eb480e0bdb68f01",
+    "src/c2_rul_improvement.py": "543c928117aa5470fecbd2a88186cd30693a50aaa0be134e5c342a90555eb6b1",
+    "scripts/run_c2_nasa_fewshot_improvement.py": "48e2b1c7e2c2e0ae8be6e82a4c517fa0c25954c1badd29bbbde4a48719a95870"
+  },
+  "data_artifact_sha256": {
+    "nasa_aging": {
+      "soh.csv": "5f404b22266bd737401e9ac1b478db33cd02146a069ff76e1bdd385d08c0e48a",
+      "batteries.csv": "41c770eaf1441b53f4a08b0beb9178d59fa8a3bb79ea935a0e6fdf9fe7a6c562",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "calce_cs2_1c": {
+      "soh.csv": "9a37ab4832e761c4d3232b796d486920d3726628929ae7d9d462fcd966ae784f",
+      "batteries.csv": "99f9a05546bdbbe699073e1cc642a7bf8f085dbaf0351ae1eb8f2a128a3eac82",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch1": {
+      "soh.csv": "d45a55c491697df6c652de6e0bb5f48720499739fe7b9dd9d527c49621f3f005",
+      "batteries.csv": "d1a4bdf7dbb2ed500faa3269f4aaf3b3ddd6dbf15fc4e28991001538b1acf9c2",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch2": {
+      "soh.csv": "6d5987ba6aaf6ee2bc43997a69ce6083963b44a0e0b455259ebb61465570e418",
+      "batteries.csv": "00bf0638861fe0a26954020fc200f0222e541a7727db03051d6808cfc9f12092",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch3": {
+      "soh.csv": "ec86c78609a7af8378d485abb5a3b27b7ef0860bf65295594265db164adf68e7",
+      "batteries.csv": "efbe817ba775900f9950b146cd054cd98025c9d83fa90c1cb7394fad870ef222",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_2c": {
+      "soh.csv": "94368941c3d155cb42a3d14a6065ddcb36553b170e019ac7bba49aeeb1de5ae0",
+      "batteries.csv": "4dc44f54a620d03d870d1d39ef2c32e5ff9d1c4e9fb877edb5e21b67dc80c4fd",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_3c": {
+      "soh.csv": "c620b327c32a2f2f5230f848203fa8ff95daa6b0cf4142e8396329f9f332081d",
+      "batteries.csv": "1694e3710003e4ac86ace11012c71a3027d00b13c3f4e8e523148bdf81316a7c",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    }
+  },
+  "frozen_feature_protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+  "frozen_features_sha256": "934037ad0c964bbd8e8b22df940f07a239a126fa83d06912fe11b25cd1c68356",
+  "comparison": "Four separately reported methods; same pretrained frozen encoder and head architecture; 2 source cells x16 labels; identical sampled minibatches per seed. Only scaler and loss differ.",
+  "selection": "Each method independently chooses LR and checkpoint on the validation cell, for every seed/partition. All 144 selections locked before test inference. No test-based winner selection.",
+  "limitation": "Follow-up motivated by prior NASA results; reused historical cells, not external confirmation. Three partitions per test cell are correlated, not 12 independent test cells. Validation uses all eligible labels in its separate cell, beyond the 32 training examples."
+}

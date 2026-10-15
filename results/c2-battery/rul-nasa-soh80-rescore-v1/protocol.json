@@ -1,0 +1,37 @@
+{
+  "threshold_soh": 0.8,
+  "definition": "First eligible SOH <= 0.8; SOH=Q/Q_ref",
+  "primary_origin": 64,
+  "source_runs": [
+    "rul-nasa-l64-h256-zero-v1",
+    "rul-nasa-l64-h256-head-v1",
+    "rul-nasa-context-sweep-cuda-v1",
+    "rul-nasa-multi-origin-xpu-v1"
+  ],
+  "source_artifacts_sha256": {
+    "data/processed/reviewed_native_v3/nasa_aging/soh.csv": "f329c056563417dffb406918c1a0bf6d40f64db86c759f89c67db8cf8d8e33af",
+    "data/processed/reviewed_native_v3/nasa_aging/batteries.csv": "da87728d9744dac1bd3a70985b62ced5f772ea2d54323ab8a744e28298a56460",
+    "data/processed/reviewed_native_v3/nasa_aging/manifest.json": "484524d075c2807010c7424b816ee2fb6c370e3b90e1fc6a4fb78f4a29105f57",
+    "results/c2-battery/rul-nasa-l64-h256-zero-v1/protocol.json": "6b94b60b4246a4b7b5efcc7b97fb0b2cc1c301018c4654d1bbe5e0d26bd8f698",
+    "results/c2-battery/rul-nasa-l64-h256-zero-v1/forecast_quantiles.npz": "cd7a38594b90d2ad5b4ff47cb22489f3b8dc85a254d4614b569e62a0c02853c8",
+    "results/c2-battery/rul-nasa-l64-h256-zero-v1/status.json": "7200b91e0fba5e7a344a76005b309f2e4997a447daabbdb331f9f89ece2fe05d",
+    "results/c2-battery/rul-nasa-l64-h256-head-v1/protocol.json": "0ad27b7f492b5c15bcbe098aff8da70e8e7d9d58210f0a63e26dcbd7e7f43ba7",
+    "results/c2-battery/rul-nasa-l64-h256-head-v1/forecast_quantiles.npz": "abf74636eb332fa93174f4b11cab4eb8e039a06e2fddad4595f4b85a88cf8517",
+    "results/c2-battery/rul-nasa-l64-h256-head-v1/status.json": "64a0a9c00c77bd76d0fd35dc7bc015cfd2e35787b42ff0805f67269ea5aba295",
+    "results/c2-battery/rul-nasa-context-sweep-cuda-v1/protocol.json": "f1f43e7ae5bccaddc4bc5c536511e39cd1b434950dcf21411eaff53193c2287d",
+    "results/c2-battery/rul-nasa-context-sweep-cuda-v1/forecast_quantiles.npz": "3ccf56a3485952ebe8d1dc9b11d4b854a22be91734245a577db833fae17edf3c",
+    "results/c2-battery/rul-nasa-context-sweep-cuda-v1/status.json": "dc3a4a92f18c2487873e9da898bce84c72c454f2c199aa4d6aa3c80c7229de76",
+    "results/c2-battery/rul-nasa-multi-origin-xpu-v1/protocol.json": "08524395246c5548084158dd770cfcba3502ed0067843c4654a8c95b28f878de",
+    "results/c2-battery/rul-nasa-multi-origin-xpu-v1/forecast_quantiles.npz": "448fb655c2ac01ee0bfce7139fae835f6bc59bdd0a3826f96e580b3dc91f8cd5",
+    "results/c2-battery/rul-nasa-multi-origin-xpu-v1/status.json": "9deeb2fe8a0ec223301c17e92dd95892e2fe340bf677ff56a4da10c73c62ceac"
+  },
+  "source_sha256": {
+    "scripts/rescore_c2_rul_soh80.py": "611f81d0a68bab56c021614adad49fe69563959e51522ce98fdf32beda000a6c",
+    "src/c2_rul.py": "46a21800a4f358f268f92e164d7f0701f8448f239f875ceb5e9a894a1661c6e4",
+    "src/soh_data.py": "21bda8d110de2614f376eb6c68db5152398b53530fd2779d266523d2c0ed7b3c"
+  },
+  "no_retraining": true,
+  "no_new_inference": true,
+  "unchanged_model_selection": true,
+  "not_a_fresh_80_percent_training_protocol": true
+}

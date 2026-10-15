@@ -25,3 +25,11 @@ results/**/.runtime/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Local build products, transfer bundles and preserved historical experiments.
+# These folders are kept on disk; only their navigation/readme files are tracked.
+/artifacts/*
+!/artifacts/README.md
+/archive/*
+!/archive/README.md
+/presentations/published/

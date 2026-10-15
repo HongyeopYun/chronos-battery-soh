@@ -1,0 +1,161 @@
+dataset,battery_id,old_eol,eol,newly_labeled,definition
+nasa_aging,B0005,101.0,101.0,False,first eligible initial-reference SOH <= 80%
+nasa_aging,B0006,61.0,61.0,False,first eligible initial-reference SOH <= 80%
+nasa_aging,B0007,124.0,124.0,False,first eligible initial-reference SOH <= 80%
+nasa_aging,B0018,75.0,75.0,False,first eligible initial-reference SOH <= 80%
+calce_cs2_1c,CS2_35,546.0,546.0,False,first eligible initial-reference SOH <= 80%
+calce_cs2_1c,CS2_36,503.0,503.0,False,first eligible initial-reference SOH <= 80%
+calce_cs2_1c,CS2_37,575.0,575.0,False,first eligible initial-reference SOH <= 80%
+calce_cs2_1c,CS2_38,580.0,580.0,False,first eligible initial-reference SOH <= 80%
+mit_batch1,b1c0,,1852.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c1,,2160.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c10,,,False,official nominal 1.1Ah * 80%
+mit_batch1,b1c11,,788.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c12,,,False,official nominal 1.1Ah * 80%
+mit_batch1,b1c13,,,False,official nominal 1.1Ah * 80%
+mit_batch1,b1c14,,880.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c15,,719.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c16,,862.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c17,,857.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c18,,691.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c19,,788.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c2,,2237.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c20,,534.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c21,,559.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c22,,,False,official nominal 1.1Ah * 80%
+mit_batch1,b1c23,,1014.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c24,,1017.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c25,,854.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c26,,870.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c27,,842.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c28,,860.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c29,,917.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c3,,1434.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c30,,709.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c31,,876.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c32,,731.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c33,,757.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c34,,742.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c35,,703.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c36,,704.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c37,,648.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c38,,617.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c39,,625.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c4,,1709.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c40,,966.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c41,,1051.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c42,,702.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c43,,651.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c44,,616.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c45,,599.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c5,,1074.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c6,,636.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c7,,870.0,True,official nominal 1.1Ah * 80%
+mit_batch1,b1c8,,,False,official nominal 1.1Ah * 80%
+mit_batch1,b1c9,,1054.0,True,official nominal 1.1Ah * 80%
+mit_batch2,b2c0,312.0,300.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c1,159.0,148.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c10,580.0,561.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c11,490.0,477.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c12,474.0,458.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c13,497.0,483.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c14,495.0,485.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c17,510.0,494.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c18,508.0,487.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c19,484.0,461.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c2,449.0,438.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c20,512.0,502.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c21,502.0,489.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c22,523.0,513.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c23,542.0,527.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c24,511.0,495.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c25,475.0,461.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c26,482.0,471.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c27,484.0,468.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c28,526.0,509.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c29,509.0,498.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c3,349.0,335.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c30,496.0,481.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c31,505.0,492.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c32,530.0,519.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c33,530.0,520.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c34,514.0,499.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c35,475.0,463.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c36,545.0,535.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c37,489.0,478.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c38,476.0,465.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c39,467.0,459.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c4,456.0,444.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c40,512.0,499.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c41,441.0,429.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c42,476.0,466.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c43,474.0,462.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c44,469.0,457.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c45,501.0,487.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c46,440.0,429.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c47,743.0,713.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c5,495.0,480.0,False,official nominal 1.1Ah * 80%
+mit_batch2,b2c6,531.0,511.0,False,official nominal 1.1Ah * 80%
+mit_batch3,b3c0,,1009.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c1,,1063.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c10,,1078.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c11,,817.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c12,,932.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c13,,816.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c14,,858.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c15,,876.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c16,,1638.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c17,,1315.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c18,,1146.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c19,,1155.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c20,,813.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c21,,772.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c22,,1002.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c24,,825.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c25,,989.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c26,,1028.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c27,,850.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c28,,541.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c29,,858.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c3,,1115.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c30,,935.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c31,,731.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c33,,1284.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c34,,1158.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c35,,1093.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c36,,923.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c38,,1935.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c39,,1156.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c4,,1048.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c40,,796.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c41,,786.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c44,,940.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c45,,1801.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c5,,828.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c6,,667.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c7,,1836.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c8,,828.0,True,official nominal 1.1Ah * 80%
+mit_batch3,b3c9,,1039.0,True,official nominal 1.1Ah * 80%
+xjtu_2c,batch1_2C_battery-1,,,False,first eligible initial-reference SOH <= 80%
+xjtu_2c,batch1_2C_battery-2,,,False,first eligible initial-reference SOH <= 80%
+xjtu_2c,batch1_2C_battery-3,,,False,first eligible initial-reference SOH <= 80%
+xjtu_2c,batch1_2C_battery-4,,,False,first eligible initial-reference SOH <= 80%
+xjtu_2c,batch1_2C_battery-5,394.0,394.0,False,first eligible initial-reference SOH <= 80%
+xjtu_2c,batch1_2C_battery-6,398.0,398.0,False,first eligible initial-reference SOH <= 80%
+xjtu_2c,batch1_2C_battery-7,383.0,383.0,False,first eligible initial-reference SOH <= 80%
+xjtu_2c,batch1_2C_battery-8,418.0,418.0,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-1,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-10,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-11,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-12,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-13,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-14,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-15,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-2,285.0,285.0,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-3,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-4,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-5,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-6,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-7,319.0,319.0,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-8,,,False,first eligible initial-reference SOH <= 80%
+xjtu_3c,batch2_3C_battery-9,,,False,first eligible initial-reference SOH <= 80%

@@ -1,0 +1,7 @@
+source_run,context_length,method,scope,n_origins,n_event_origins,n_event_batteries,n_finite_event_predictions,n_no_crossing_event_predictions,conditional_mae_cycles,conditional_rmse_cycles,conditional_bias_cycles,mae_lower_bound_all_event_origins,censored_origins,censored_contradictions,all_event_predictions_finite
+rul-nasa-context-sweep-cuda-v1,16,zero-shot,primary_t64,3,3,3,0,3,,,,221.0,0,0,False
+rul-nasa-context-sweep-cuda-v1,16,head-only,primary_t64,3,3,3,1,2,3.0,3.0,-3.0,148.66666666666666,0,0,False
+rul-nasa-context-sweep-cuda-v1,32,zero-shot,primary_t64,3,3,3,0,3,,,,221.0,0,0,False
+rul-nasa-context-sweep-cuda-v1,32,head-only,primary_t64,3,3,3,1,2,26.0,26.0,26.0,156.33333333333334,0,0,False
+rul-nasa-context-sweep-cuda-v1,64,zero-shot,primary_t64,3,3,3,1,2,1.0,1.0,-1.0,139.33333333333334,0,0,False
+rul-nasa-context-sweep-cuda-v1,64,head-only,primary_t64,3,3,3,1,2,2.0,2.0,-2.0,139.66666666666666,0,0,False

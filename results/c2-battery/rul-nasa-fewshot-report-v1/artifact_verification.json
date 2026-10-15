@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "figure_count": 4,
+  "html_links_valid": true,
+  "files_sha256": {
+    "audit.json": "58ead044e58025c06d8ec1bc05ac74fdf843295da80a2d6021f46a0e5da962a2",
+    "cell_metrics.csv": "ee916f06dd96b5f33b49fb407b48234c458af29e2826b7a760155bbb8856241f",
+    "context_comparison.png": "855931b82975098981971d114beca29e94781fb7703c7ac0ef2ad5f4897df599",
+    "full_selection_checks.csv": "d65998e2f63bc37fc25f3f1a428ae25573eb04673295e97c717588b3b9fb884b",
+    "head_reload_checks.csv": "d242d7e97b2bf4883d03023e81d42d76ed7d68ca3a6b2b5c87923317e6e2d2c0",
+    "index.html": "7dee0f408d152531a088cbc0ba27d73c5e79615a10b8787613ace76d0dae0e2d",
+    "metrics.png": "8ea2adf5792d6fe02dedd30673a9056c464a81c69b9b457453dab96500eea328",
+    "nasa_before_after.png": "6bb2763163575e814077192b63f035a96b0d7c77b33f19b1b82d609ca5bb93bd",
+    "predictions.csv": "1b0405bc21ed1beb8ed4dc7dd1330f08fc508e2c3deb75cfc3770774b99c7245",
+    "reproduction.json": "f2830d6d9aea66883db7ede23f1ce06ef7a59c748c83707b1dcf29ed2d901d8d",
+    "robustness.png": "1d4fd01193c7563356fe66249a609982d9ddb407271dbe5748850f32c9595941",
+    "robustness_cell_metrics.csv": "cd62f2308a785615b769e4fa7541037f186c86b8de2ca0396dd3d8156bf5c94b",
+    "robustness_summary.csv": "d80143e861fbcf868a177045a3ffdfcf6bf7410ea475da71a8180e361f478e66",
+    "seed_metrics.csv": "53aac1a94dfeb753fea3decbc85eb0788a01d5e66006ed62dd593fdb4e1860a3",
+    "stage_cell_metrics.csv": "f5f0c033540945a41263a568f2c340a073d44aa36f44aaa4b5e4d5d3699336cf",
+    "stage_origin_counts.csv": "2f1a411aeee69812d07e18e7a71f7b9530d19334b61622c7a48cd52f24a66df8",
+    "summary.csv": "28d1bd681c2d2aa833b4f2d3665110c1779e19c7c037472f978a4088f2a769eb"
+  }
+}

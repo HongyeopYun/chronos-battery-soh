@@ -1,0 +1,1123 @@
+{
+  "models": [
+    {
+      "key": "nasa_aging__test_B0005__s42__L32",
+      "fold": "test_B0005",
+      "length": 32,
+      "seed": 42,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "step": 100,
+      "validation_mae": 16.0679435072274,
+      "weights_path": "references/nasa_aging__test_B0005__s42__L32.pt",
+      "weights_sha256": "15eb384fc298602eeac15fdc099d50743fefa3ad5a3346a145b19db30a8fb54e",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0005__s43__L32",
+      "fold": "test_B0005",
+      "length": 32,
+      "seed": 43,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "step": 50,
+      "validation_mae": 14.5841174290098,
+      "weights_path": "references/nasa_aging__test_B0005__s43__L32.pt",
+      "weights_sha256": "8be957d50f4ba1af5abae0e67ec088987d23270b03927f45e59203637f479b0e",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0005__s44__L32",
+      "fold": "test_B0005",
+      "length": 32,
+      "seed": 44,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 100,
+      "validation_mae": 13.593093674758382,
+      "weights_path": "references/nasa_aging__test_B0005__s44__L32.pt",
+      "weights_sha256": "c2678119358b413a41befffcf0e9a747c0b741257efd60ca82cb221f247ec651",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 2.486506938934326,
+      "key": "test_B0005__L32__metadata_mae__lr0.003__s42",
+      "fold": "test_B0005",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.2959999999984575,
+      "weights_path": "candidates\\test_B0005__L32__metadata_mae__lr0.003__s42\\weights.pt",
+      "weights_sha256": "affbb23429a67153c343d50f4717ce0f8229da827b4b833353814c30347db203",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "step": 150,
+      "validation_mae": 4.145990371704102,
+      "key": "test_B0005__L32__metadata_mae__lr0.003__s43",
+      "fold": "test_B0005",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.125,
+      "weights_path": "candidates\\test_B0005__L32__metadata_mae__lr0.003__s43\\weights.pt",
+      "weights_sha256": "8d0b06aa210975b2a88d0900c7ec63b79bdd8ee7016aa880320f094c89ef480b",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "step": 200,
+      "validation_mae": 3.45554256439209,
+      "key": "test_B0005__L32__metadata_mae__lr0.003__s44",
+      "fold": "test_B0005",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.1090000000003783,
+      "weights_path": "candidates\\test_B0005__L32__metadata_mae__lr0.003__s44\\weights.pt",
+      "weights_sha256": "df81bf0509a5b4b689baf63a850af66a5c4deb1ec40292906c346ceecc6eec6b",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 2.486506938934326,
+      "key": "test_B0005__L32__metadata_mae__lr0.003__s42",
+      "fold": "test_B0005",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.2959999999984575,
+      "weights_path": "candidates\\test_B0005__L32__metadata_mae__lr0.003__s42\\weights.pt",
+      "weights_sha256": "affbb23429a67153c343d50f4717ce0f8229da827b4b833353814c30347db203",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "step": 150,
+      "validation_mae": 4.145990371704102,
+      "key": "test_B0005__L32__metadata_mae__lr0.003__s43",
+      "fold": "test_B0005",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.125,
+      "weights_path": "candidates\\test_B0005__L32__metadata_mae__lr0.003__s43\\weights.pt",
+      "weights_sha256": "8d0b06aa210975b2a88d0900c7ec63b79bdd8ee7016aa880320f094c89ef480b",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "step": 200,
+      "validation_mae": 3.45554256439209,
+      "key": "test_B0005__L32__metadata_mae__lr0.003__s44",
+      "fold": "test_B0005",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.1090000000003783,
+      "weights_path": "candidates\\test_B0005__L32__metadata_mae__lr0.003__s44\\weights.pt",
+      "weights_sha256": "df81bf0509a5b4b689baf63a850af66a5c4deb1ec40292906c346ceecc6eec6b",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0006__s42__L32",
+      "fold": "test_B0006",
+      "length": 32,
+      "seed": 42,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 250,
+      "validation_mae": 23.571416295093037,
+      "weights_path": "references/nasa_aging__test_B0006__s42__L32.pt",
+      "weights_sha256": "b88fee9bcd740c419bd93e3ce1534181c86ab1c3ce75410e012a98e4358e31d6",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0006__s43__L32",
+      "fold": "test_B0006",
+      "length": 32,
+      "seed": 43,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 200,
+      "validation_mae": 22.63936096688975,
+      "weights_path": "references/nasa_aging__test_B0006__s43__L32.pt",
+      "weights_sha256": "97399ab6091c0d8461f92d2abe191dad0b3208fbcacff103280d0d1be68fde09",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0006__s44__L32",
+      "fold": "test_B0006",
+      "length": 32,
+      "seed": 44,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 150,
+      "validation_mae": 23.35847137285315,
+      "weights_path": "references/nasa_aging__test_B0006__s44__L32.pt",
+      "weights_sha256": "4b8a855d3033f43b58818f92a23fc02dd479652e3898d8afab8d8b17ad70edec",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 11.970335960388184,
+      "key": "test_B0006__L32__metadata_mae__lr0.003__s42",
+      "fold": "test_B0006",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.0790000000015425,
+      "weights_path": "candidates\\test_B0006__L32__metadata_mae__lr0.003__s42\\weights.pt",
+      "weights_sha256": "0072f39a2f6c76f4ed0baf8a22925663e9e3e2ed289904df91713b94cf2c97d8",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 13.267545700073242,
+      "key": "test_B0006__L32__metadata_mae__lr0.003__s43",
+      "fold": "test_B0006",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.125,
+      "weights_path": "candidates\\test_B0006__L32__metadata_mae__lr0.003__s43\\weights.pt",
+      "weights_sha256": "08d147d4f8c640db874cc281767f2942985fb743f082b2e9d7f7e4b4ae61cc2c",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "step": 100,
+      "validation_mae": 12.860191345214844,
+      "key": "test_B0006__L32__metadata_mae__lr0.003__s44",
+      "fold": "test_B0006",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.2190000000009604,
+      "weights_path": "candidates\\test_B0006__L32__metadata_mae__lr0.003__s44\\weights.pt",
+      "weights_sha256": "f95693182af4143b0d3ee49ffe64d639acf285b08cf6f0f3ff9e7793cb083188",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 11.970335960388184,
+      "key": "test_B0006__L32__metadata_mae__lr0.003__s42",
+      "fold": "test_B0006",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.0790000000015425,
+      "weights_path": "candidates\\test_B0006__L32__metadata_mae__lr0.003__s42\\weights.pt",
+      "weights_sha256": "0072f39a2f6c76f4ed0baf8a22925663e9e3e2ed289904df91713b94cf2c97d8",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 13.267545700073242,
+      "key": "test_B0006__L32__metadata_mae__lr0.003__s43",
+      "fold": "test_B0006",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.125,
+      "weights_path": "candidates\\test_B0006__L32__metadata_mae__lr0.003__s43\\weights.pt",
+      "weights_sha256": "08d147d4f8c640db874cc281767f2942985fb743f082b2e9d7f7e4b4ae61cc2c",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "step": 100,
+      "validation_mae": 12.860191345214844,
+      "key": "test_B0006__L32__metadata_mae__lr0.003__s44",
+      "fold": "test_B0006",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.2190000000009604,
+      "weights_path": "candidates\\test_B0006__L32__metadata_mae__lr0.003__s44\\weights.pt",
+      "weights_sha256": "f95693182af4143b0d3ee49ffe64d639acf285b08cf6f0f3ff9e7793cb083188",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0007__s42__L32",
+      "fold": "test_B0007",
+      "length": 32,
+      "seed": 42,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 0,
+      "validation_mae": 11.565406976744185,
+      "weights_path": "references/nasa_aging__test_B0007__s42__L32.pt",
+      "weights_sha256": "89ecb76e98dfbc6beaee6c98eb725d72bf68255c2da7156b0725b808ea94591d",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0007__s43__L32",
+      "fold": "test_B0007",
+      "length": 32,
+      "seed": 43,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 0,
+      "validation_mae": 11.565406976744185,
+      "weights_path": "references/nasa_aging__test_B0007__s43__L32.pt",
+      "weights_sha256": "aa6c2814ce777a8f1312330f9a0c6d2665c9421b0d483d5b1bcd032c80d02d82",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0007__s44__L32",
+      "fold": "test_B0007",
+      "length": 32,
+      "seed": 44,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 0,
+      "validation_mae": 11.565406976744185,
+      "weights_path": "references/nasa_aging__test_B0007__s44__L32.pt",
+      "weights_sha256": "d4a1ebe442dbc4f516bf5d005278b266b0f8ea2bfb7e242d1a34c65e2fe02d4e",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "step": 600,
+      "validation_mae": 4.8449811935424805,
+      "key": "test_B0007__L32__metadata_mae__lr0.001__s42",
+      "fold": "test_B0007",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "seed": 42,
+      "seconds": 1.2029999999977008,
+      "weights_path": "candidates\\test_B0007__L32__metadata_mae__lr0.001__s42\\weights.pt",
+      "weights_sha256": "43e134fd034215f89829e888f8ad1274e83094031234e0006bcfbad1fe8e3b3c",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "step": 500,
+      "validation_mae": 5.22023344039917,
+      "key": "test_B0007__L32__metadata_mae__lr0.001__s43",
+      "fold": "test_B0007",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "seed": 43,
+      "seconds": 1.1719999999986612,
+      "weights_path": "candidates\\test_B0007__L32__metadata_mae__lr0.001__s43\\weights.pt",
+      "weights_sha256": "35e2825512af3368c12f7fe7f1ddeb6ff48550e3b1be90ab8bb54a1ffa93c332",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "step": 400,
+      "validation_mae": 4.817615509033203,
+      "key": "test_B0007__L32__metadata_mae__lr0.001__s44",
+      "fold": "test_B0007",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "seed": 44,
+      "seconds": 1.125,
+      "weights_path": "candidates\\test_B0007__L32__metadata_mae__lr0.001__s44\\weights.pt",
+      "weights_sha256": "3c4945fd9c72610efa2c6fe8911f579d409095065a0cee23044365c111bf5725",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 3.8737382888793945,
+      "key": "test_B0007__L16__metadata_mae__lr0.003__s42",
+      "fold": "test_B0007",
+      "length": 16,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.0779999999977008,
+      "weights_path": "candidates\\test_B0007__L16__metadata_mae__lr0.003__s42\\weights.pt",
+      "weights_sha256": "467a7dea52c0dd800ed34574ecdb73a6b8ceb9cbbd8087b41ae0f771c6f52045",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 4.386524200439453,
+      "key": "test_B0007__L16__metadata_mae__lr0.003__s43",
+      "fold": "test_B0007",
+      "length": 16,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.0780000000013388,
+      "weights_path": "candidates\\test_B0007__L16__metadata_mae__lr0.003__s43\\weights.pt",
+      "weights_sha256": "f71b5fa1b8e21b34f93757f1fcf04b67fa0e23ec1259d98dc3b971fae84f616d",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "step": 150,
+      "validation_mae": 5.933156490325928,
+      "key": "test_B0007__L16__metadata_mae__lr0.003__s44",
+      "fold": "test_B0007",
+      "length": 16,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.1709999999984575,
+      "weights_path": "candidates\\test_B0007__L16__metadata_mae__lr0.003__s44\\weights.pt",
+      "weights_sha256": "6ca141079e57f0b4136cd50497db67a499e87742f9d99b1ad8340d377d44012e",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0018__s42__L32",
+      "fold": "test_B0018",
+      "length": 32,
+      "seed": 42,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 0,
+      "validation_mae": 17.259510869565215,
+      "weights_path": "references/nasa_aging__test_B0018__s42__L32.pt",
+      "weights_sha256": "f51e99b469d1c34b1d9066625000bc543021512d8e3ddc3bf5a392bbd6228dff",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0018__s43__L32",
+      "fold": "test_B0018",
+      "length": 32,
+      "seed": 43,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 200,
+      "validation_mae": 17.164495274640515,
+      "weights_path": "references/nasa_aging__test_B0018__s43__L32.pt",
+      "weights_sha256": "269c77210d626c3822237d8032c943a7c74dab9c6d60f84fe21097ee1c7045ea",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "key": "nasa_aging__test_B0018__s44__L32",
+      "fold": "test_B0018",
+      "length": 32,
+      "seed": 44,
+      "config": {
+        "name": "historical",
+        "normalization": "none",
+        "loss": "huber1",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "step": 0,
+      "validation_mae": 17.259510869565215,
+      "weights_path": "references/nasa_aging__test_B0018__s44__L32.pt",
+      "weights_sha256": "17e0c3764cc89718d161b2a3e80f80de855ce3ec68b18da94078bd144462ddcd",
+      "parameters": 51015,
+      "method": "historical_L32",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 5.7860107421875,
+      "key": "test_B0018__L32__metadata_mae__lr0.003__s42",
+      "fold": "test_B0018",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.1090000000003783,
+      "weights_path": "candidates\\test_B0018__L32__metadata_mae__lr0.003__s42\\weights.pt",
+      "weights_sha256": "3de09e70d4264e0951c12d564309142c988bb4ccfabeadf204c7d7043ed51a9e",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "step": 250,
+      "validation_mae": 12.989004135131836,
+      "key": "test_B0018__L32__metadata_mae__lr0.003__s43",
+      "fold": "test_B0018",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.139999999999418,
+      "weights_path": "candidates\\test_B0018__L32__metadata_mae__lr0.003__s43\\weights.pt",
+      "weights_sha256": "9940c2bd208271d489e8b7c62dcb95a3db1274a5f5175c919988e46956112dcb",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "step": 350,
+      "validation_mae": 10.553936004638672,
+      "key": "test_B0018__L32__metadata_mae__lr0.003__s44",
+      "fold": "test_B0018",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.1569999999992433,
+      "weights_path": "candidates\\test_B0018__L32__metadata_mae__lr0.003__s44\\weights.pt",
+      "weights_sha256": "f7d61af93023f7a2622dbb05060850e53d91de8eaa70e005ff07df9ecb6edb1f",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 5.126668453216553,
+      "key": "test_B0018__L8__metadata_huber01__lr0.003__s42",
+      "fold": "test_B0018",
+      "length": 8,
+      "config": {
+        "name": "metadata_huber01",
+        "normalization": "metadata",
+        "loss": "huber01",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.0930000000007567,
+      "weights_path": "candidates\\test_B0018__L8__metadata_huber01__lr0.003__s42\\weights.pt",
+      "weights_sha256": "66ae521d6068d6861ab545f6a23c5d62e81ef89775d46087e7233ed3e28ab561",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "step": 100,
+      "validation_mae": 8.77882194519043,
+      "key": "test_B0018__L8__metadata_huber01__lr0.003__s43",
+      "fold": "test_B0018",
+      "length": 8,
+      "config": {
+        "name": "metadata_huber01",
+        "normalization": "metadata",
+        "loss": "huber01",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.0470000000022992,
+      "weights_path": "candidates\\test_B0018__L8__metadata_huber01__lr0.003__s43\\weights.pt",
+      "weights_sha256": "1bacb20fe8cd60768cade87657ea8e6ece65286ccefdd5f5e0b80f7244392ada",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "step": 150,
+      "validation_mae": 8.342884063720703,
+      "key": "test_B0018__L8__metadata_huber01__lr0.003__s44",
+      "fold": "test_B0018",
+      "length": 8,
+      "config": {
+        "name": "metadata_huber01",
+        "normalization": "metadata",
+        "loss": "huber01",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.0779999999977008,
+      "weights_path": "candidates\\test_B0018__L8__metadata_huber01__lr0.003__s44\\weights.pt",
+      "weights_sha256": "0e04cb36dce3c957b4b122840abcf2f792fbbd9da9992fd00abdaa835b54a961",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_context",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    }
+  ],
+  "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+  "locked_at": "2026-10-14T11:08:47.994508+00:00",
+  "test_inference_started": false
+}

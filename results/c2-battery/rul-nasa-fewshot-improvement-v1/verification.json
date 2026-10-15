@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "architecture_changed": false,
+  "head_parameters": 51015,
+  "source_cells": 2,
+  "labels_per_source_cell": 16,
+  "selected_models": 36,
+  "predictions": 2097,
+  "source_test_disjoint": true,
+  "train_only_preprocessing": true,
+  "selection_locked_before_test": true,
+  "pretrained_feature_single_batch_parity": true,
+  "reference_validation_parity": true,
+  "predictions_sha256": "573726c8ef5995eb2169938f5e836dded960bef29ce457c4978ae7bd88e52919"
+}

@@ -1,0 +1,6 @@
+dataset,source_dataset,fold,method,scope,battery_id,origin_cycle,threshold_soh,event_observed,true_eol_cycle,true_rul,observed_rul_lower_bound,predicted_rul,error_cycles,absolute_error_cycles,contradicts_censored_followup
+nasa_aging,nasa_aging,test_B0005,head,within_dataset,B0005,32,0.8,True,101,69,,28.200408935546875,-40.799591064453125,40.799591064453125,False
+nasa_aging,nasa_aging,test_B0005,head,within_dataset,B0005,48,0.8,True,101,53,,26.690385818481445,-26.309614181518555,26.309614181518555,False
+nasa_aging,nasa_aging,test_B0005,head,within_dataset,B0005,64,0.8,True,101,37,,29.2803955078125,-7.7196044921875,7.7196044921875,False
+nasa_aging,nasa_aging,test_B0005,head,within_dataset,B0005,80,0.8,True,101,21,,27.709291458129883,6.709291458129883,6.709291458129883,False
+nasa_aging,nasa_aging,test_B0005,head,within_dataset,B0005,96,0.8,True,101,5,,26.663864135742188,21.663864135742188,21.663864135742188,False

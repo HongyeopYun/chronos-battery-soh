@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "checked_at": "2026-10-13T12:14:46.284329+00:00",
+  "physical_cells": 135,
+  "usable_labels": {
+    "mit_batch1": 41,
+    "mit_batch2": 43,
+    "mit_batch3": 40
+  },
+  "raw_nominal_crossing_matches_batch2": 43,
+  "source_label_last_plus_one_batch1_batch3": 81,
+  "label_qc_first_crossing_differences": 2,
+  "old_label_delay_min": 8,
+  "old_label_delay_median": 13.0,
+  "old_label_delay_max": 30,
+  "processed_artifact_sha256_unchanged": {
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch1\\batteries.csv": "d1a4bdf7dbb2ed500faa3269f4aaf3b3ddd6dbf15fc4e28991001538b1acf9c2",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch1\\manifest.json": "c516af58ee5684e6ee62a5384568f70bfb4dea4af0b9ccb437e80c94b23edcce",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch1\\schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch1\\soh.csv": "d45a55c491697df6c652de6e0bb5f48720499739fe7b9dd9d527c49621f3f005",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch2\\batteries.csv": "00bf0638861fe0a26954020fc200f0222e541a7727db03051d6808cfc9f12092",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch2\\manifest.json": "117248800e34a837a0318cb6023cc3ea821ae216e024cc56420de8c8053b7447",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch2\\schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch2\\soh.csv": "6d5987ba6aaf6ee2bc43997a69ce6083963b44a0e0b455259ebb61465570e418",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch3\\batteries.csv": "efbe817ba775900f9950b146cd054cd98025c9d83fa90c1cb7394fad870ef222",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch3\\manifest.json": "b2ed4dfd6427e75af5dec28f2dbec4391a27488e8e69d08a9da119b0d9d85b02",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch3\\schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7",
+    "data\\processed\\reviewed_v4\\forecast_safe\\mit_batch3\\soh.csv": "ec86c78609a7af8378d485abb5a3b27b7ef0860bf65295594265db164adf68e7"
+  },
+  "raw_file_stats": {
+    "MIT_Batch_1.mat": {
+      "bytes": 3025320241,
+      "mtime_ns": 1790773400139123400
+    },
+    "MIT_Batch_2.mat": {
+      "bytes": 2007331155,
+      "mtime_ns": 1790773323565470900
+    },
+    "MIT_Batch_3.mat": {
+      "bytes": 3236690412,
+      "mtime_ns": 1790773427564625700
+    }
+  },
+  "raw_hash_scope": "Raw summaries and labels read; full multi-GB file hashes not recomputed in this quick audit.",
+  "upstream_url": "https://raw.githubusercontent.com/rdbraatz/data-driven-prediction-of-battery-cycle-life-before-capacity-degradation/master/Load%20Data.ipynb",
+  "upstream_snapshot_sha256": "234e207f54632732c75d314b504e1fbd204e10557feb9519f99ecf6a14f5aa28",
+  "audit_source_sha256": "ff08fd394feeccfeaae2018c77d7eb0fe5e20728845e4706a136db687403435d",
+  "output_sha256": {
+    "all_physical_cells_audit.csv": "bcfe9f9a07d0035bca3f6b446220ecef8e0c5b84aa627f2171da5278980947d7",
+    "qc_crossing_differences.csv": "655c711eb32e86063fa9d3f561ae57788f8da612dd4e9eaf8fe4456e119280b4",
+    "report.md": "0b3a3b74e9e831eaa470deb82ea9ccfac59624109036a4ba485db3d5e2a49144",
+    "summary.csv": "9006087c44965a21b5eedd2339bf39bbc26186ab6649f7c5ac4dfdce4bfd4d80",
+    "upstream_load_data.ipynb": "234e207f54632732c75d314b504e1fbd204e10557feb9519f99ecf6a14f5aa28",
+    "usable_official_eol_labels.csv": "8ccbd2d6fd1d1fe409da5fbb7024d9623167bbb40a36fa327a098a175012fed5"
+  }
+}

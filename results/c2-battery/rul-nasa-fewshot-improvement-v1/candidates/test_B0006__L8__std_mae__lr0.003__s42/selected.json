@@ -1,0 +1,21 @@
+{
+  "step": 300,
+  "validation_mae": 23.622333526611328,
+  "key": "test_B0006__L8__std_mae__lr0.003__s42",
+  "fold": "test_B0006",
+  "length": 8,
+  "config": {
+    "name": "std_mae",
+    "normalization": "all",
+    "loss": "mae",
+    "weight_decay": 0.0
+  },
+  "lr": 0.003,
+  "seed": 42,
+  "seconds": 1.2030000000013388,
+  "weights_path": "candidates\\test_B0006__L8__std_mae__lr0.003__s42\\weights.pt",
+  "weights_sha256": "82d40b2353c12f5a847ca0eda854510c101ed2a332c017762c3381cc7e3de5e1",
+  "train_labels": 32,
+  "parameters": 51015,
+  "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc"
+}

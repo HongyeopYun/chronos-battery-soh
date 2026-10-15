@@ -1,0 +1,15 @@
+{
+  "step": 80,
+  "lr": 1e-05,
+  "loss": 10.319920539855957,
+  "crossing": 0.0,
+  "invalid": 0.0,
+  "protocol_sha256": "b645a17b3de4be1f63804458f6f1587e703511f0d27e693049c4f00d658cac89",
+  "weights_sha256": "8d04dd3eb339850e8632febe9faba14e345b8ba78927e0b7f9d47ece609445d1",
+  "train_labels": 8,
+  "validation_labels": 4,
+  "trainable_parameters": 3653280,
+  "frozen_verified": true,
+  "reload_verified": true,
+  "elapsed_seconds": 0.5309999999990396
+}

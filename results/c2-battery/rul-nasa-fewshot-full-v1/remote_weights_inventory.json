@@ -1,0 +1,14 @@
+﻿[
+    {
+        "case":  "test_B0018__s43",
+        "path":  "C:\\Users\\master\\Lab\\chronos-battery-soh\\.codex-runs\\nasa-fewshot-improvement-v1\\results\\c2-battery\\rul-nasa-fewshot-full-v1\\checkpoints\\test_B0018__s43\\weights.pt",
+        "bytes":  463558779,
+        "sha256":  "4910c74cae59b530bb6048e11629b0ae94dae3097560117166b77a44d7e1da9f"
+    },
+    {
+        "case":  "test_B0018__s44",
+        "path":  "C:\\Users\\master\\Lab\\chronos-battery-soh\\.codex-runs\\nasa-fewshot-improvement-v1\\results\\c2-battery\\rul-nasa-fewshot-full-v1\\checkpoints\\test_B0018__s44\\weights.pt",
+        "bytes":  463558779,
+        "sha256":  "4362e0b29467a6797ae43f1f5611c2390d79f1d56c056bce15115095ac396f61"
+    }
+]

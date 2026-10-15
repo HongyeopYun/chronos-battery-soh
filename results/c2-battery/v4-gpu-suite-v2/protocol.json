@@ -1,0 +1,802 @@
+{
+  "schema_version": 1,
+  "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "seed": 42,
+  "device": "cuda",
+  "dtype": "float32",
+  "data_profile": "reviewed_v4/forecast_safe",
+  "data_artifact_sha256": {
+    "nasa_aging": {
+      "soh.csv": "5f404b22266bd737401e9ac1b478db33cd02146a069ff76e1bdd385d08c0e48a",
+      "batteries.csv": "41c770eaf1441b53f4a08b0beb9178d59fa8a3bb79ea935a0e6fdf9fe7a6c562",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "calce_cs2_1c": {
+      "soh.csv": "9a37ab4832e761c4d3232b796d486920d3726628929ae7d9d462fcd966ae784f",
+      "batteries.csv": "99f9a05546bdbbe699073e1cc642a7bf8f085dbaf0351ae1eb8f2a128a3eac82",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch1": {
+      "soh.csv": "d45a55c491697df6c652de6e0bb5f48720499739fe7b9dd9d527c49621f3f005",
+      "batteries.csv": "d1a4bdf7dbb2ed500faa3269f4aaf3b3ddd6dbf15fc4e28991001538b1acf9c2",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch2": {
+      "soh.csv": "6d5987ba6aaf6ee2bc43997a69ce6083963b44a0e0b455259ebb61465570e418",
+      "batteries.csv": "00bf0638861fe0a26954020fc200f0222e541a7727db03051d6808cfc9f12092",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch3": {
+      "soh.csv": "ec86c78609a7af8378d485abb5a3b27b7ef0860bf65295594265db164adf68e7",
+      "batteries.csv": "efbe817ba775900f9950b146cd054cd98025c9d83fa90c1cb7394fad870ef222",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_2c": {
+      "soh.csv": "94368941c3d155cb42a3d14a6065ddcb36553b170e019ac7bba49aeeb1de5ae0",
+      "batteries.csv": "4dc44f54a620d03d870d1d39ef2c32e5ff9d1c4e9fb877edb5e21b67dc80c4fd",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_3c": {
+      "soh.csv": "c620b327c32a2f2f5230f848203fa8ff95daa6b0cf4142e8396329f9f332081d",
+      "batteries.csv": "1694e3710003e4ac86ace11012c71a3027d00b13c3f4e8e523148bdf81316a7c",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    }
+  },
+  "source_sha256": {
+    "scripts/run_c2_v4_suite.py": "7eecad0dd2ffe5d60772ccf36cbece5af366b3d67bbb73a17b0f3a6b466d7a33",
+    "src/battery_fewshot_tuning.py": "2bf3829edc00a4ef9d2bc1e95d374d1e8151c2e2c1222a612e943398b1db5797",
+    "src/battery_model_zeroshot.py": "ba2f3c4e8cf01fbc9dc51e3514d3f1bdce8329f72ec78702e9019874c9043942",
+    "src/battery_preprocessing.py": "d7af37010d5383103057d519652e008409f42a5c5022cd72da274f6310031236",
+    "src/battery_zeroshot.py": "ce200770dd9eb4b6d273ca3889e03fdceaa1a00b082f14bf1885df02d988d209",
+    "src/battery_zeroshot_minimal.py": "4198f06cf3a6c7f9d90aef174917331867c52657f88146e0e9c38a646f78f41e",
+    "src/battery_zeroshot_plots.py": "dae8a97378590b1c63cf1d73267a7efcf87bb14c4a7d7fc00c2cfb39972b7409",
+    "src/c2_context_comparison.py": "987e3d0a2ebb3837d99961b44b9db9b9c91c4e8acafca842b126c8bca6628ce3",
+    "src/c2_fewshot_trainer.py": "392a5fd2c739f460adb3e5678c3806e011ded45aef3a01d197d8b6c73c4c6135",
+    "src/c2_head_protocol.py": "2c1d5d6afadf238993e0c6bdf85d50f261a6d8719642cfbc937601cd566ee9fa",
+    "src/c2_one_step.py": "edfcac97fde8d6e5be05df2d4ff54dd3a2227cb4001be200a33f748012ae7f95",
+    "src/c2_partial_tuning.py": "ccbb24d75d82271d0445f9f868fd66df1ea7ae9a2716b536318c6b3e04bdcdcc",
+    "src/c2_rul.py": "46a21800a4f358f268f92e164d7f0701f8448f239f875ceb5e9a894a1661c6e4",
+    "src/c2_rul_head.py": "6e7653cb21ca4647b5b3d363658c1a454c0de18acb7bc987251096a9e1d4f0ee",
+    "src/c2_v4_experiments.py": "6e341cdc08d0892fce92b8f5131f02a7588d88c990b70b49de37c85a7934b94c",
+    "src/calce_windows.py": "e441f61150606955059cafec28a861a8a5818f86131fefac9051cd6704a0f23d",
+    "src/preprocessing_v4.py": "ffd5fe5fbda1b299699fe110e0c10370f357421e9fd2901230fe0486f38a7728",
+    "src/reviewed_soh.py": "6e6f66889063e45a3d8cf80ec6359bd1ef03ce26dac8ef141c47eaac0aca5b6b",
+    "src/soh_checkpoint.py": "0d91424b99a5abe8f4e77041119535e3e9ea2bf333c946af8f18fa2d849bc338",
+    "src/soh_cleaning.py": "51e5ed4faa9fd761ebe6c9b40cec4b01ae1790adc65f68dc9ffb0ac53d8ed52e",
+    "src/soh_data.py": "21bda8d110de2614f376eb6c68db5152398b53530fd2779d266523d2c0ed7b3c",
+    "src/soh_evaluation.py": "038a9eb24ee96da6a657e183a879e47d776e68d4a0d181571127ac9095c9fbf6",
+    "src/soh_experiment.py": "7c9c3cbd7bad48ee97ea83ac040255354016782d2d35ea74020831ab96fa39a9",
+    "src/strict_preprocessing.py": "54d6956645d2af56783b8ef7cb960224ef8d8bf6bd2314aa0d0c17095023ed23",
+    "src/xjtu_preprocessing.py": "99d413e599335dddc35087ea2ed83f568ed18225f5c26b48d2bde9c17c1adf11",
+    "src/__init__.py": "73b098210a49c01a6af5b41010f1860d9305ccd70436e0b499df68577e5b97c2"
+  },
+  "soh_lengths": [
+    2,
+    4,
+    8,
+    16,
+    32,
+    64
+  ],
+  "soh_prediction_length": 1,
+  "soh_methods": [
+    "LastValue",
+    "zero-shot",
+    "head-only"
+  ],
+  "soh_matched_targets": "Original t>=65, eligible target, at least one valid observation in t-2:t-1; identical times for all L.",
+  "rul_context": 32,
+  "rul_horizon": 1024,
+  "rul_origin_stride": 16,
+  "rul_threshold": 0.8,
+  "rul_definition": "First eligible observed Q/Q_ref <= .8; absorbing, no smoothing/interpolation. Record end is censoring, never EOL.",
+  "rul_direct_methods": [
+    "head",
+    "full",
+    "lora"
+  ],
+  "rul_features": "Native REG token plus input loc, scale and last eligible SOH. No cycle, dataset ID, Qref, future covariates or EOL input.",
+  "rul_head": "LayerNorm(771), Linear(771,64), GELU, Linear(64,1), softplus; train-label median scaling; initial constant train-label mean.",
+  "rul_labels": "Four evenly spaced eligible pre-EOL source origins per completed cell; eight train/four validation labels. Source selection uses completed source histories only. Evaluation origins fixed every 16 positions.",
+  "soh_steps": 100,
+  "soh_lrs": [
+    1e-06,
+    1e-05
+  ],
+  "rul_steps": 200,
+  "rul_lrs": {
+    "head": [
+      0.001,
+      0.003
+    ],
+    "full": [
+      1e-06,
+      1e-05
+    ],
+    "lora": [
+      0.0001,
+      0.0003
+    ]
+  },
+  "rul_head_lr_with_backbone": 0.001,
+  "batch_size": 4,
+  "validation_every": 20,
+  "rul_loss": "Huber on RUL divided by median training-label RUL; validation MAE, step zero allowed; no refit.",
+  "lora": {
+    "rank": 8,
+    "alpha": 16,
+    "dropout": 0.0,
+    "target_modules": [
+      "self_attention.q",
+      "self_attention.k",
+      "self_attention.v",
+      "self_attention.o"
+    ]
+  },
+  "dropout": "eval mode in all optimization forwards: no dropout, gradients enabled for selected scope.",
+  "all_selections_before_test": true,
+  "split_design": {
+    "soh": {
+      "nasa_aging": [
+        {
+          "fold_id": "test_B0005",
+          "train_ids": [
+            "B0007",
+            "B0018"
+          ],
+          "validation_ids": [
+            "B0006"
+          ],
+          "test_ids": [
+            "B0005"
+          ]
+        },
+        {
+          "fold_id": "test_B0006",
+          "train_ids": [
+            "B0005",
+            "B0018"
+          ],
+          "validation_ids": [
+            "B0007"
+          ],
+          "test_ids": [
+            "B0006"
+          ]
+        },
+        {
+          "fold_id": "test_B0007",
+          "train_ids": [
+            "B0005",
+            "B0006"
+          ],
+          "validation_ids": [
+            "B0018"
+          ],
+          "test_ids": [
+            "B0007"
+          ]
+        },
+        {
+          "fold_id": "test_B0018",
+          "train_ids": [
+            "B0006",
+            "B0007"
+          ],
+          "validation_ids": [
+            "B0005"
+          ],
+          "test_ids": [
+            "B0018"
+          ]
+        }
+      ],
+      "calce_cs2_1c": [
+        {
+          "fold_id": "test_CS2_35",
+          "train_ids": [
+            "CS2_37",
+            "CS2_38"
+          ],
+          "validation_ids": [
+            "CS2_36"
+          ],
+          "test_ids": [
+            "CS2_35"
+          ]
+        },
+        {
+          "fold_id": "test_CS2_36",
+          "train_ids": [
+            "CS2_35",
+            "CS2_38"
+          ],
+          "validation_ids": [
+            "CS2_37"
+          ],
+          "test_ids": [
+            "CS2_36"
+          ]
+        },
+        {
+          "fold_id": "test_CS2_37",
+          "train_ids": [
+            "CS2_35",
+            "CS2_36"
+          ],
+          "validation_ids": [
+            "CS2_38"
+          ],
+          "test_ids": [
+            "CS2_37"
+          ]
+        },
+        {
+          "fold_id": "test_CS2_38",
+          "train_ids": [
+            "CS2_36",
+            "CS2_37"
+          ],
+          "validation_ids": [
+            "CS2_35"
+          ],
+          "test_ids": [
+            "CS2_38"
+          ]
+        }
+      ],
+      "mit_batch1": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "b1c0",
+            "b1c1"
+          ],
+          "validation_ids": [
+            "b1c2"
+          ],
+          "test_ids": [
+            "b1c3",
+            "b1c4",
+            "b1c5",
+            "b1c6",
+            "b1c7",
+            "b1c8",
+            "b1c9",
+            "b1c10",
+            "b1c11",
+            "b1c12",
+            "b1c13",
+            "b1c14",
+            "b1c15",
+            "b1c16",
+            "b1c17",
+            "b1c18",
+            "b1c19",
+            "b1c20",
+            "b1c21",
+            "b1c22",
+            "b1c23",
+            "b1c24",
+            "b1c25",
+            "b1c26",
+            "b1c27",
+            "b1c28",
+            "b1c29",
+            "b1c30",
+            "b1c31",
+            "b1c32",
+            "b1c33",
+            "b1c34",
+            "b1c35",
+            "b1c36",
+            "b1c37",
+            "b1c38",
+            "b1c39",
+            "b1c40",
+            "b1c41",
+            "b1c42",
+            "b1c43",
+            "b1c44",
+            "b1c45"
+          ]
+        }
+      ],
+      "mit_batch2": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "b2c0",
+            "b2c1"
+          ],
+          "validation_ids": [
+            "b2c2"
+          ],
+          "test_ids": [
+            "b2c3",
+            "b2c4",
+            "b2c5",
+            "b2c6",
+            "b2c10",
+            "b2c11",
+            "b2c12",
+            "b2c13",
+            "b2c14",
+            "b2c17",
+            "b2c18",
+            "b2c19",
+            "b2c20",
+            "b2c21",
+            "b2c22",
+            "b2c23",
+            "b2c24",
+            "b2c25",
+            "b2c26",
+            "b2c27",
+            "b2c28",
+            "b2c29",
+            "b2c30",
+            "b2c31",
+            "b2c32",
+            "b2c33",
+            "b2c34",
+            "b2c35",
+            "b2c36",
+            "b2c37",
+            "b2c38",
+            "b2c39",
+            "b2c40",
+            "b2c41",
+            "b2c42",
+            "b2c43",
+            "b2c44",
+            "b2c45",
+            "b2c46",
+            "b2c47"
+          ]
+        }
+      ],
+      "mit_batch3": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "b3c0",
+            "b3c1"
+          ],
+          "validation_ids": [
+            "b3c3"
+          ],
+          "test_ids": [
+            "b3c4",
+            "b3c5",
+            "b3c6",
+            "b3c7",
+            "b3c8",
+            "b3c9",
+            "b3c10",
+            "b3c11",
+            "b3c12",
+            "b3c13",
+            "b3c14",
+            "b3c15",
+            "b3c16",
+            "b3c17",
+            "b3c18",
+            "b3c19",
+            "b3c20",
+            "b3c21",
+            "b3c22",
+            "b3c24",
+            "b3c25",
+            "b3c26",
+            "b3c27",
+            "b3c28",
+            "b3c29",
+            "b3c30",
+            "b3c31",
+            "b3c33",
+            "b3c34",
+            "b3c35",
+            "b3c36",
+            "b3c38",
+            "b3c39",
+            "b3c40",
+            "b3c41",
+            "b3c44",
+            "b3c45"
+          ]
+        }
+      ],
+      "xjtu_2c": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "batch1_2C_battery-4",
+            "batch1_2C_battery-5"
+          ],
+          "validation_ids": [
+            "batch1_2C_battery-6"
+          ],
+          "test_ids": [
+            "batch1_2C_battery-1",
+            "batch1_2C_battery-2",
+            "batch1_2C_battery-3",
+            "batch1_2C_battery-7",
+            "batch1_2C_battery-8"
+          ]
+        }
+      ],
+      "xjtu_3c": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "batch2_3C_battery-4",
+            "batch2_3C_battery-5"
+          ],
+          "validation_ids": [
+            "batch2_3C_battery-6"
+          ],
+          "test_ids": [
+            "batch2_3C_battery-1",
+            "batch2_3C_battery-2",
+            "batch2_3C_battery-3",
+            "batch2_3C_battery-7",
+            "batch2_3C_battery-8",
+            "batch2_3C_battery-9",
+            "batch2_3C_battery-10",
+            "batch2_3C_battery-11",
+            "batch2_3C_battery-12",
+            "batch2_3C_battery-13",
+            "batch2_3C_battery-14",
+            "batch2_3C_battery-15"
+          ]
+        }
+      ]
+    },
+    "rul": {
+      "nasa_aging": [
+        {
+          "fold_id": "test_B0005",
+          "train_ids": [
+            "B0007",
+            "B0018"
+          ],
+          "validation_ids": [
+            "B0006"
+          ],
+          "test_ids": [
+            "B0005"
+          ]
+        },
+        {
+          "fold_id": "test_B0006",
+          "train_ids": [
+            "B0005",
+            "B0018"
+          ],
+          "validation_ids": [
+            "B0007"
+          ],
+          "test_ids": [
+            "B0006"
+          ]
+        },
+        {
+          "fold_id": "test_B0007",
+          "train_ids": [
+            "B0005",
+            "B0006"
+          ],
+          "validation_ids": [
+            "B0018"
+          ],
+          "test_ids": [
+            "B0007"
+          ]
+        },
+        {
+          "fold_id": "test_B0018",
+          "train_ids": [
+            "B0006",
+            "B0007"
+          ],
+          "validation_ids": [
+            "B0005"
+          ],
+          "test_ids": [
+            "B0018"
+          ]
+        }
+      ],
+      "calce_cs2_1c": [
+        {
+          "fold_id": "test_CS2_35",
+          "train_ids": [
+            "CS2_37",
+            "CS2_38"
+          ],
+          "validation_ids": [
+            "CS2_36"
+          ],
+          "test_ids": [
+            "CS2_35"
+          ]
+        },
+        {
+          "fold_id": "test_CS2_36",
+          "train_ids": [
+            "CS2_35",
+            "CS2_38"
+          ],
+          "validation_ids": [
+            "CS2_37"
+          ],
+          "test_ids": [
+            "CS2_36"
+          ]
+        },
+        {
+          "fold_id": "test_CS2_37",
+          "train_ids": [
+            "CS2_35",
+            "CS2_36"
+          ],
+          "validation_ids": [
+            "CS2_38"
+          ],
+          "test_ids": [
+            "CS2_37"
+          ]
+        },
+        {
+          "fold_id": "test_CS2_38",
+          "train_ids": [
+            "CS2_36",
+            "CS2_37"
+          ],
+          "validation_ids": [
+            "CS2_35"
+          ],
+          "test_ids": [
+            "CS2_38"
+          ]
+        }
+      ],
+      "mit_batch2": [
+        {
+          "fold_id": "fixed",
+          "train_ids": [
+            "b2c0",
+            "b2c1"
+          ],
+          "validation_ids": [
+            "b2c2"
+          ],
+          "test_ids": [
+            "b2c3",
+            "b2c4",
+            "b2c5",
+            "b2c6",
+            "b2c10",
+            "b2c11",
+            "b2c12",
+            "b2c13",
+            "b2c14",
+            "b2c17",
+            "b2c18",
+            "b2c19",
+            "b2c20",
+            "b2c21",
+            "b2c22",
+            "b2c23",
+            "b2c24",
+            "b2c25",
+            "b2c26",
+            "b2c27",
+            "b2c28",
+            "b2c29",
+            "b2c30",
+            "b2c31",
+            "b2c32",
+            "b2c33",
+            "b2c34",
+            "b2c35",
+            "b2c36",
+            "b2c37",
+            "b2c38",
+            "b2c39",
+            "b2c40",
+            "b2c41",
+            "b2c42",
+            "b2c43",
+            "b2c44",
+            "b2c45",
+            "b2c46",
+            "b2c47"
+          ],
+          "transfer_test": {
+            "mit_batch1": [
+              "b1c0",
+              "b1c1",
+              "b1c2",
+              "b1c3",
+              "b1c4",
+              "b1c5",
+              "b1c6",
+              "b1c7",
+              "b1c8",
+              "b1c9",
+              "b1c10",
+              "b1c11",
+              "b1c12",
+              "b1c13",
+              "b1c14",
+              "b1c15",
+              "b1c16",
+              "b1c17",
+              "b1c18",
+              "b1c19",
+              "b1c20",
+              "b1c21",
+              "b1c22",
+              "b1c23",
+              "b1c24",
+              "b1c25",
+              "b1c26",
+              "b1c27",
+              "b1c28",
+              "b1c29",
+              "b1c30",
+              "b1c31",
+              "b1c32",
+              "b1c33",
+              "b1c34",
+              "b1c35",
+              "b1c36",
+              "b1c37",
+              "b1c38",
+              "b1c39",
+              "b1c40",
+              "b1c41",
+              "b1c42",
+              "b1c43",
+              "b1c44",
+              "b1c45"
+            ],
+            "mit_batch3": [
+              "b3c0",
+              "b3c1",
+              "b3c3",
+              "b3c4",
+              "b3c5",
+              "b3c6",
+              "b3c7",
+              "b3c8",
+              "b3c9",
+              "b3c10",
+              "b3c11",
+              "b3c12",
+              "b3c13",
+              "b3c14",
+              "b3c15",
+              "b3c16",
+              "b3c17",
+              "b3c18",
+              "b3c19",
+              "b3c20",
+              "b3c21",
+              "b3c22",
+              "b3c24",
+              "b3c25",
+              "b3c26",
+              "b3c27",
+              "b3c28",
+              "b3c29",
+              "b3c30",
+              "b3c31",
+              "b3c33",
+              "b3c34",
+              "b3c35",
+              "b3c36",
+              "b3c38",
+              "b3c39",
+              "b3c40",
+              "b3c41",
+              "b3c44",
+              "b3c45"
+            ]
+          }
+        }
+      ],
+      "xjtu_2c": [
+        {
+          "fold_id": "test_batch1_2C_battery-5",
+          "train_ids": [
+            "batch1_2C_battery-7",
+            "batch1_2C_battery-8"
+          ],
+          "validation_ids": [
+            "batch1_2C_battery-6"
+          ],
+          "test_ids": [
+            "batch1_2C_battery-5",
+            "batch1_2C_battery-1",
+            "batch1_2C_battery-2",
+            "batch1_2C_battery-3",
+            "batch1_2C_battery-4"
+          ],
+          "transfer_test": {
+            "xjtu_3c": [
+              "batch2_3C_battery-1",
+              "batch2_3C_battery-2",
+              "batch2_3C_battery-3",
+              "batch2_3C_battery-4",
+              "batch2_3C_battery-5",
+              "batch2_3C_battery-6",
+              "batch2_3C_battery-7",
+              "batch2_3C_battery-8",
+              "batch2_3C_battery-9",
+              "batch2_3C_battery-10",
+              "batch2_3C_battery-11",
+              "batch2_3C_battery-12",
+              "batch2_3C_battery-13",
+              "batch2_3C_battery-14",
+              "batch2_3C_battery-15"
+            ]
+          }
+        },
+        {
+          "fold_id": "test_batch1_2C_battery-6",
+          "train_ids": [
+            "batch1_2C_battery-5",
+            "batch1_2C_battery-8"
+          ],
+          "validation_ids": [
+            "batch1_2C_battery-7"
+          ],
+          "test_ids": [
+            "batch1_2C_battery-6"
+          ]
+        },
+        {
+          "fold_id": "test_batch1_2C_battery-7",
+          "train_ids": [
+            "batch1_2C_battery-5",
+            "batch1_2C_battery-6"
+          ],
+          "validation_ids": [
+            "batch1_2C_battery-8"
+          ],
+          "test_ids": [
+            "batch1_2C_battery-7"
+          ]
+        },
+        {
+          "fold_id": "test_batch1_2C_battery-8",
+          "train_ids": [
+            "batch1_2C_battery-6",
+            "batch1_2C_battery-7"
+          ],
+          "validation_ids": [
+            "batch1_2C_battery-5"
+          ],
+          "test_ids": [
+            "batch1_2C_battery-8"
+          ]
+        }
+      ]
+    },
+    "transfers": {
+      "mit_batch1": "mit_batch2",
+      "mit_batch3": "mit_batch2",
+      "xjtu_3c": "xjtu_2c"
+    }
+  },
+  "limitations": [
+    "Single seed and fixed small labeled budgets; not a hyperparameter optimum.",
+    "CALCE axis is retained record count; missing physical cycles between files unknown.",
+    "Within-dataset and transferred direct models reported separately.",
+    "Censored labels never used as exact RUL; only observed-followup consistency evaluated.",
+    "Conditioning exact-RUL training on observed EOL introduces subset selection; does not establish censored-population accuracy."
+  ]
+}

@@ -1,0 +1,448 @@
+{
+  "task": "NASA full-weight few-shot with unchanged architecture",
+  "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "models": [
+    {
+      "step": 50,
+      "validation_mae": 2.486506938934326,
+      "key": "test_B0005__L32__metadata_mae__lr0.003__s42",
+      "fold": "test_B0005",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.2959999999984575,
+      "weights_path": "candidates\\test_B0005__L32__metadata_mae__lr0.003__s42\\weights.pt",
+      "weights_sha256": "affbb23429a67153c343d50f4717ce0f8229da827b4b833353814c30347db203",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "step": 150,
+      "validation_mae": 4.145990371704102,
+      "key": "test_B0005__L32__metadata_mae__lr0.003__s43",
+      "fold": "test_B0005",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.125,
+      "weights_path": "candidates\\test_B0005__L32__metadata_mae__lr0.003__s43\\weights.pt",
+      "weights_sha256": "8d0b06aa210975b2a88d0900c7ec63b79bdd8ee7016aa880320f094c89ef480b",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "step": 200,
+      "validation_mae": 3.45554256439209,
+      "key": "test_B0005__L32__metadata_mae__lr0.003__s44",
+      "fold": "test_B0005",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.1090000000003783,
+      "weights_path": "candidates\\test_B0005__L32__metadata_mae__lr0.003__s44\\weights.pt",
+      "weights_sha256": "df81bf0509a5b4b689baf63a850af66a5c4deb1ec40292906c346ceecc6eec6b",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0005"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 11.970335960388184,
+      "key": "test_B0006__L32__metadata_mae__lr0.003__s42",
+      "fold": "test_B0006",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.0790000000015425,
+      "weights_path": "candidates\\test_B0006__L32__metadata_mae__lr0.003__s42\\weights.pt",
+      "weights_sha256": "0072f39a2f6c76f4ed0baf8a22925663e9e3e2ed289904df91713b94cf2c97d8",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 13.267545700073242,
+      "key": "test_B0006__L32__metadata_mae__lr0.003__s43",
+      "fold": "test_B0006",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.125,
+      "weights_path": "candidates\\test_B0006__L32__metadata_mae__lr0.003__s43\\weights.pt",
+      "weights_sha256": "08d147d4f8c640db874cc281767f2942985fb743f082b2e9d7f7e4b4ae61cc2c",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "step": 100,
+      "validation_mae": 12.860191345214844,
+      "key": "test_B0006__L32__metadata_mae__lr0.003__s44",
+      "fold": "test_B0006",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.2190000000009604,
+      "weights_path": "candidates\\test_B0006__L32__metadata_mae__lr0.003__s44\\weights.pt",
+      "weights_sha256": "f95693182af4143b0d3ee49ffe64d639acf285b08cf6f0f3ff9e7793cb083188",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ]
+    },
+    {
+      "step": 600,
+      "validation_mae": 4.8449811935424805,
+      "key": "test_B0007__L32__metadata_mae__lr0.001__s42",
+      "fold": "test_B0007",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "seed": 42,
+      "seconds": 1.2029999999977008,
+      "weights_path": "candidates\\test_B0007__L32__metadata_mae__lr0.001__s42\\weights.pt",
+      "weights_sha256": "43e134fd034215f89829e888f8ad1274e83094031234e0006bcfbad1fe8e3b3c",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "step": 500,
+      "validation_mae": 5.22023344039917,
+      "key": "test_B0007__L32__metadata_mae__lr0.001__s43",
+      "fold": "test_B0007",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "seed": 43,
+      "seconds": 1.1719999999986612,
+      "weights_path": "candidates\\test_B0007__L32__metadata_mae__lr0.001__s43\\weights.pt",
+      "weights_sha256": "35e2825512af3368c12f7fe7f1ddeb6ff48550e3b1be90ab8bb54a1ffa93c332",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "step": 400,
+      "validation_mae": 4.817615509033203,
+      "key": "test_B0007__L32__metadata_mae__lr0.001__s44",
+      "fold": "test_B0007",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.001,
+      "seed": 44,
+      "seconds": 1.125,
+      "weights_path": "candidates\\test_B0007__L32__metadata_mae__lr0.001__s44\\weights.pt",
+      "weights_sha256": "3c4945fd9c72610efa2c6fe8911f579d409095065a0cee23044365c111bf5725",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ]
+    },
+    {
+      "step": 50,
+      "validation_mae": 5.7860107421875,
+      "key": "test_B0018__L32__metadata_mae__lr0.003__s42",
+      "fold": "test_B0018",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 42,
+      "seconds": 1.1090000000003783,
+      "weights_path": "candidates\\test_B0018__L32__metadata_mae__lr0.003__s42\\weights.pt",
+      "weights_sha256": "3de09e70d4264e0951c12d564309142c988bb4ccfabeadf204c7d7043ed51a9e",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "step": 250,
+      "validation_mae": 12.989004135131836,
+      "key": "test_B0018__L32__metadata_mae__lr0.003__s43",
+      "fold": "test_B0018",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 43,
+      "seconds": 1.139999999999418,
+      "weights_path": "candidates\\test_B0018__L32__metadata_mae__lr0.003__s43\\weights.pt",
+      "weights_sha256": "9940c2bd208271d489e8b7c62dcb95a3db1274a5f5175c919988e46956112dcb",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    },
+    {
+      "step": 350,
+      "validation_mae": 10.553936004638672,
+      "key": "test_B0018__L32__metadata_mae__lr0.003__s44",
+      "fold": "test_B0018",
+      "length": 32,
+      "config": {
+        "name": "metadata_mae",
+        "normalization": "metadata",
+        "loss": "mae",
+        "weight_decay": 0.0
+      },
+      "lr": 0.003,
+      "seed": 44,
+      "seconds": 1.1569999999992433,
+      "weights_path": "candidates\\test_B0018__L32__metadata_mae__lr0.003__s44\\weights.pt",
+      "weights_sha256": "f7d61af93023f7a2622dbb05060850e53d91de8eaa70e005ff07df9ecb6edb1f",
+      "train_labels": 32,
+      "parameters": 51015,
+      "protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+      "method": "tuned_L32",
+      "test_ids": [
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ]
+    }
+  ],
+  "head_protocol_sha256": "53de16b352bb29e89706c9ecef04850359d6e122d779e8792ac0d7f3ace263cc",
+  "head_selection_lock_sha256": "2b7861a7933691aecd18d9a1f37a76e6bf2d664339932ea99202c129d681f53f",
+  "source_sha256": {
+    "scripts/run_c2_nasa_fewshot_full.py": "e0ccb57d9fd8ebea378d5febeb411c000236134d6d16a8ef8c61c731206abe8a",
+    "src/c2_rul_improvement.py": "543c928117aa5470fecbd2a88186cd30693a50aaa0be134e5c342a90555eb6b1",
+    "src/c2_v4_experiments.py": "6e341cdc08d0892fce92b8f5131f02a7588d88c990b70b49de37c85a7934b94c",
+    "scripts/run_c2_nasa_fewshot_improvement.py": "48e2b1c7e2c2e0ae8be6e82a4c517fa0c25954c1badd29bbbde4a48719a95870"
+  },
+  "data_artifact_sha256": {
+    "nasa_aging": {
+      "soh.csv": "5f404b22266bd737401e9ac1b478db33cd02146a069ff76e1bdd385d08c0e48a",
+      "batteries.csv": "41c770eaf1441b53f4a08b0beb9178d59fa8a3bb79ea935a0e6fdf9fe7a6c562",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "calce_cs2_1c": {
+      "soh.csv": "9a37ab4832e761c4d3232b796d486920d3726628929ae7d9d462fcd966ae784f",
+      "batteries.csv": "99f9a05546bdbbe699073e1cc642a7bf8f085dbaf0351ae1eb8f2a128a3eac82",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch1": {
+      "soh.csv": "d45a55c491697df6c652de6e0bb5f48720499739fe7b9dd9d527c49621f3f005",
+      "batteries.csv": "d1a4bdf7dbb2ed500faa3269f4aaf3b3ddd6dbf15fc4e28991001538b1acf9c2",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch2": {
+      "soh.csv": "6d5987ba6aaf6ee2bc43997a69ce6083963b44a0e0b455259ebb61465570e418",
+      "batteries.csv": "00bf0638861fe0a26954020fc200f0222e541a7727db03051d6808cfc9f12092",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch3": {
+      "soh.csv": "ec86c78609a7af8378d485abb5a3b27b7ef0860bf65295594265db164adf68e7",
+      "batteries.csv": "efbe817ba775900f9950b146cd054cd98025c9d83fa90c1cb7394fad870ef222",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_2c": {
+      "soh.csv": "94368941c3d155cb42a3d14a6065ddcb36553b170e019ac7bba49aeeb1de5ae0",
+      "batteries.csv": "4dc44f54a620d03d870d1d39ef2c32e5ff9d1c4e9fb877edb5e21b67dc80c4fd",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_3c": {
+      "soh.csv": "c620b327c32a2f2f5230f848203fa8ff95daa6b0cf4142e8396329f9f332081d",
+      "batteries.csv": "1694e3710003e4ac86ace11012c71a3027d00b13c3f4e8e523148bdf81316a7c",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    }
+  },
+  "backbone_lrs": [
+    1e-06,
+    1e-05
+  ],
+  "head_lr": 0.0001,
+  "steps": 200,
+  "batch_size": 16,
+  "eval_every": 20,
+  "structure": "Exactly existing DirectRUL(mode=full), no adapter/new layer/changed dimensions. Existing output SOH head unused/frozen. Existing encoder and scalar head weights trained.",
+  "budget": "Same2 source cells x16 exact RUL labels; same validation1/test1 cells, t>=32,L32.",
+  "optimization": "Warm start from validation-selected same-budget head. Keep its external source-only feature scaler and loss. AdamW no WD, linear decay, grad clip1. Baseline step0 allowed.",
+  "selection": "Lock all12 models using validation MAE only before any full-model test prediction. Fixed LR grid declared independently of test outcome.",
+  "limitation": "Historical datasets previously viewed; exploratory follow-up. Architecture unchanged but parameter-training scope differs from Head-only."
+}

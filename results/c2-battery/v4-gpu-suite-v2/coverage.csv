@@ -1,0 +1,8 @@
+dataset,usable_cells,event_cells,censored_cells,direct_within_dataset
+nasa_aging,4,4,0,True
+calce_cs2_1c,4,4,0,True
+mit_batch1,46,0,46,False
+mit_batch2,43,43,0,True
+mit_batch3,40,0,40,False
+xjtu_2c,8,4,4,True
+xjtu_3c,15,2,13,False

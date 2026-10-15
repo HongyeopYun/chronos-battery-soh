@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "command": ".venv/Scripts/python.exe -X utf8 -m unittest discover -s tests",
+  "tests": 150,
+  "duration_seconds": 32.525,
+  "new_v4_tests": 7,
+  "test_source_sha256": "1e59116e69473408ba942bc49452494be08817073ed6b4c36acfcdc7d565e1e3",
+  "remote_gpu_smoke": "smoke.json contains actual CUDA gradient-scope and reload checks for all three methods"
+}

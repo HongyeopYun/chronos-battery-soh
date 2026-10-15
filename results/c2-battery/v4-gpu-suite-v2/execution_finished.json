@@ -1,0 +1,7 @@
+{
+  "status": "predictions_finished",
+  "finished_at": "2026-10-13T08:48:20.359284+00:00",
+  "selection_unchanged": true,
+  "max_gpu_memory_allocated_bytes": 3753827840,
+  "protocol_sha256": "b645a17b3de4be1f63804458f6f1587e703511f0d27e693049c4f00d658cac89"
+}

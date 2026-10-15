@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "independent_forecast_crossings": 51,
+  "scored_predictions": 51,
+  "excluded_predictions": 36,
+  "original_artifacts_unchanged": true,
+  "nonpositive_true_rul_excluded": true,
+  "artifacts_sha256": {
+    "eol_audit.csv": "43f28bd107582b014480ae59779eaf0f90b5dcb717db1873816296fc69532a1b",
+    "excluded_origins.csv": "89f55ddfffe4ce4ecb0e884a423bb778a43f6562f4774475fee8400e94522378",
+    "primary_context_sweep.csv": "f9aa44b3a63ea31cdb561a91b176e866027c76f293e9309c04260f56420a7b38",
+    "protocol.json": "f0b46f97d0f0dc4f248d9665ff7e857ed6238f0c8c99874423a7b37cabb96546",
+    "report.md": "098155afd2d6f657c7a8c6c6a2236d87215820e8796f6b2f1b81121f74d1417c",
+    "rul_predictions.csv": "e409126bc519d92a47c67072d9ada8ce7a02d38f34b541520bd3b422445168a6",
+    "soh_metrics_through_eol.csv": "cd97c93300916c39760880449936403783c7d764d3eb79556abebd6b4a651a88",
+    "summary.csv": "4fee9cbe3b96b3cea75f4603962360db7b4615e7ddae8256bce6dac52aa4d7e3",
+    "trajectories.png": "1ed34817412c5f79ca2378e4845f9fb2789e57519e73612349fd252d3c42012d"
+  }
+}

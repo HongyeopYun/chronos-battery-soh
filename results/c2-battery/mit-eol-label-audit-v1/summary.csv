@@ -1,0 +1,4 @@
+dataset,cells,eol_min,eol_median,eol_max
+mit_batch1,41,534.0,842.0,2237.0
+mit_batch2,43,148.0,481.0,713.0
+mit_batch3,40,541.0,964.5,1935.0

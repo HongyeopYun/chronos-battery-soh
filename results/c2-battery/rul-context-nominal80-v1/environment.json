@@ -1,0 +1,12 @@
+{
+  "started_at": "2026-10-13T13:27:02.231012+00:00",
+  "host": "DESKTOP-L4769S5",
+  "gpu": "NVIDIA GeForce RTX 3080",
+  "cuda": "13.0",
+  "packages": {
+    "torch": "2.14.0+cu130",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "chronos-forecasting": "2.3.2"
+  }
+}

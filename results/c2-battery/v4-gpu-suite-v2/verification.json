@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "verified_at": "2026-10-13T08:50:37.134365+00:00",
+  "protocol_sha256": "b645a17b3de4be1f63804458f6f1587e703511f0d27e693049c4f00d658cac89",
+  "selected_models": 117,
+  "checkpoints_sha256_checked_locally": 117,
+  "checkpoints_sha256_checked_remotely": null,
+  "soh_prediction_files": 870,
+  "soh_test_cells": 145,
+  "soh_targets_per_length": 94516,
+  "rul_all_zero_origins": 6869,
+  "rul_matched_origins_per_method": 6816,
+  "direct_test_cells": 157,
+  "source_and_test_disjoint": true,
+  "censored_not_exact_labels": true,
+  "identical_direct_method_test_origins": true,
+  "scores_independently_recomputed": true,
+  "selection_histories_verified": true,
+  "source_and_data_hashes_verified": true
+}

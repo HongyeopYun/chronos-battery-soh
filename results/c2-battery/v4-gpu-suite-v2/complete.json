@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "finished_at": "2026-10-13T08:50:50.212947+00:00",
+  "protocol_sha256": "b645a17b3de4be1f63804458f6f1587e703511f0d27e693049c4f00d658cac89",
+  "verification_sha256": "24e35bccf533ff13cfe8ff8b0a2691d747e5bc72abb4fec9218aa2b129a27f51",
+  "remote_artifact_manifest_sha256": "12072c4976b62386a4eec73209fe92cccf288d3d42226e7712ce311dab419d32",
+  "selected_models": 117,
+  "report": "report.md",
+  "exporter_sha256": "b41c88f1c6ae2ed365e59cc5de7dd2526e2a8fb3a18e938030a7cb45f5fb2d3b",
+  "report_builder_sha256": "66a93223d51de6651d9858b28b7b26b06282c010cb2fc3503defe1be87f065b7"
+}

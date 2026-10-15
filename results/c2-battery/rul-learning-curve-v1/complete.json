@@ -1,0 +1,8 @@
+{
+  "status": "complete",
+  "completed_at": "2026-10-13T11:42:12.526930+00:00",
+  "cases": 144,
+  "protocol_sha256": "e63c51f07adfef47c2ce70f95573e2a77ad98f87b0d6b5bd5afaf8b0c05edf99",
+  "report_source_sha256": "cd4cc59ebb1ca586e036e2683b960c9223413202bbb12643ada15631f4372357",
+  "gpu_verification_sha256": "fd28f0deb5c20553fbd2745e4a2e94fa5b8ff03a562709b3c172e1baf731fcb4"
+}

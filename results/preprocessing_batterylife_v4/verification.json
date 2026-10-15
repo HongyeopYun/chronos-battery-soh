@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "raw_files_unchanged": 136,
+  "v3_and_prior_result_files_unchanged": 1587,
+  "input_rows": 126272,
+  "output_rows_per_profile": 126272,
+  "all_source_rows_mapped_exactly_once": true,
+  "physical_cells_in_one_group": true,
+  "completed_bundles": 14,
+  "no_model_runs": true,
+  "implementation_sha256": {
+    "src/preprocessing_v4.py": "ffd5fe5fbda1b299699fe110e0c10370f357421e9fd2901230fe0486f38a7728",
+    "scripts/build_preprocessing_v4.py": "e692203412836468714f77a8cf585be996a319116cc892bf682eede3a9df0f90"
+  },
+  "upstream": {
+    "batteryml_CALCE.py.txt": {
+      "url": "https://raw.githubusercontent.com/microsoft/BatteryML/2861ae3b8c79938c7fc8e6fe9986b799ca71c7dd/batteryml/preprocess/preprocess_CALCE.py",
+      "sha256": "2ac1067e088b7906655b9772babca9ec5b2241de8917dae9b834b14fdcf8a5db"
+    },
+    "batterylife_CALCE.py.txt": {
+      "url": "https://raw.githubusercontent.com/Ruifeng-Tan/BatteryLife/3b17bb53202e10711deae0448c91f84144bb3dd9/process_scripts/preprocess_CALCE.py",
+      "sha256": "9fa56acd65e37ba74ed61ef27aa150cffcc6bead2cc7d1d3da142a6192c613b5"
+    },
+    "batterylife_MATR.py.txt": {
+      "url": "https://raw.githubusercontent.com/Ruifeng-Tan/BatteryLife/3b17bb53202e10711deae0448c91f84144bb3dd9/process_scripts/preprocess_MATR.py",
+      "sha256": "ada511cf294862f123def7ff52e060a84e935ab1d3cec8efe3633b46015349b9"
+    },
+    "batterylife_XJTU.py.txt": {
+      "url": "https://raw.githubusercontent.com/Ruifeng-Tan/BatteryLife/3b17bb53202e10711deae0448c91f84144bb3dd9/process_scripts/preprocess_XJTU.py",
+      "sha256": "1209160a6669d56f4ba40b20adf0076821042cf5b578628d641749a26315dca3"
+    },
+    "batterylife_XJTU_tools.py.txt": {
+      "url": "https://raw.githubusercontent.com/Ruifeng-Tan/BatteryLife/3b17bb53202e10711deae0448c91f84144bb3dd9/process_scripts/Extract_life_labels_tools/XJTU_tools.py",
+      "sha256": "5dcf153f504ebca311aed43c6bb6fc7a4005b4bb98c477aba2bc4230eb53452a"
+    }
+  },
+  "artifact_sha256": {
+    "battery_coverage.csv": "c40e64036a4245ad5a99184b3c6baa781234a7c56695c131fc0729223200adad",
+    "calce_filter_diagnostics.csv": "4868824a5c88f6a3952a8b684733b67413cf092745ea0c53856a65c8bf74e1be",
+    "changed_observations.csv.gz": "b1dd883991021cb4215f363d133fe101ac32f18058a8471467bdffb4c54533ec",
+    "dataset_coverage.csv": "9d34b745bd7a86751134e66bdd43793af8459ec8239943f39bb3d68562ee157d",
+    "eligible_trajectories.png": "471c3117ece13ea199ed68692710bb18b131fcde24ccc07907062fdfbd2d7880",
+    "lineage.csv.gz": "1ed3e56cc87485556d33a138463228291f62426676ab7d8cb53c1b60dbb5860b",
+    "protected_before.json": "1c7f5a2f58f8a8270fa02883443ad7801aec6dc8f2b4c38c7f68a08b51aac298",
+    "report.md": "c2a5c1b448a513aa4b3023376a85493d2816ed654ce1460c46efce7a7d59ae36",
+    "evidence/calce.csv.gz": "471873b0d49d2c04f4e1aa7d97aaad28637dd7a80c3a0b2b132a2e9cd9ccc57c",
+    "evidence/calce.json": "3596f15e65aeb99546cd04544163e4da49db88b89e3c02aaa9a83a0ae899cb65",
+    "evidence/xjtu.csv.gz": "49cb29c54177d8b60d703da601de2f6003d795450ac86af9784ef7008b4a6aa4",
+    "evidence/xjtu.json": "a2c4dc09787108c4b5a44bc8827e13cef5f4a77e3533c082681f85cd812d94cd",
+    "upstream_sources/batterylife_CALCE.py.txt": "9fa56acd65e37ba74ed61ef27aa150cffcc6bead2cc7d1d3da142a6192c613b5",
+    "upstream_sources/batterylife_MATR.py.txt": "ada511cf294862f123def7ff52e060a84e935ab1d3cec8efe3633b46015349b9",
+    "upstream_sources/batterylife_XJTU.py.txt": "1209160a6669d56f4ba40b20adf0076821042cf5b578628d641749a26315dca3",
+    "upstream_sources/batterylife_XJTU_tools.py.txt": "5dcf153f504ebca311aed43c6bb6fc7a4005b4bb98c477aba2bc4230eb53452a",
+    "upstream_sources/batteryml_CALCE.py.txt": "2ac1067e088b7906655b9772babca9ec5b2241de8917dae9b834b14fdcf8a5db"
+  }
+}

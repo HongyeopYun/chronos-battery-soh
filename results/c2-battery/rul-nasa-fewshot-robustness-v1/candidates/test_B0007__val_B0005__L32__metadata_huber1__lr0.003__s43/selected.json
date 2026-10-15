@@ -1,0 +1,21 @@
+{
+  "step": 1000,
+  "validation_mae": 6.463354110717773,
+  "key": "test_B0007__val_B0005__L32__metadata_huber1__lr0.003__s43",
+  "fold": "test_B0007__val_B0005",
+  "length": 32,
+  "config": {
+    "name": "metadata_huber1",
+    "normalization": "metadata",
+    "loss": "huber1",
+    "weight_decay": 0.0
+  },
+  "lr": 0.003,
+  "seed": 43,
+  "seconds": 1.1089999999967404,
+  "weights_path": "candidates\\test_B0007__val_B0005__L32__metadata_huber1__lr0.003__s43\\weights.pt",
+  "weights_sha256": "6ec169f55bcc923eb5bc1453fef0bc64ab9a731919b994f79fa41a08c4a17700",
+  "train_labels": 32,
+  "parameters": 51015,
+  "protocol_sha256": "cc2da3c36a0f4f65ca79bacc85359de2ffc6517a48d80892649170cd87536bf3"
+}

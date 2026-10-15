@@ -1,0 +1,126 @@
+{
+  "status": "passed",
+  "new_training": false,
+  "new_inference": false,
+  "source_protocol_sha256": "b645a17b3de4be1f63804458f6f1587e703511f0d27e693049c4f00d658cac89",
+  "data_artifact_sha256": {
+    "nasa_aging": {
+      "soh.csv": "5f404b22266bd737401e9ac1b478db33cd02146a069ff76e1bdd385d08c0e48a",
+      "batteries.csv": "41c770eaf1441b53f4a08b0beb9178d59fa8a3bb79ea935a0e6fdf9fe7a6c562",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "calce_cs2_1c": {
+      "soh.csv": "9a37ab4832e761c4d3232b796d486920d3726628929ae7d9d462fcd966ae784f",
+      "batteries.csv": "99f9a05546bdbbe699073e1cc642a7bf8f085dbaf0351ae1eb8f2a128a3eac82",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch1": {
+      "soh.csv": "d45a55c491697df6c652de6e0bb5f48720499739fe7b9dd9d527c49621f3f005",
+      "batteries.csv": "d1a4bdf7dbb2ed500faa3269f4aaf3b3ddd6dbf15fc4e28991001538b1acf9c2",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch2": {
+      "soh.csv": "6d5987ba6aaf6ee2bc43997a69ce6083963b44a0e0b455259ebb61465570e418",
+      "batteries.csv": "00bf0638861fe0a26954020fc200f0222e541a7727db03051d6808cfc9f12092",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch3": {
+      "soh.csv": "ec86c78609a7af8378d485abb5a3b27b7ef0860bf65295594265db164adf68e7",
+      "batteries.csv": "efbe817ba775900f9950b146cd054cd98025c9d83fa90c1cb7394fad870ef222",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_2c": {
+      "soh.csv": "94368941c3d155cb42a3d14a6065ddcb36553b170e019ac7bba49aeeb1de5ae0",
+      "batteries.csv": "4dc44f54a620d03d870d1d39ef2c32e5ff9d1c4e9fb877edb5e21b67dc80c4fd",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_3c": {
+      "soh.csv": "c620b327c32a2f2f5230f848203fa8ff95daa6b0cf4142e8396329f9f332081d",
+      "batteries.csv": "1694e3710003e4ac86ace11012c71a3027d00b13c3f4e8e523148bdf81316a7c",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    }
+  },
+  "source_prediction_sha256": "97ed2cc0e774aecfd66db3274294bfc36f0efe0b3862a799c07e241e325cc845",
+  "trajectory_files_sha256": {
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\calce_cs2_1c\\CS2_35.npz": "8c21934961e8de00da6b4c4f19de0ba66a4da9071e5ffc5717d6d2f5a871fffe",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\calce_cs2_1c\\CS2_36.npz": "24b32b1caa55974d1bf087d982c724a75bec8239b72d0547deb0ba5938577643",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\calce_cs2_1c\\CS2_37.npz": "b54b71d33435c35b0d6f330ddc09bae81a0f503c4201e08c1d4b5702c603dc80",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\calce_cs2_1c\\CS2_38.npz": "93abf31beee2ffdff5cbd802f4d94e6f77f92a502b5bd481bfffbefb983b765d",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c10.npz": "227753489c3d500e4bcb5baeb8ec2c3f1d9568f65d816a5d8631030afd11a8b5",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c11.npz": "1efca64146f8988096fbcea1529df936c2aab4c17e28f0d00f558267430065c7",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c12.npz": "18496cc072f6a181e91429c97f51515a4085bb8597c5ae9a6532582770afc729",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c13.npz": "d9876471cc598a8cc701947812c989058c20a2d7f25a29a8f19eaa6d032d052b",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c14.npz": "8b3c7f09ea589e3d1771a0406ba10c08952c10661f37b94b590b703799ac7819",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c17.npz": "395940d33c5c62c5470b4f8cd23629bed51b0b5e2fdeaffc8689de9b9aff3d41",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c18.npz": "607098d6ccb48710d07657d6cb221785ca9c6de69f7d2c4f0c98fa317e01574f",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c19.npz": "4490f8b01972dff56bebd773f8e0c0c9bc73bfde2b5c9d2f0f9f070617b7b9b7",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c20.npz": "a07364eefa894d9d2eb197aa0498ee06429f5d79dba97ed653aef5a3c3061a5c",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c21.npz": "f4deceaa88c3a9dc0837c6dfa4996734b93ef9dc9ee5b9ebe43e0c7b4c7e2fd0",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c22.npz": "a7c95e13c75b873104c18c8a56b8215de645dd3d0f9afe0fb3f7fbeaf36f6302",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c23.npz": "31ed06fcf1d256b7241c393f4855c125bde355efe69c00814e1f0dc62210d468",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c24.npz": "d9a653b0c43831207a23b4a94ee0c18f2aae7d289f7132ac993c5218e36e0797",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c25.npz": "5b7cdf84d995527f10eed29a24f9482d7be5ed45f7e49acb4ce0635cda197175",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c26.npz": "989b0e893d8db9112aab7d92dca29a322e69f224540f6a467562cd774403f6d6",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c27.npz": "2c622fa6075dc1c766d3156cad24217b767ffd9dead714b8b3a2080142fbe713",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c28.npz": "71af4dfe4f3f82630b2eecf56ce66329caf13617aa0409e12828e9dd8f921649",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c29.npz": "7cadd174075b21d3b3fd1d6c31407e6a3d1843b8533e92011edabb08aa9cc9da",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c3.npz": "2d5b7999be27732555408d6924eeb9f41514d332420b1d839419b469e45e72ba",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c30.npz": "01f729206792d5ebbbd5d4ad70319c3fc65d7f4b18a102726a8fee3ec7721de9",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c31.npz": "cb7a20bed6ed229e3c35e71121ffa171687a4ce85e8cc11e43d15785b3a4b8e4",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c32.npz": "809596caa14d72ea99c009d0ffb92bce932db227c5b93ddb6e556f244976a360",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c33.npz": "e62b8e6c1fe1405f94a77f5fcdd6718186d3380de8db407726c4149c43301a3f",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c34.npz": "59b93af8d5057fe4a5830c577c2259f24827898fd251b493e3b5d38ce08bf8a9",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c35.npz": "dde1e4b8fccd7458df21ecc15224160cef824a5b70e42cc6c0c4825c5bc8bad4",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c36.npz": "81c92dbbe76b13e487f3bb1aedaf0d748b7e600e9a7e87c4c1b047be7798db2e",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c37.npz": "2b7e9503ce185e06e675e9a50fe66347bbe813e68006c12618743647751b0ae1",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c38.npz": "5769464a9582595f6e19b2a679cd8f81fc300209645a44cb372b73907752fc0a",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c39.npz": "6c92410e5c324b63dbb683dec55f50a3cd5c08237c0bb52f56f398920ec8ae62",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c4.npz": "806ad0301fb26e47c196d532122fc87a38a533c75dd3e85ac40592ecad558a06",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c40.npz": "7ace3a9872117fdaa0a5dce8cd9927d6cbc7308fefcf9dbb2de9cd92597fd16b",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c41.npz": "335479d553292a7e1e3726a5480b148a288f5ff730ed475c44a3209e2248ff6a",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c42.npz": "72e039ca320b182dd73e6a40df7647404a95c61cda94a90ba470d30f51d6f94a",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c43.npz": "48cd8919c87ae1e546ac87da2249c73ea428738c03601560d73649a8a1e9e3a9",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c44.npz": "70c1ff59583d1abea08e3ad4ae8c5b0c5f0f7617bf93fe28c0c179fb54a9c09e",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c45.npz": "bb7a64e39762b480b394141d203fbb6ce89a7897329794495bfdb7945febda16",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c46.npz": "376ef9635c7ca63beb918c3350545d9841958596c30b4d231d5ae9a80cceb34f",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c47.npz": "d249caa7fc3d13de0c8d764b7cf32555fb4d5ec367539b9b197dd1a8f4a7ca6f",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c5.npz": "d4276ccfdbb2a51ec99f251161cce077c1ba4332c8e5aeaf15de1892c89f909e",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\mit_batch2\\b2c6.npz": "34202f25b45c8395160ed717580d67a6bd78066ff659e6e086463f519ea85fc7",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\nasa_aging\\B0005.npz": "31824bd8fa169f4ca5349ef67584a0dad3619d37bbf5470c5a3544c16fdd396c",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\nasa_aging\\B0006.npz": "398164c9e4c4102322b36c55abfe09d5d6b47c659bf31a9cd3868adf8f5e59a4",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\nasa_aging\\B0007.npz": "73142e675aefaa279a84e974e695973c2703428dc42f50b752d7f3149ca96547",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\nasa_aging\\B0018.npz": "fc52af4c28c92ef4f922916eae44dfd162e639a965267600d7383a6bf05b769b",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\xjtu_2c\\batch1_2C_battery-5.npz": "6a5584430fc36c069adc42f17fe7c50fc5634bea4d49aac5b5f648ba285aa2b0",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\xjtu_2c\\batch1_2C_battery-6.npz": "c781061efcec787bfd20a7e208ed47385c3c6f4a7664a9a1303b7aac415c6f17",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\xjtu_2c\\batch1_2C_battery-7.npz": "59bd6a45459eb5104e5f43950dbf1d50c63134bca09ef686a81d6e96cd585faa",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\xjtu_2c\\batch1_2C_battery-8.npz": "f5a66a485942fd5d654c7aba0bf43808a5fd7df49d52b76bf30050af30db8b4e",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\xjtu_3c\\batch2_3C_battery-2.npz": "40e42e6f8783cf6b5a1da48c2f9b8d7733bc78bd582c4dbf4419fd426d56faca",
+    "results\\c2-battery\\v4-gpu-suite-v2\\rul_trajectories\\xjtu_3c\\batch2_3C_battery-7.npz": "7e33007994521d2f7db4a967b97d4f18a2e7e99dfaf64acaeca51bcafb64fdb4"
+  },
+  "exact_origin_count": 1461,
+  "exact_cell_count": 54,
+  "noncrossing_count": 1297,
+  "representative_count": 6,
+  "threshold": "0.8 of initial reference capacity; original v4 protocol",
+  "checks": [
+    "data hashes match original protocol",
+    "NPZ protocol hashes match",
+    "recomputed crossings match saved RUL CSV",
+    "EOL labels match eligible observations",
+    "all six cases satisfy declared descriptive selection criteria",
+    "excluded observations remain NaN",
+    "source trajectories unchanged"
+  ],
+  "output_sha256": {
+    "01_mit_batch2_b2c34_t464.png": "e1e66529a19acccfb9b86ce5c572c5d74105fb852824b492109a511a66f729c1",
+    "02_xjtu_2c_batch1_2C_battery-7_t352.png": "4f469e70cd7cade05782b7e0c56d69c8a1f6a2d2e1383ddbdc8af967bb33ea63",
+    "03_xjtu_3c_batch2_3C_battery-7_t256.png": "9d19eb49595e18c695ec19b3156e0b1c1103dd0ca9ff7e09a02555e2a26ab63c",
+    "04_calce_cs2_1c_CS2_38_t528.png": "b6ccbd496adf89f239bbeabba4dd0d301b19d1819584c2b30a8433fe3e1f8526",
+    "05_nasa_aging_B0007_t32.png": "5d9d483571bb51ec8923f23e2f442adbe8c07bc54321df1692d20bb36ae7e670",
+    "06_mit_batch2_b2c34_t32.png": "151cd940dd35f93c936b348cdeedc67298fd481a6f06438ddb27404bf9654427",
+    "candidate_metrics.csv": "923f38b918b7d7d576c9f84d4a7757fff893c1875a4cd9bee4d5bdd7c3cc4c4f",
+    "index.html": "8138661052eed5d4a229653ccfd4b3e5bc8e4fefa149a146b84cd13752d74070",
+    "overview.png": "471335842d113485d1bc7a1128b796e110e858e09ba8edce354ea6be328f7a07",
+    "selected_cases.csv": "1cdf757e1029e32e33b246db22ab8ef38f0978a125e9d1389251a120810d9748"
+  }
+}

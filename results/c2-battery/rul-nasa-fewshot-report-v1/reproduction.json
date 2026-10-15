@@ -1,0 +1,29 @@
+{
+  "scope": "NASA direct RUL few-shot; architecture unchanged",
+  "home_repository": "C:\\Users\\master\\Lab\\chronos-battery-soh",
+  "home_isolated_run": "C:\\Users\\master\\Lab\\chronos-battery-soh\\.codex-runs\\nasa-fewshot-improvement-v1",
+  "pretrained_model": "amazon/chronos-2",
+  "pretrained_revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "required_inputs": [
+    "data/processed/reviewed_v4/forecast_safe",
+    "results/c2-battery/mit-eol-label-audit-v1/usable_official_eol_labels.csv",
+    "results/c2-battery/rul-context-nominal80-v1/protocol.json",
+    "results/c2-battery/rul-context-nominal80-v1/checkpoints/nasa_aging*",
+    "models/huggingface"
+  ],
+  "run_order": [
+    "python scripts/run_c2_nasa_fewshot_improvement.py --out results/c2-battery/rul-nasa-fewshot-improvement-v1 --device cuda --cache-root models/huggingface",
+    "python scripts/run_c2_nasa_fewshot_full.py --out results/c2-battery/rul-nasa-fewshot-full-v1 --cache-root models/huggingface",
+    "python scripts/run_c2_nasa_fewshot_robustness.py --out results/c2-battery/rul-nasa-fewshot-robustness-v1"
+  ],
+  "verification_order": [
+    "python scripts/audit_nasa_fewshot_improvement.py",
+    "python scripts/audit_nasa_fewshot_robustness.py",
+    "python scripts/report_nasa_fewshot_improvement.py"
+  ],
+  "fresh_run_requirement": "Use a fresh isolated checkout with the required inputs. Existing output directories resume saved candidates and immutable protocols; never overwrite an earlier protocol to relabel a run.",
+  "remote_full_weights": "Two selected nonzero-step full-weight checkpoints remain on home desktop. remote_weights_inventory.json records their paths, byte sizes and SHA256. Local audit checks this inventory and the home-GPU reload evidence; it does not reload those full weights locally.",
+  "label_budget": "2 source cells x16 supervised RUL pairs per model, plus all eligible labels of a separate validation cell for model selection. Test cell never used in fitting.",
+  "partition_scope": "Primary report preserves historical four partitions. Robustness report separately averages all three possible validation choices for each of four test cells.",
+  "code_scope": "Only new experiment and report scripts plus src/c2_rul_improvement.py; no pretrained architecture or existing experiment source modified."
+}

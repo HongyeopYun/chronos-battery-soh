@@ -1,0 +1,15 @@
+profile,group,cells,eligible_cells,rows,v3_eligible_in_these_rows,eligible,newly_excluded,capacity_changes
+forecast_safe,nasa_aging,4,4,636,636,636,0,0
+forecast_safe,xjtu_2c,8,8,3219,3209,3209,0,0
+forecast_safe,xjtu_3c,15,15,3742,3727,3727,0,0
+forecast_safe,calce_cs2_1c,4,4,3937,3801,3801,0,3921
+forecast_safe,mit_batch1,46,46,42204,42138,42138,0,0
+forecast_safe,mit_batch2,43,43,21527,21505,21462,43,0
+forecast_safe,mit_batch3,46,40,51007,41233,41193,40,0
+retrospective,nasa_aging,4,4,636,636,636,0,0
+retrospective,xjtu_2c,8,8,3219,3209,3209,0,0
+retrospective,xjtu_3c,15,15,3742,3727,3727,0,0
+retrospective,calce_cs2_1c,4,4,3937,3801,3325,476,3921
+retrospective,mit_batch1,46,41,42204,42138,37673,4465,0
+retrospective,mit_batch2,43,43,21527,21505,21462,43,0
+retrospective,mit_batch3,46,40,51007,41233,41193,40,0

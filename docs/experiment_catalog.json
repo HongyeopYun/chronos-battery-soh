@@ -1,0 +1,590 @@
+[
+  {
+    "name": "rul-nasa-fewshot-report-v1",
+    "title": "NASA 직접 RUL 개선 · 요약 및 전후 그래프",
+    "category": "NASA 직접 RUL 개선",
+    "path": "results/c2-battery/rul-nasa-fewshot-report-v1",
+    "links": [
+      {
+        "label": "그래프 보기",
+        "path": "c2-battery/rul-nasa-fewshot-report-v1/index.html"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/rul-nasa-fewshot-report-v1/summary.csv"
+      },
+      {
+        "label": "감사 기록",
+        "path": "c2-battery/rul-nasa-fewshot-report-v1/audit.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-nasa-fewshot-full-v1",
+    "title": "NASA 개선 Head 이후 전체 가중치 학습",
+    "category": "NASA 직접 RUL 개선",
+    "path": "results/c2-battery/rul-nasa-fewshot-full-v1",
+    "links": [
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/rul-nasa-fewshot-full-v1/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-nasa-fewshot-full-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-nasa-fewshot-improvement-v1",
+    "title": "NASA Head 개선 · 탐색 및 저장 예측",
+    "category": "NASA 직접 RUL 개선",
+    "path": "results/c2-battery/rul-nasa-fewshot-improvement-v1",
+    "links": [
+      {
+        "label": "성능표",
+        "path": "c2-battery/rul-nasa-fewshot-improvement-v1/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/rul-nasa-fewshot-improvement-v1/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-nasa-fewshot-improvement-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-nasa-fewshot-robustness-v1",
+    "title": "NASA 개선 원인 · 셀 분할 반복 검증",
+    "category": "NASA 직접 RUL 개선",
+    "path": "results/c2-battery/rul-nasa-fewshot-robustness-v1",
+    "links": [
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/rul-nasa-fewshot-robustness-v1/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-nasa-fewshot-robustness-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-context-nominal80-adaptation-xpu-v1",
+    "title": "rul-context-nominal80-adaptation-xpu-v1",
+    "category": "직접 RUL · context 및 학습량",
+    "path": "results/c2-battery/rul-context-nominal80-adaptation-xpu-v1",
+    "links": [
+      {
+        "label": "폴더",
+        "path": "c2-battery/rul-context-nominal80-adaptation-xpu-v1/"
+      }
+    ]
+  },
+  {
+    "name": "rul-context-nominal80-v1",
+    "title": "직접 RUL 입력 길이 · MIT 정격 80%",
+    "category": "직접 RUL · context 및 학습량",
+    "path": "results/c2-battery/rul-context-nominal80-v1",
+    "links": [
+      {
+        "label": "그래프 보기",
+        "path": "c2-battery/rul-context-nominal80-v1/index.html"
+      },
+      {
+        "label": "보고서",
+        "path": "c2-battery/rul-context-nominal80-v1/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/rul-context-nominal80-v1/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/rul-context-nominal80-v1/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-context-nominal80-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-learning-curve-v1",
+    "title": "직접 RUL 학습 셀 수 · 정답 수",
+    "category": "직접 RUL · context 및 학습량",
+    "path": "results/c2-battery/rul-learning-curve-v1",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/rul-learning-curve-v1/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/rul-learning-curve-v1/summary.csv"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-learning-curve-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "one-step-16-reviewed-v3",
+    "title": "one-step-16-reviewed-v3",
+    "category": "현재 SOH",
+    "path": "results/c2-battery/one-step-16-reviewed-v3",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/one-step-16-reviewed-v3/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/one-step-16-reviewed-v3/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/one-step-16-reviewed-v3/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/one-step-16-reviewed-v3/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "one-step-2-reviewed-v3",
+    "title": "one-step-2-reviewed-v3",
+    "category": "현재 SOH",
+    "path": "results/c2-battery/one-step-2-reviewed-v3",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/one-step-2-reviewed-v3/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/one-step-2-reviewed-v3/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/one-step-2-reviewed-v3/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/one-step-2-reviewed-v3/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "one-step-32-reviewed-v3",
+    "title": "one-step-32-reviewed-v3",
+    "category": "현재 SOH",
+    "path": "results/c2-battery/one-step-32-reviewed-v3",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/one-step-32-reviewed-v3/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/one-step-32-reviewed-v3/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/one-step-32-reviewed-v3/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/one-step-32-reviewed-v3/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "one-step-4-reviewed-v3",
+    "title": "one-step-4-reviewed-v3",
+    "category": "현재 SOH",
+    "path": "results/c2-battery/one-step-4-reviewed-v3",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/one-step-4-reviewed-v3/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/one-step-4-reviewed-v3/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/one-step-4-reviewed-v3/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/one-step-4-reviewed-v3/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "one-step-64",
+    "title": "one-step-64",
+    "category": "현재 SOH",
+    "path": "results/c2-battery/one-step-64",
+    "links": [
+      {
+        "label": "폴더",
+        "path": "c2-battery/one-step-64/"
+      }
+    ]
+  },
+  {
+    "name": "one-step-64-reviewed-v3",
+    "title": "one-step-64-reviewed-v3",
+    "category": "현재 SOH",
+    "path": "results/c2-battery/one-step-64-reviewed-v3",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/one-step-64-reviewed-v3/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/one-step-64-reviewed-v3/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/one-step-64-reviewed-v3/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/one-step-64-reviewed-v3/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "one-step-8-reviewed-v3",
+    "title": "one-step-8-reviewed-v3",
+    "category": "현재 SOH",
+    "path": "results/c2-battery/one-step-8-reviewed-v3",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/one-step-8-reviewed-v3/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/one-step-8-reviewed-v3/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/one-step-8-reviewed-v3/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/one-step-8-reviewed-v3/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "indirect-rul-representatives-v1",
+    "title": "간접 RUL 대표 예측 궤적",
+    "category": "간접 RUL · 미래 SOH 궤적",
+    "path": "results/c2-battery/indirect-rul-representatives-v1",
+    "links": [
+      {
+        "label": "그래프 보기",
+        "path": "c2-battery/indirect-rul-representatives-v1/index.html"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/indirect-rul-representatives-v1/verification.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-nasa-context-sweep-cuda-v1",
+    "title": "rul-nasa-context-sweep-cuda-v1",
+    "category": "간접 RUL · 미래 SOH 궤적",
+    "path": "results/c2-battery/rul-nasa-context-sweep-cuda-v1",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/rul-nasa-context-sweep-cuda-v1/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/rul-nasa-context-sweep-cuda-v1/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/rul-nasa-context-sweep-cuda-v1/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-nasa-context-sweep-cuda-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-nasa-l64-h256-head-v1",
+    "title": "rul-nasa-l64-h256-head-v1",
+    "category": "간접 RUL · 미래 SOH 궤적",
+    "path": "results/c2-battery/rul-nasa-l64-h256-head-v1",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/rul-nasa-l64-h256-head-v1/report.md"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/rul-nasa-l64-h256-head-v1/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-nasa-l64-h256-head-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-nasa-l64-h256-zero-v1",
+    "title": "rul-nasa-l64-h256-zero-v1",
+    "category": "간접 RUL · 미래 SOH 궤적",
+    "path": "results/c2-battery/rul-nasa-l64-h256-zero-v1",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/rul-nasa-l64-h256-zero-v1/report.md"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/rul-nasa-l64-h256-zero-v1/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-nasa-l64-h256-zero-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-nasa-multi-origin-xpu-v1",
+    "title": "rul-nasa-multi-origin-xpu-v1",
+    "category": "간접 RUL · 미래 SOH 궤적",
+    "path": "results/c2-battery/rul-nasa-multi-origin-xpu-v1",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/rul-nasa-multi-origin-xpu-v1/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/rul-nasa-multi-origin-xpu-v1/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/rul-nasa-multi-origin-xpu-v1/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-nasa-multi-origin-xpu-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "rul-nasa-soh80-rescore-v1",
+    "title": "rul-nasa-soh80-rescore-v1",
+    "category": "간접 RUL · 미래 SOH 궤적",
+    "path": "results/c2-battery/rul-nasa-soh80-rescore-v1",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/rul-nasa-soh80-rescore-v1/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/rul-nasa-soh80-rescore-v1/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/rul-nasa-soh80-rescore-v1/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/rul-nasa-soh80-rescore-v1/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "full-soh4-rul-gallery-v1",
+    "title": "SOH 4→1 및 기존 RUL 전체 셀 갤러리",
+    "category": "통합 결과 및 갤러리",
+    "path": "results/c2-battery/full-soh4-rul-gallery-v1",
+    "links": [
+      {
+        "label": "그래프 보기",
+        "path": "c2-battery/full-soh4-rul-gallery-v1/index.html"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/full-soh4-rul-gallery-v1/verification.json"
+      }
+    ]
+  },
+  {
+    "name": "v4-gpu-suite-v2",
+    "title": "v4 SOH · 간접 RUL · 직접 RUL 통합 실험",
+    "category": "통합 결과 및 갤러리",
+    "path": "results/c2-battery/v4-gpu-suite-v2",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/v4-gpu-suite-v2/report.md"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/v4-gpu-suite-v2/verification.json"
+      },
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/v4-gpu-suite-v2/protocol.json"
+      }
+    ]
+  },
+  {
+    "name": "data_audit",
+    "title": "data_audit",
+    "category": "데이터 전처리 · 감사",
+    "path": "results/data_audit",
+    "links": [
+      {
+        "label": "폴더",
+        "path": "data_audit/"
+      }
+    ]
+  },
+  {
+    "name": "mit-eol-label-audit-v1",
+    "title": "mit-eol-label-audit-v1",
+    "category": "데이터 전처리 · 감사",
+    "path": "results/c2-battery/mit-eol-label-audit-v1",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "c2-battery/mit-eol-label-audit-v1/report.md"
+      },
+      {
+        "label": "성능표",
+        "path": "c2-battery/mit-eol-label-audit-v1/summary.csv"
+      },
+      {
+        "label": "검증 기록",
+        "path": "c2-battery/mit-eol-label-audit-v1/verification.json"
+      }
+    ]
+  },
+  {
+    "name": "preprocessing_batterylife_v4",
+    "title": "preprocessing_batterylife_v4",
+    "category": "데이터 전처리 · 감사",
+    "path": "results/preprocessing_batterylife_v4",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "preprocessing_batterylife_v4/report.md"
+      },
+      {
+        "label": "검증 기록",
+        "path": "preprocessing_batterylife_v4/verification.json"
+      }
+    ]
+  },
+  {
+    "name": "preprocessing_nasa_review_v3",
+    "title": "preprocessing_nasa_review_v3",
+    "category": "데이터 전처리 · 감사",
+    "path": "results/preprocessing_nasa_review_v3",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "preprocessing_nasa_review_v3/report.md"
+      },
+      {
+        "label": "검증 기록",
+        "path": "preprocessing_nasa_review_v3/verification.json"
+      }
+    ]
+  },
+  {
+    "name": "preprocessing_review_all",
+    "title": "preprocessing_review_all",
+    "category": "데이터 전처리 · 감사",
+    "path": "results/preprocessing_review_all",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "preprocessing_review_all/report.md"
+      },
+      {
+        "label": "검증 기록",
+        "path": "preprocessing_review_all/verification.json"
+      }
+    ]
+  },
+  {
+    "name": "preprocessing_reviewed_native_v3",
+    "title": "preprocessing_reviewed_native_v3",
+    "category": "데이터 전처리 · 감사",
+    "path": "results/preprocessing_reviewed_native_v3",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "preprocessing_reviewed_native_v3/report.md"
+      },
+      {
+        "label": "검증 기록",
+        "path": "preprocessing_reviewed_native_v3/verification.json"
+      }
+    ]
+  },
+  {
+    "name": "preprocessing_strict_v2",
+    "title": "preprocessing_strict_v2",
+    "category": "데이터 전처리 · 감사",
+    "path": "results/preprocessing_strict_v2",
+    "links": [
+      {
+        "label": "보고서",
+        "path": "preprocessing_strict_v2/report.md"
+      },
+      {
+        "label": "검증 기록",
+        "path": "preprocessing_strict_v2/verification.json"
+      }
+    ]
+  },
+  {
+    "name": "diagnostics",
+    "title": "diagnostics",
+    "category": "과거 참조 및 진단",
+    "path": "results/diagnostics",
+    "links": [
+      {
+        "label": "폴더",
+        "path": "diagnostics/"
+      }
+    ]
+  },
+  {
+    "name": "strict-v2-zero-head",
+    "title": "strict-v2-zero-head",
+    "category": "과거 참조 및 진단",
+    "path": "results/c2-battery/strict-v2-zero-head",
+    "links": [
+      {
+        "label": "실험 조건",
+        "path": "c2-battery/strict-v2-zero-head/protocol.json"
+      }
+    ]
+  }
+]

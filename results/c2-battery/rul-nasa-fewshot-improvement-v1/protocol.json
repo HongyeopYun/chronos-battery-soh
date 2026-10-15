@@ -1,0 +1,372 @@
+{
+  "task": "NASA few-shot direct RUL improvement without architecture changes",
+  "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+  "cases": [
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0005",
+      "seed": 42,
+      "length": 8,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "test_ids": [
+        "B0005"
+      ],
+      "case_id": "nasa_aging__test_B0005__s42__L8",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0005",
+      "seed": 42,
+      "length": 16,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "test_ids": [
+        "B0005"
+      ],
+      "case_id": "nasa_aging__test_B0005__s42__L16",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0005",
+      "seed": 42,
+      "length": 32,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0007",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0006"
+      ],
+      "test_ids": [
+        "B0005"
+      ],
+      "case_id": "nasa_aging__test_B0005__s42__L32",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0006",
+      "seed": 42,
+      "length": 8,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "test_ids": [
+        "B0006"
+      ],
+      "case_id": "nasa_aging__test_B0006__s42__L8",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0006",
+      "seed": 42,
+      "length": 16,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "test_ids": [
+        "B0006"
+      ],
+      "case_id": "nasa_aging__test_B0006__s42__L16",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0006",
+      "seed": 42,
+      "length": 32,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0005",
+        "B0018"
+      ],
+      "validation_ids": [
+        "B0007"
+      ],
+      "test_ids": [
+        "B0006"
+      ],
+      "case_id": "nasa_aging__test_B0006__s42__L32",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0007",
+      "seed": 42,
+      "length": 8,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "test_ids": [
+        "B0007"
+      ],
+      "case_id": "nasa_aging__test_B0007__s42__L8",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0007",
+      "seed": 42,
+      "length": 16,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "test_ids": [
+        "B0007"
+      ],
+      "case_id": "nasa_aging__test_B0007__s42__L16",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0007",
+      "seed": 42,
+      "length": 32,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0005",
+        "B0006"
+      ],
+      "validation_ids": [
+        "B0018"
+      ],
+      "test_ids": [
+        "B0007"
+      ],
+      "case_id": "nasa_aging__test_B0007__s42__L32",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0018",
+      "seed": 42,
+      "length": 8,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "test_ids": [
+        "B0018"
+      ],
+      "case_id": "nasa_aging__test_B0018__s42__L8",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0018",
+      "seed": 42,
+      "length": 16,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "test_ids": [
+        "B0018"
+      ],
+      "case_id": "nasa_aging__test_B0018__s42__L16",
+      "extra_tests": {}
+    },
+    {
+      "dataset": "nasa_aging",
+      "fold": "test_B0018",
+      "seed": 42,
+      "length": 32,
+      "start": 32,
+      "budget": "16",
+      "n_train_cells": 2,
+      "train_ids": [
+        "B0006",
+        "B0007"
+      ],
+      "validation_ids": [
+        "B0005"
+      ],
+      "test_ids": [
+        "B0018"
+      ],
+      "case_id": "nasa_aging__test_B0018__s42__L32",
+      "extra_tests": {}
+    }
+  ],
+  "grid": [
+    {
+      "name": "std_huber1",
+      "normalization": "all",
+      "loss": "huber1",
+      "weight_decay": 0.0
+    },
+    {
+      "name": "std_huber01",
+      "normalization": "all",
+      "loss": "huber01",
+      "weight_decay": 0.0
+    },
+    {
+      "name": "std_mae",
+      "normalization": "all",
+      "loss": "mae",
+      "weight_decay": 0.0
+    },
+    {
+      "name": "std_mse",
+      "normalization": "all",
+      "loss": "mse",
+      "weight_decay": 0.0
+    },
+    {
+      "name": "metadata_huber01",
+      "normalization": "metadata",
+      "loss": "huber01",
+      "weight_decay": 0.0
+    },
+    {
+      "name": "metadata_mae",
+      "normalization": "metadata",
+      "loss": "mae",
+      "weight_decay": 0.0
+    },
+    {
+      "name": "std_huber01_wd",
+      "normalization": "all",
+      "loss": "huber01",
+      "weight_decay": 0.001
+    }
+  ],
+  "lengths": [
+    8,
+    16,
+    32
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "lrs": [
+    0.001,
+    0.003
+  ],
+  "steps": 1000,
+  "batch_size": 16,
+  "eval_every": 50,
+  "budget_per_source_cell": 16,
+  "n_source_cells": 2,
+  "architecture": "Unchanged frozen Chronos2 REG(768)+loc/scale/lastSOH(3); LayerNorm771,Linear64,GELU,Linear1,softplus.",
+  "user_constraint": "Ask before changing model architecture/internal structure. No new adapters/layers/inputs. Feature scaling is fitted outside the unchanged head using source training examples only.",
+  "scope": "Few-shot only: 2 source cells x 16 labels. No all-label fitting. NASA prioritized; same initial-reference80 EOL as historical NASA results.",
+  "selection": "For each outer fold, seed42 validation MAE selects configuration/L/LR, including the old model as fallback. Fixed-L32 and flexible-L8/16/32 selections separately. Seeds43/44 reuse chosen config/L/LR, select checkpoint only on that fold validation cell. All selections locked before test prediction.",
+  "evaluation": "Original stride16 origins for direct baseline comparability plus dense stride1 sensitivity on identical origins per method. t>=32 and t<EOL. Report each cell and early/middle/late separately. Test reused historically: exploratory, not pristine external validation.",
+  "source_sha256": {
+    "scripts/run_c2_nasa_fewshot_improvement.py": "48e2b1c7e2c2e0ae8be6e82a4c517fa0c25954c1badd29bbbde4a48719a95870",
+    "src/c2_rul_improvement.py": "543c928117aa5470fecbd2a88186cd30693a50aaa0be134e5c342a90555eb6b1",
+    "src/c2_rul_context_nominal.py": "3328e224d5f7e4b90a41b2433414cfa647946aeb557c899a2a0c8a8f3ec58dcf",
+    "src/c2_rul_learning_curve.py": "d5580ad884fed1f2f8fae84b7e3dfb41c39e54ea6829a78f2fc1413846032e0e",
+    "src/c2_v4_experiments.py": "6e341cdc08d0892fce92b8f5131f02a7588d88c990b70b49de37c85a7934b94c"
+  },
+  "data_artifact_sha256": {
+    "nasa_aging": {
+      "soh.csv": "5f404b22266bd737401e9ac1b478db33cd02146a069ff76e1bdd385d08c0e48a",
+      "batteries.csv": "41c770eaf1441b53f4a08b0beb9178d59fa8a3bb79ea935a0e6fdf9fe7a6c562",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "calce_cs2_1c": {
+      "soh.csv": "9a37ab4832e761c4d3232b796d486920d3726628929ae7d9d462fcd966ae784f",
+      "batteries.csv": "99f9a05546bdbbe699073e1cc642a7bf8f085dbaf0351ae1eb8f2a128a3eac82",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch1": {
+      "soh.csv": "d45a55c491697df6c652de6e0bb5f48720499739fe7b9dd9d527c49621f3f005",
+      "batteries.csv": "d1a4bdf7dbb2ed500faa3269f4aaf3b3ddd6dbf15fc4e28991001538b1acf9c2",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch2": {
+      "soh.csv": "6d5987ba6aaf6ee2bc43997a69ce6083963b44a0e0b455259ebb61465570e418",
+      "batteries.csv": "00bf0638861fe0a26954020fc200f0222e541a7727db03051d6808cfc9f12092",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "mit_batch3": {
+      "soh.csv": "ec86c78609a7af8378d485abb5a3b27b7ef0860bf65295594265db164adf68e7",
+      "batteries.csv": "efbe817ba775900f9950b146cd054cd98025c9d83fa90c1cb7394fad870ef222",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_2c": {
+      "soh.csv": "94368941c3d155cb42a3d14a6065ddcb36553b170e019ac7bba49aeeb1de5ae0",
+      "batteries.csv": "4dc44f54a620d03d870d1d39ef2c32e5ff9d1c4e9fb877edb5e21b67dc80c4fd",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    },
+    "xjtu_3c": {
+      "soh.csv": "c620b327c32a2f2f5230f848203fa8ff95daa6b0cf4142e8396329f9f332081d",
+      "batteries.csv": "1694e3710003e4ac86ace11012c71a3027d00b13c3f4e8e523148bdf81316a7c",
+      "schema.json": "4a56535d8db29f1b3728c877ab193123c585395a54004595a50c4656a3553ec7"
+    }
+  },
+  "reference_protocol_sha256": "fa27a0a5ddf1a6f7d1fa549fb3187eb8c8b9ebe48cad213d2b1e81d9897d218b",
+  "label_sha256": "8ccbd2d6fd1d1fe409da5fbb7024d9623167bbb40a36fa327a098a175012fed5"
+}

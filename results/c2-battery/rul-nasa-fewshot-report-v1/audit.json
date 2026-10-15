@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "checked_at": "2026-10-14T11:18:48.130780+00:00",
+  "data_hashes_match": true,
+  "source_hashes_match": true,
+  "unchanged_head_parameters": 51015,
+  "source_validation_test_disjoint": true,
+  "source_labels_per_model": 32,
+  "validation_cell_labels_additional": true,
+  "scaler_independently_refitted_on_training_only": true,
+  "selected_head_reload_models": 36,
+  "max_head_prediction_difference": 2.288818359375e-05,
+  "old_stride16_prediction_max_difference": 1.1444091796875e-05,
+  "original_stride16_origins": 16,
+  "dense_origins": 233,
+  "full_models": 12,
+  "full_step_zero_fallbacks": 10,
+  "full_weight_reload": "Verified on home GPU by training runner; local metadata and hashes checked. Full weights remain on home GPU.",
+  "full_weights_inventory_sha256": "003d6e64b6721d17afe0c4343779ca6df0a378b173d4953fa8788cedee65b195",
+  "note": "Historical test cells have been viewed before; exploratory follow-up, not an untouched external validation."
+}

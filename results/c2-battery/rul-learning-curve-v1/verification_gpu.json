@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "verified_at": "2026-10-13T11:42:11.173496+00:00",
+  "protocol_sha256": "e63c51f07adfef47c2ce70f95573e2a77ad98f87b0d6b5bd5afaf8b0c05edf99",
+  "cases": 144,
+  "weight_files": 144,
+  "predictions": 93816,
+  "label_rows": 143245,
+  "gpu_native_reloaded_test_points": 675,
+  "cell_disjoint": true,
+  "matched_test_origins": true,
+  "constants_and_ridge_recomputed": true,
+  "source_and_data_hashes": true
+}

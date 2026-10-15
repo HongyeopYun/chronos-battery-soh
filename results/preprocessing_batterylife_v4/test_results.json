@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "command": ".venv/Scripts/python.exe -X utf8 -m unittest discover -s tests",
+  "tests": 143,
+  "elapsed_seconds": 30.624,
+  "new_preprocessing_tests": 10,
+  "test_source_sha256": "77db7a6b7ad6f7ecd59c4345fbdcd81c7fc1306d62f6e5d1a6c6dc8c22b1653f"
+}

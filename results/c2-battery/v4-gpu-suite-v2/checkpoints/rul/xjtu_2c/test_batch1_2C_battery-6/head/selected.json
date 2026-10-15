@@ -1,0 +1,44 @@
+{
+  "step": 40,
+  "lr": 0.001,
+  "validation_mae": 62.106483459472656,
+  "training_loss": 0.06009582430124283,
+  "method": "head",
+  "protocol_sha256": "b645a17b3de4be1f63804458f6f1587e703511f0d27e693049c4f00d658cac89",
+  "weights_sha256": "3b766857b023470519606703b58e78b95ee6202ce10e87d1641993596a539649",
+  "scale": 186.0,
+  "mean_target": 187.75,
+  "train_labels": 8,
+  "validation_labels": 4,
+  "reload_verified": true,
+  "frozen_verified": true,
+  "gradient_audit": {
+    "0.001": {
+      "head_nonzero_gradient": true,
+      "backbone_nonzero_gradient": false,
+      "trainable_parameters": 51015,
+      "trainable_names": [
+        "head.0.weight",
+        "head.0.bias",
+        "head.1.weight",
+        "head.1.bias",
+        "head.3.weight",
+        "head.3.bias"
+      ]
+    },
+    "0.003": {
+      "head_nonzero_gradient": true,
+      "backbone_nonzero_gradient": false,
+      "trainable_parameters": 51015,
+      "trainable_names": [
+        "head.0.weight",
+        "head.0.bias",
+        "head.1.weight",
+        "head.1.bias",
+        "head.3.weight",
+        "head.3.bias"
+      ]
+    }
+  },
+  "elapsed_seconds": 0.9850000000005821
+}

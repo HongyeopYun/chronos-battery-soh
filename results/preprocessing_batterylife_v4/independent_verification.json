@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "protected_file_hashes_checked": 1587,
+  "bundles_checked": 14,
+  "calce_raw_integral_cycles": 108,
+  "calce_independent_filter_decisions": 3937,
+  "mit_raw_exception_indices": 4,
+  "mit_merged_continuations": 5,
+  "xjtu_eligible_same_condition": 6936,
+  "nasa_exactly_unchanged": true,
+  "verifier_sha256": "66a785584595e826613708237edb12fb6371b9ade797cea586f15ab98d6daf15"
+}

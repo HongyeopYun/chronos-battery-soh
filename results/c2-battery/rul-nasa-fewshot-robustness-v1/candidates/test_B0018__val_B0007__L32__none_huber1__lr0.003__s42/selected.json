@@ -1,0 +1,21 @@
+{
+  "step": 100,
+  "validation_mae": 25.313297271728516,
+  "key": "test_B0018__val_B0007__L32__none_huber1__lr0.003__s42",
+  "fold": "test_B0018__val_B0007",
+  "length": 32,
+  "config": {
+    "name": "none_huber1",
+    "normalization": "none",
+    "loss": "huber1",
+    "weight_decay": 0.0
+  },
+  "lr": 0.003,
+  "seed": 42,
+  "seconds": 1.0929999999971187,
+  "weights_path": "candidates\\test_B0018__val_B0007__L32__none_huber1__lr0.003__s42\\weights.pt",
+  "weights_sha256": "d2d7a6a18c38c94d1ce4b6e5f43bc581ca7e55f4800af037e3f08c5e1dfa287b",
+  "train_labels": 32,
+  "parameters": 51015,
+  "protocol_sha256": "cc2da3c36a0f4f65ca79bacc85359de2ffc6517a48d80892649170cd87536bf3"
+}

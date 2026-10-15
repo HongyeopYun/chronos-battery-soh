@@ -1,0 +1,7 @@
+battery_id,cycle,capacity_ah,quality_eligible,exclusion_reasons
+b2c40,498,0.8824496299999997,True,
+b2c40,499,0.87644982,False,charge_termination_not_met
+b2c40,500,0.87935251,True,
+b2c46,428,0.88485616,True,
+b2c46,429,0.8778943999999999,False,charge_termination_not_met
+b2c46,430,0.87689918,True,

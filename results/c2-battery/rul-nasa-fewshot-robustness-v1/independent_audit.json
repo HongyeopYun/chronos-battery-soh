@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checked_at": "2026-10-14T11:28:01.780376+00:00",
+  "selected_heads_reloaded": 144,
+  "candidates_and_histories_verified": 288,
+  "source_labels": 32,
+  "head_parameters": 51015,
+  "train_only_scaler_recomputed": true,
+  "source_validation_test_disjoint": true,
+  "validation_only_lr_step_selection": true,
+  "all_three_validation_choices_per_test_cell": true,
+  "max_prediction_difference": 1.9073486328125e-05,
+  "predictions_sha256": "9e17eed917b6c992b13b74f63f4be82a18e0c234bd68142badba3b8c27e17331"
+}

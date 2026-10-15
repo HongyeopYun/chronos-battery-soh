@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "verified_at": "2026-10-13T13:37:11.086775+00:00",
+  "models": 201,
+  "predictions": 593076,
+  "label_rows": 100449,
+  "matched_origins": true,
+  "source_data_hashes": true,
+  "mit_restored_exact_labels": 81,
+  "mit_still_censored": 5,
+  "native_reload_test_points": 819
+}
